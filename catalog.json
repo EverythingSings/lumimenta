@@ -59,6 +59,26 @@
       "rarity": "blue",
       "edition": "1/1",
       "imageHash": "c6670301d96bf5bb259cfe65fd79cc34b8b7bb32efc1a30b50a6331c7ca9f7c9"
+    },
+    {
+      "id": 7,
+      "title": "Oregon Beach Scenes",
+      "description": "Rock stack (gold 1/2) and mountain cliff (silver 1/2)",
+      "location": "Oregon Coast",
+      "blockHeight": 920046,
+      "rarity": "gold & silver",
+      "edition": "1/2 each",
+      "imageHash": "8e587a9a699dd2035b5b63727396587a7ff9979eb029f8bf57caeb4d6aa60f83"
+    },
+    {
+      "id": 8,
+      "title": "Oregon Beach Scenes (Back)",
+      "description": "Back side showing both cards with gold and silver annotations",
+      "location": "Oregon Coast",
+      "blockHeight": 920046,
+      "rarity": "gold & silver",
+      "edition": "1/2 each",
+      "imageHash": "91304d4d005b21135e6361f489320828fbe974ea8517c94b9dd0402f46df0252"
     }
   ]
 }
