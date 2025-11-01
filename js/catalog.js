@@ -25,11 +25,22 @@ async function loadCatalog() {
 function calculateStats(cards) {
     const stats = {
         total: cards.length,
-        blue: cards.filter(c => c.rarity === 'blue').length,
-        silver: cards.filter(c => c.rarity === 'silver').length,
-        gold: cards.filter(c => c.rarity === 'gold').length,
+        blue: 0,
+        silver: 0,
+        gold: 0,
         uniqueSubjects: new Set(cards.map(c => c.title)).size
     };
+    
+    // Count rarities, handling both string and array formats
+    cards.forEach(card => {
+        const rarities = Array.isArray(card.rarity) ? card.rarity : [card.rarity];
+        rarities.forEach(rarity => {
+            if (rarity === 'blue') stats.blue++;
+            else if (rarity === 'silver') stats.silver++;
+            else if (rarity === 'gold') stats.gold++;
+        });
+    });
+    
     return stats;
 }
 
