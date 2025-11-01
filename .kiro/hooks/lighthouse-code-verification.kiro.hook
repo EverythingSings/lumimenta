@@ -1,0 +1,18 @@
+{
+  "enabled": true,
+  "name": "Lighthouse Code Verification",
+  "description": "Automatically runs Lighthouse performance, accessibility, and SEO audits when major code files are modified to verify the changes don't negatively impact site quality",
+  "version": "1",
+  "when": {
+    "type": "fileEdited",
+    "patterns": [
+      "index.html",
+      "css/style.css",
+      "js/catalog.js"
+    ]
+  },
+  "then": {
+    "type": "askAgent",
+    "prompt": "Major code changes have been detected in the project. Run a Lighthouse audit to verify performance, accessibility, SEO, and best practices scores. Compare the results with previous reports (lighthouse-report.html, lighthouse-report.json) if they exist. Report any regressions or improvements in key metrics including: performance score, accessibility score, SEO score, best practices score, First Contentful Paint, Largest Contentful Paint, Total Blocking Time, and Cumulative Layout Shift. Provide actionable recommendations if any scores have degraded."
+  }
+}

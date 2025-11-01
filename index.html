@@ -48,15 +48,18 @@
     <script src="js/catalog.js"></script>
 </head>
 <body>
+    <!-- Skip to main content link for keyboard navigation -->
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+    
     <div class="container">
         <header role="banner">
             <h1>LUMIMENTA</h1>
             <p class="tagline">Physical Photography in the Digital Age</p>
         </header>
 
-        <main>
-        <section class="concept">
-            <h2>THE CONCEPT</h2>
+        <main id="main-content" role="main">
+        <section class="concept" aria-labelledby="concept-heading">
+            <h2 id="concept-heading">THE CONCEPT</h2>
             <p>Lumimenta is a photography series exploring the return to physical artifacts in an increasingly digital world. Each photograph is printed on demand using a Kodak C210R, creating scarce, tangible cards that can never exist digitally—only as physical objects.</p>
             
             <p>Inspired by trading cards, each print is annotated with colored metallic ink (blue, silver, or gold), my signature, edition number (1/2, 2/2, 1/1, etc.), and the Bitcoin block height as a rough timestamp—anchoring each piece to a specific moment in blockchain time.</p>
@@ -64,30 +67,30 @@
             <p>The photographs themselves are never stored as digital files. Once printed, they exist only as physical artifacts—scarce, tradeable, and deliberately offline.</p>
         </section>
 
-        <section>
-            <h2>RARITY SYSTEM</h2>
+        <section aria-labelledby="rarity-heading">
+            <h2 id="rarity-heading">RARITY SYSTEM</h2>
             <p>Each card is annotated with one of three ink colors, determining its rarity tier:</p>
             
             <div class="rarity-grid">
-                <div class="rarity-card blue">
+                <div class="rarity-card blue" role="article" aria-label="Blue rarity tier - Most common, standard edition" tabindex="0">
                     <div class="rarity-name">BLUE</div>
                     <div class="rarity-description">Most Common<br>Standard Edition</div>
                 </div>
                 
-                <div class="rarity-card silver">
+                <div class="rarity-card silver" role="article" aria-label="Silver rarity tier - Rare, limited edition" tabindex="0">
                     <div class="rarity-name">SILVER</div>
                     <div class="rarity-description">Rare<br>Limited Edition</div>
                 </div>
                 
-                <div class="rarity-card gold">
+                <div class="rarity-card gold" role="article" aria-label="Gold rarity tier - Rarest, one-of-a-kind" tabindex="0">
                     <div class="rarity-name">GOLD</div>
                     <div class="rarity-description">Rarest<br>One-of-a-Kind</div>
                 </div>
             </div>
         </section>
 
-        <section>
-            <h2>SPECIFICATIONS</h2>
+        <section aria-labelledby="specifications-heading">
+            <h2 id="specifications-heading">SPECIFICATIONS</h2>
             <div class="specs">
                 <ul>
                     <li><strong>Format:</strong> Physical trading card prints</li>
@@ -101,25 +104,27 @@
             </div>
         </section>
 
-        <section class="philosophy">
+        <section class="philosophy" aria-label="Philosophy statement">
             <p>"In an age where everything is copied infinitely, where every image lives as data in the cloud, Lumimenta asks: what if we returned to the scarce, the tangible, the real?"</p>
             <br>
             <p>"These are not photographs of things. They are things—physical artifacts that cannot be replicated, only documented."</p>
         </section>
 
-        <section>
-            <h2>COLLECTION</h2>
+        <section aria-labelledby="collection-heading">
+            <h2 id="collection-heading">COLLECTION</h2>
             <div id="catalog-stats"></div>
         </section>
 
-        <section>
-            <h2>GALLERY</h2>
+        <section aria-labelledby="gallery-heading">
+            <h2 id="gallery-heading">GALLERY</h2>
             <p>Documentation photographs of physical cards. Each image represents tangible artifacts that exist only as physical prints.</p>
             
             <div class="example-images"></div>
                 <div style="margin-bottom: 30px;">
                     <img src="images/a6cf6fc02dac25b73eaaa0919c0fac91b9d613ed768bc04a9ef6216a9f828d50.jpg" 
                          alt="Oregon landscape physical prints - fronts" 
+                         loading="lazy"
+                         tabindex="0"
                          style="width: 100%; max-width: 800px; display: block; margin: 0 auto; border: 1px solid #333; border-radius: 4px;">
                     <p style="text-align: center; color: #666; font-size: 0.9em; margin-top: 10px; font-style: italic;">
                         Oregon landscape — front view
@@ -129,6 +134,8 @@
                 <div style="margin-bottom: 30px;">
                     <img src="images/185d89123bdb948880a277745f67b77beba2a90844d5e606ca06f9f1042e6e13.jpg" 
                          alt="Oregon landscape physical prints - backs with blue ink annotations" 
+                         loading="lazy"
+                         tabindex="0"
                          style="width: 100%; max-width: 800px; display: block; margin: 0 auto; border: 1px solid #333; border-radius: 4px;">
                     <p style="text-align: center; color: #666; font-size: 0.9em; margin-top: 10px; font-style: italic;">
                         Oregon landscape — back view with blue ink annotations
@@ -138,6 +145,8 @@
                 <div style="margin-bottom: 30px;">
                     <img src="images/445cb4c1dd7b20a148df1aee6daa5d2a944e117013ebff9ce5b8180deac9617a.jpg" 
                          alt="Local concert - physical prints with blue ink annotations" 
+                         loading="lazy"
+                         tabindex="0"
                          style="width: 100%; max-width: 800px; display: block; margin: 0 auto; border: 1px solid #333; border-radius: 4px;">
                     <p style="text-align: center; color: #666; font-size: 0.9em; margin-top: 10px; font-style: italic;">
                         Local concert — two blue ink editions
@@ -147,6 +156,8 @@
                 <div style="margin-bottom: 30px;">
                     <img src="images/4ee826f397b59be8c29d6dd6270504f8ac93b971d9983fa5a66236a2d384f6ee.jpg" 
                          alt="Local concert - physical prints with blue ink annotations" 
+                         loading="lazy"
+                         tabindex="0"
                          style="width: 100%; max-width: 800px; display: block; margin: 0 auto; border: 1px solid #333; border-radius: 4px;">
                     <p style="text-align: center; color: #666; font-size: 0.9em; margin-top: 10px; font-style: italic;">
                         Local concert — two blue ink editions
@@ -156,6 +167,8 @@
                 <div style="margin-bottom: 30px;">
                     <img src="images/8e587a9a699dd2035b5b63727396587a7ff9979eb029f8bf57caeb4d6aa60f83.jpg" 
                          alt="Oregon beach rock stack - physical prints with silver and gold ink annotations" 
+                         loading="lazy"
+                         tabindex="0"
                          style="width: 100%; max-width: 800px; display: block; margin: 0 auto; border: 1px solid #333; border-radius: 4px;">
                     <p style="text-align: center; color: #666; font-size: 0.9em; margin-top: 10px; font-style: italic;">
                         Oregon beach rock stack — silver and gold ink editions
@@ -165,6 +178,8 @@
                 <div style="margin-bottom: 30px;">
                     <img src="images/91304d4d005b21135e6361f489320828fbe974ea8517c94b9dd0402f46df0252.jpg" 
                          alt="Oregon beach rock stack - physical prints with silver and gold ink annotations" 
+                         loading="lazy"
+                         tabindex="0"
                          style="width: 100%; max-width: 800px; display: block; margin: 0 auto; border: 1px solid #333; border-radius: 4px;">
                     <p style="text-align: center; color: #666; font-size: 0.9em; margin-top: 10px; font-style: italic;">
                         Oregon beach rock stack — silver and gold ink editions
@@ -177,15 +192,15 @@
             </div>
         </section>
 
-        <section>
-            <h2>TIMESTAMPING</h2>
+        <section aria-labelledby="timestamping-heading">
+            <h2 id="timestamping-heading">TIMESTAMPING</h2>
             <p>Each card is marked with the current Bitcoin block height at the time of printing. Block height serves as a decentralized, immutable timestamp—a way to anchor each physical artifact to a specific moment without relying on traditional dates or centralized systems.</p>
             
             <p>The blockchain provides proof of when that moment existed, creating a bridge between the physical and the crypto-native—a decentralized, immutable record that anyone can verify.</p>
         </section>
 
-        <section>
-            <h2>DOCUMENTATION & NOSTR</h2>
+        <section aria-labelledby="documentation-heading">
+            <h2 id="documentation-heading">DOCUMENTATION & NOSTR</h2>
             <p>Documentation photographs are shared on Nostr, a decentralized social protocol. This platform alignment is deliberate—Nostr's censorship-resistant, decentralized architecture mirrors the philosophical approach of using Bitcoin block height as a timestamp.</p>
             
             <p>The photographs you see online are not the artwork—they are documentation of the artwork. The actual pieces exist only as physical cards, held by collectors. This inverts the typical relationship between digital and physical in contemporary photography.</p>
