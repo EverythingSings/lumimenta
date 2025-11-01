@@ -189,11 +189,203 @@ function initScrollAnimations() {
     });
 }
 
+// Pair front and back cards from catalog
+function pairCards(cards) {
+    const pairs = [];
+    const processed = new Set();
+    
+    cards.forEach(card => {
+        if (processed.has(card.id)) return;
+        
+        // Skip if this is a back card (will be paired with its front)
+        const isBack = card.title.includes('(Back)');
+        if (isBack) return;
+        
+        // Look for matching back card
+        const frontTitle = card.title;
+        const backCard = cards.find(c => 
+            c.title === `${frontTitle} (Back)` && !processed.has(c.id)
+        );
+        
+        pairs.push({
+            front: card,
+            back: backCard || null
+        });
+        
+        processed.add(card.id);
+        if (backCard) {
+            processed.add(backCard.id);
+        }
+    });
+    
+    return pairs;
+}
+
+// Create flip card HTML for paired cards
+function createFlipCard(frontCard, backCard) {
+    return `
+        <div class="flip-card">
+            <div class="flip-card-inner">
+                <div class="flip-card-front">
+                    <img src="images/${frontCard.imageHash}.jpg" 
+                         alt="${frontCard.title} - front" 
+                         loading="lazy">
+                    <p class="card-caption">${frontCard.title} — front view</p>
+                </div>
+                <div class="flip-card-back">
+                    <img src="images/${backCard.imageHash}.jpg" 
+                         alt="${backCard.title} - back with annotations" 
+                         loading="lazy">
+                    <p class="card-caption">${frontCard.title} — back view with annotations</p>
+                </div>
+            </div>
+            <button class="flip-button" aria-label="Flip card to see back">
+                <span class="flip-text">See Back</span>
+                <span class="flip-icon">↻</span>
+            </button>
+        </div>
+    `;
+}
+
+// Create static card HTML for unpaired cards
+function createStaticCard(card) {
+    return `
+        <div style="margin-bottom: 30px;">
+            <img src="images/${card.imageHash}.jpg" 
+                 alt="${card.description}" 
+                 loading="lazy"
+                 tabindex="0"
+                 style="width: 100%; max-width: 800px; display: block; margin: 0 auto; border: 1px solid #333; border-radius: 4px;">
+            <p style="text-align: center; color: #666; font-size: 0.9em; margin-top: 10px; font-style: italic;">
+                ${card.title}
+            </p>
+        </div>
+    `;
+}
+
+// Initialize flip button event listeners
+function initializeFlipButtons() {
+    const flipButtons = document.querySelectorAll('.flip-button');
+    
+    flipButtons.forEach(button => {
+        let lastTouchTime = 0;
+        
+        // Shared flip logic
+        const performFlip = () => {
+            const card = button.closest('.flip-card');
+            const isFlipped = card.classList.contains('flipped');
+            
+            // Add flipping class for performance optimization
+            card.classList.add('flipping');
+            
+            // Toggle flipped state
+            card.classList.toggle('flipped');
+            
+            // Update button text and aria-label
+            const flipText = button.querySelector('.flip-text');
+            if (isFlipped) {
+                button.setAttribute('aria-label', 'Flip card to see back');
+                flipText.textContent = 'See Back';
+            } else {
+                button.setAttribute('aria-label', 'Flip card to see front');
+                flipText.textContent = 'See Front';
+            }
+            
+            // Remove flipping class after animation completes
+            setTimeout(() => {
+                card.classList.remove('flipping');
+            }, 600);
+        };
+        
+        // Click event listener
+        button.addEventListener('click', (event) => {
+            // Prevent click if it's from a touch event (handled by touchend)
+            if (event.detail === 0) return; // Keyboard-triggered click
+            
+            const now = Date.now();
+            // Prevent rapid successive clicks/taps
+            if (now - lastTouchTime < 300) {
+                event.preventDefault();
+                return;
+            }
+            lastTouchTime = now;
+            
+            performFlip();
+        });
+        
+        // Touch event listener for better mobile support
+        button.addEventListener('touchend', (event) => {
+            event.preventDefault(); // Prevent ghost click
+            
+            const now = Date.now();
+            // Prevent double-tap
+            if (now - lastTouchTime < 300) {
+                return;
+            }
+            lastTouchTime = now;
+            
+            performFlip();
+        });
+        
+        // Keyboard event listener for Enter and Space keys
+        button.addEventListener('keydown', (event) => {
+            // Handle Enter (key code 13) and Space (key code 32)
+            if (event.key === 'Enter' || event.key === ' ') {
+                event.preventDefault(); // Prevent default space scrolling
+                performFlip();
+            }
+        });
+    });
+}
+
+// Generate gallery from catalog data
+async function generateGallery() {
+    try {
+        const cards = await loadCatalog();
+        
+        if (cards.length === 0) {
+            const galleryContainer = document.getElementById('gallery-container');
+            if (galleryContainer) {
+                galleryContainer.innerHTML = '<p style="text-align: center; color: #999; padding: 40px 0;">Unable to load gallery. Please try refreshing the page.</p>';
+            }
+            return;
+        }
+        
+        // Pair front and back cards
+        const cardPairs = pairCards(cards);
+        
+        // Generate HTML for each pair
+        const galleryHTML = cardPairs.map(pair => {
+            if (pair.back) {
+                return createFlipCard(pair.front, pair.back);
+            } else {
+                return createStaticCard(pair.front);
+            }
+        }).join('');
+        
+        const galleryContainer = document.getElementById('gallery-container');
+        if (galleryContainer) {
+            galleryContainer.innerHTML = galleryHTML;
+            // Initialize flip button event listeners after HTML is inserted
+            initializeFlipButtons();
+        }
+    } catch (error) {
+        console.error('Failed to generate gallery:', error);
+        const galleryContainer = document.getElementById('gallery-container');
+        if (galleryContainer) {
+            galleryContainer.innerHTML = '<p style="text-align: center; color: #999; padding: 40px 0;">Unable to load gallery. Please try refreshing the page.</p>';
+        }
+    }
+}
+
 // Initialize on page load
 document.addEventListener('DOMContentLoaded', async () => {
     const cards = await loadCatalog();
     const stats = calculateStats(cards);
     displayStats(stats);
+    
+    // Generate gallery with flip cards
+    await generateGallery();
     
     // Initialize scroll animations
     initScrollAnimations();

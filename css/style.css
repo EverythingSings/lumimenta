@@ -835,3 +835,209 @@ button:focus,
         transform: none !important;
     }
 }
+
+/* ============================================
+   FLIP CARD COMPONENTS
+   Interactive card flip animation for gallery
+   ============================================ */
+
+/* Flip Card Container - Creates 3D space */
+.flip-card {
+    position: relative;
+    width: 100%;
+    max-width: 800px;
+    margin: 0 auto 30px;
+    perspective: 1000px;
+}
+
+/* Card Inner - Handles rotation transform */
+.flip-card-inner {
+    position: relative;
+    width: 100%;
+    transition: transform 600ms cubic-bezier(0.4, 0.0, 0.2, 1);
+    transform-style: preserve-3d;
+}
+
+/* Flipped state */
+.flip-card.flipped .flip-card-inner {
+    transform: rotateY(180deg);
+}
+
+/* Card Faces - Front and Back */
+.flip-card-front,
+.flip-card-back {
+    width: 100%;
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+}
+
+.flip-card-back {
+    position: absolute;
+    top: 0;
+    left: 0;
+    transform: rotateY(180deg);
+}
+
+/* Card images */
+.flip-card-front img,
+.flip-card-back img {
+    width: 100%;
+    height: auto;
+    display: block;
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-medium);
+}
+
+/* Card captions */
+.card-caption {
+    margin-top: var(--spacing-sm);
+    font-size: 0.9em;
+    color: var(--color-text-tertiary);
+    text-align: center;
+    font-style: italic;
+}
+
+/* Flip Button */
+.flip-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    width: 100%;
+    max-width: 200px;
+    margin: var(--spacing-sm) auto 0;
+    padding: 12px var(--spacing-md);
+    background: var(--color-bg-surface);
+    border: 1px solid var(--color-border-light);
+    border-radius: var(--radius-md);
+    color: var(--color-primary);
+    font-size: 1em;
+    font-family: 'Georgia', serif;
+    cursor: pointer;
+    transition: all 300ms ease;
+    min-height: 44px;
+    min-width: 44px;
+    touch-action: manipulation; /* Prevents double-tap zoom */
+    -webkit-tap-highlight-color: rgba(74, 144, 226, 0.2);
+    user-select: none; /* Prevents text selection on touch */
+    -webkit-user-select: none;
+}
+
+.flip-button:hover {
+    background: var(--color-primary);
+    color: var(--color-text-white);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-medium);
+}
+
+.flip-button:active {
+    transform: translateY(0);
+}
+
+.flip-button:focus {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 4px;
+}
+
+.flip-icon {
+    font-size: 1.2em;
+    transition: transform 300ms ease;
+}
+
+.flip-card.flipped .flip-icon {
+    transform: rotate(180deg);
+}
+
+/* Performance optimizations */
+.flip-card-inner {
+    contain: layout style paint;
+}
+
+/* GPU acceleration hint */
+.flip-card.flipping .flip-card-inner {
+    will-change: transform;
+}
+
+/* Browser compatibility fallback for non-3D transform support */
+@supports not (transform-style: preserve-3d) {
+    .flip-card-inner {
+        transition: opacity 300ms ease;
+    }
+    
+    .flip-card.flipped .flip-card-front {
+        opacity: 0;
+        pointer-events: none;
+    }
+    
+    .flip-card.flipped .flip-card-back {
+        opacity: 1;
+        position: relative;
+        transform: none;
+    }
+    
+    .flip-card:not(.flipped) .flip-card-back {
+        opacity: 0;
+        pointer-events: none;
+    }
+}
+
+/* Reduced motion fallback - fade transition instead of flip */
+@media (prefers-reduced-motion: reduce) {
+    .flip-card-inner {
+        transition: opacity 300ms ease;
+        transform: none !important;
+    }
+    
+    .flip-card.flipped .flip-card-front {
+        opacity: 0;
+        pointer-events: none;
+    }
+    
+    .flip-card.flipped .flip-card-back {
+        opacity: 1;
+        position: relative;
+        transform: none;
+    }
+    
+    .flip-card:not(.flipped) .flip-card-back {
+        opacity: 0;
+        pointer-events: none;
+    }
+    
+    .flip-button:hover {
+        transform: none !important;
+    }
+    
+    .flip-icon {
+        transition: none !important;
+    }
+    
+    .flip-card.flipped .flip-icon {
+        transform: none !important;
+    }
+}
+
+/* Mobile-specific enhancements */
+@media (max-width: 479px) {
+    .flip-button {
+        padding: 14px 18px;
+        min-height: 48px;
+        min-width: 48px;
+        max-width: 100%;
+    }
+    
+    .flip-card {
+        margin-bottom: var(--spacing-md);
+    }
+}
+
+/* Tablet and desktop adjustments */
+@media (min-width: 480px) {
+    .flip-card {
+        margin-bottom: var(--spacing-lg);
+    }
+    
+    .flip-button {
+        font-size: 1.05em;
+    }
+}
