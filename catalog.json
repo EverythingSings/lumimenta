@@ -89,6 +89,26 @@
       "rarity": "gold & silver",
       "edition": "Documentation",
       "imageHash": "8e587a9a699dd2035b5b63727396587a7ff9979eb029f8bf57caeb4d6aa60f83"
+    },
+    {
+      "id": 10,
+      "title": "3 Bitaxe Gammas",
+      "description": "Three Bitaxe Gamma miners (front)",
+      "location": "Unknown",
+      "blockHeight": 921809,
+      "rarity": "blue",
+      "edition": "1/1",
+      "imageHash": "60c9a304b8a18e046dfa4611e11fbaa38621b88387ecdac91d5f737d156ff861"
+    },
+    {
+      "id": 11,
+      "title": "3 Bitaxe Gammas (Back)",
+      "description": "Back side with blue annotation 1/1",
+      "location": "Unknown",
+      "blockHeight": 921809,
+      "rarity": "blue",
+      "edition": "1/1",
+      "imageHash": "c6670301d96bf5bb259cfe65fd79cc34b8b7bb32efc1a30b50a6331c7ca9f7c9"
     }
   ]
 }
