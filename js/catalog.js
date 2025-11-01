@@ -23,12 +23,15 @@ async function loadCatalog() {
 }
 
 function calculateStats(cards) {
+    // Extract base titles (remove "(Back)" suffix) to count unique subjects
+    const baseTitles = cards.map(c => c.title.replace(/\s*\(Back\)$/, ''));
+    
     const stats = {
         total: cards.length,
         blue: 0,
         silver: 0,
         gold: 0,
-        uniqueSubjects: new Set(cards.map(c => c.title)).size
+        uniqueSubjects: new Set(baseTitles).size
     };
     
     // Count rarities, handling both string and array formats
