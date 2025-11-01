@@ -3,231 +3,58 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lumimenta - Physical Photography Artifacts</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        
-        body {
-            font-family: 'Georgia', serif;
-            background: #0a0a0a;
-            color: #e0e0e0;
-            line-height: 1.7;
-            padding: 20px;
-        }
-        
-        .container {
-            max-width: 900px;
-            margin: 0 auto;
-            padding: 40px 20px;
-        }
-        
-        header {
-            text-align: center;
-            margin-bottom: 60px;
-            border-bottom: 1px solid #333;
-            padding-bottom: 40px;
-        }
-        
-        h1 {
-            font-size: 3.5em;
-            font-weight: 300;
-            letter-spacing: 8px;
-            margin-bottom: 20px;
-            background: linear-gradient(135deg, #a8c0ff 0%, #3f72af 50%, #c79f60 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-        
-        .tagline {
-            font-size: 1.1em;
-            color: #888;
-            font-style: italic;
-            letter-spacing: 2px;
-        }
-        
-        section {
-            margin-bottom: 50px;
-        }
-        
-        h2 {
-            font-size: 1.8em;
-            font-weight: 400;
-            margin-bottom: 20px;
-            color: #fff;
-            letter-spacing: 3px;
-        }
-        
-        p {
-            margin-bottom: 20px;
-            font-size: 1.05em;
-            color: #b0b0b0;
-        }
-        
-        .concept {
-            background: #111;
-            padding: 40px;
-            border-left: 3px solid #3f72af;
-            margin: 40px 0;
-        }
-        
-        .rarity-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 30px;
-            margin: 40px 0;
-        }
-        
-        .rarity-card {
-            background: #111;
-            padding: 30px;
-            border-radius: 4px;
-            text-align: center;
-            border: 1px solid #222;
-            transition: transform 0.3s ease, border-color 0.3s ease;
-        }
-        
-        .rarity-card:hover {
-            transform: translateY(-5px);
-        }
-        
-        .rarity-card.blue {
-            border-top: 3px solid #4a90e2;
-        }
-        
-        .rarity-card.blue:hover {
-            border-color: #4a90e2;
-        }
-        
-        .rarity-card.silver {
-            border-top: 3px solid #c0c0c0;
-        }
-        
-        .rarity-card.silver:hover {
-            border-color: #c0c0c0;
-        }
-        
-        .rarity-card.gold {
-            border-top: 3px solid #c79f60;
-        }
-        
-        .rarity-card.gold:hover {
-            border-color: #c79f60;
-        }
-        
-        .rarity-name {
-            font-size: 1.5em;
-            margin-bottom: 10px;
-            letter-spacing: 2px;
-        }
-        
-        .rarity-description {
-            color: #888;
-            font-size: 0.95em;
-        }
-        
-        .specs {
-            background: #0d0d0d;
-            padding: 30px;
-            border-radius: 4px;
-            margin: 40px 0;
-        }
-        
-        .specs ul {
-            list-style: none;
-            padding-left: 0;
-        }
-        
-        .specs li {
-            padding: 12px 0;
-            border-bottom: 1px solid #1a1a1a;
-            color: #b0b0b0;
-        }
-        
-        .specs li:last-child {
-            border-bottom: none;
-        }
-        
-        .specs strong {
-            color: #fff;
-            margin-right: 10px;
-        }
-        
-        .philosophy {
-            background: linear-gradient(135deg, #1a1a1a 0%, #0d0d0d 100%);
-            padding: 50px;
-            margin: 60px 0;
-            border-radius: 4px;
-            text-align: center;
-        }
-        
-        .philosophy p {
-            font-size: 1.2em;
-            font-style: italic;
-            line-height: 1.8;
-            color: #ccc;
-        }
-        
-        .example-images {
-            margin: 40px 0;
-            padding: 40px;
-            background: #0d0d0d;
-            border-radius: 4px;
-        }
-        
-        .example-note {
-            background: #111;
-            padding: 20px;
-            border-left: 3px solid #4a90e2;
-            margin-top: 30px;
-            font-size: 0.95em;
-            color: #999;
-        }
-        
-        footer {
-            margin-top: 80px;
-            padding-top: 40px;
-            border-top: 1px solid #222;
-            text-align: center;
-            color: #555;
-            font-size: 0.9em;
-        }
-        
-        .block-height {
-            font-family: 'Courier New', monospace;
-            background: #0a0a0a;
-            padding: 2px 8px;
-            border-radius: 3px;
-            border: 1px solid #333;
-        }
-
-        @media (max-width: 768px) {
-            h1 {
-                font-size: 2.5em;
-                letter-spacing: 4px;
-            }
-            
-            .rarity-grid {
-                grid-template-columns: 1fr;
-            }
-            
-            .concept, .philosophy {
-                padding: 30px 20px;
-            }
-        }
-    </style>
+    <title>Lumimenta - Physical Photography Artifacts | Limited Edition Trading Cards</title>
+    
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="Lumimenta is a photography series creating scarce, physical trading card prints using Kodak C210R. Each card is hand-annotated with metallic ink, timestamped with Bitcoin block height, and never exists digitally.">
+    <meta name="keywords" content="physical photography, trading cards, limited edition prints, Kodak C210R, Bitcoin timestamp, physical artifacts, collectible photography, scarce art, Nostr, decentralized art">
+    <meta name="author" content="Lumimenta">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="http://lumimenta.everythingsings.art/">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="http://lumimenta.everythingsings.art/">
+    <meta property="og:title" content="Lumimenta - Physical Photography Artifacts">
+    <meta property="og:description" content="Physical trading card photography series. Each print is scarce, hand-annotated, and timestamped with Bitcoin block height. Never exists digitally—only as tangible artifacts.">
+    <meta property="og:image" content="http://lumimenta.everythingsings.art/images/a6cf6fc02dac25b73eaaa0919c0fac91b9d613ed768bc04a9ef6216a9f828d50.jpg">
+    
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="http://lumimenta.everythingsings.art/">
+    <meta property="twitter:title" content="Lumimenta - Physical Photography Artifacts">
+    <meta property="twitter:description" content="Physical trading card photography series. Each print is scarce, hand-annotated, and timestamped with Bitcoin block height.">
+    <meta property="twitter:image" content="http://lumimenta.everythingsings.art/images/a6cf6fc02dac25b73eaaa0919c0fac91b9d613ed768bc04a9ef6216a9f828d50.jpg">
+    
+    <!-- Structured Data / Schema.org -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "CreativeWork",
+      "name": "Lumimenta",
+      "description": "Physical photography series creating scarce trading card prints timestamped with Bitcoin block height",
+      "creator": {
+        "@type": "Person",
+        "name": "Lumimenta"
+      },
+      "artform": "Photography",
+      "artMedium": "Physical Trading Cards",
+      "url": "http://lumimenta.everythingsings.art/",
+      "image": "http://lumimenta.everythingsings.art/images/a6cf6fc02dac25b73eaaa0919c0fac91b9d613ed768bc04a9ef6216a9f828d50.jpg"
+    }
+    </script>
+    
+    <link rel="stylesheet" href="css/style.css">
+    <script src="js/catalog.js"></script>
 </head>
 <body>
     <div class="container">
-        <header>
+        <header role="banner">
             <h1>LUMIMENTA</h1>
             <p class="tagline">Physical Photography in the Digital Age</p>
         </header>
 
+        <main>
         <section class="concept">
             <h2>THE CONCEPT</h2>
             <p>Lumimenta is a photography series exploring the return to physical artifacts in an increasingly digital world. Each photograph is printed on demand using a Kodak C210R, creating scarce, tangible cards that can never exist digitally—only as physical objects.</p>
@@ -281,30 +108,71 @@
         </section>
 
         <section>
-            <h2>EXAMPLE: OREGON LANDSCAPE</h2>
-            <p>Block height <span class="block-height">#920048</span> • Blue ink • Edition of 2</p>
+            <h2>COLLECTION</h2>
+            <div id="catalog-stats"></div>
+        </section>
+
+        <section>
+            <h2>GALLERY</h2>
+            <p>Documentation photographs of physical cards. Each image represents tangible artifacts that exist only as physical prints.</p>
             
-            <div class="example-images">
+            <div class="example-images"></div>
                 <div style="margin-bottom: 30px;">
-                    <img src="a6cf6fc02dac25b73eaaa0919c0fac91b9d613ed768bc04a9ef6216a9f828d50.jpg" 
+                    <img src="images/a6cf6fc02dac25b73eaaa0919c0fac91b9d613ed768bc04a9ef6216a9f828d50.jpg" 
                          alt="Oregon landscape physical prints - fronts" 
                          style="width: 100%; max-width: 800px; display: block; margin: 0 auto; border: 1px solid #333; border-radius: 4px;">
                     <p style="text-align: center; color: #666; font-size: 0.9em; margin-top: 10px; font-style: italic;">
-                        Both physical prints — front view
+                        Oregon landscape — front view
                     </p>
                 </div>
                 
                 <div style="margin-bottom: 30px;">
-                    <img src="185d89123bdb948880a277745f67b77beba2a90844d5e606ca06f9f1042e6e13.jpg" 
+                    <img src="images/185d89123bdb948880a277745f67b77beba2a90844d5e606ca06f9f1042e6e13.jpg" 
                          alt="Oregon landscape physical prints - backs with blue ink annotations" 
                          style="width: 100%; max-width: 800px; display: block; margin: 0 auto; border: 1px solid #333; border-radius: 4px;">
                     <p style="text-align: center; color: #666; font-size: 0.9em; margin-top: 10px; font-style: italic;">
-                        Back view showing blue ink annotations: signature, block height 920048, editions 1/2 and 2/2
+                        Oregon landscape — back view with blue ink annotations
+                    </p>
+                </div>
+
+                <div style="margin-bottom: 30px;">
+                    <img src="images/445cb4c1dd7b20a148df1aee6daa5d2a944e117013ebff9ce5b8180deac9617a.jpg" 
+                         alt="Local concert - physical prints with blue ink annotations" 
+                         style="width: 100%; max-width: 800px; display: block; margin: 0 auto; border: 1px solid #333; border-radius: 4px;">
+                    <p style="text-align: center; color: #666; font-size: 0.9em; margin-top: 10px; font-style: italic;">
+                        Local concert — two blue ink editions
+                    </p>
+                </div>
+
+                <div style="margin-bottom: 30px;">
+                    <img src="images/4ee826f397b59be8c29d6dd6270504f8ac93b971d9983fa5a66236a2d384f6ee.jpg" 
+                         alt="Local concert - physical prints with blue ink annotations" 
+                         style="width: 100%; max-width: 800px; display: block; margin: 0 auto; border: 1px solid #333; border-radius: 4px;">
+                    <p style="text-align: center; color: #666; font-size: 0.9em; margin-top: 10px; font-style: italic;">
+                        Local concert — two blue ink editions
+                    </p>
+                </div>
+
+                <div style="margin-bottom: 30px;">
+                    <img src="images/8e587a9a699dd2035b5b63727396587a7ff9979eb029f8bf57caeb4d6aa60f83.jpg" 
+                         alt="Oregon beach rock stack - physical prints with silver and gold ink annotations" 
+                         style="width: 100%; max-width: 800px; display: block; margin: 0 auto; border: 1px solid #333; border-radius: 4px;">
+                    <p style="text-align: center; color: #666; font-size: 0.9em; margin-top: 10px; font-style: italic;">
+                        Oregon beach rock stack — silver and gold ink editions
+                    </p>
+                </div>
+
+                <div style="margin-bottom: 30px;">
+                    <img src="images/91304d4d005b21135e6361f489320828fbe974ea8517c94b9dd0402f46df0252.jpg" 
+                         alt="Oregon beach rock stack - physical prints with silver and gold ink annotations" 
+                         style="width: 100%; max-width: 800px; display: block; margin: 0 auto; border: 1px solid #333; border-radius: 4px;">
+                    <p style="text-align: center; color: #666; font-size: 0.9em; margin-top: 10px; font-style: italic;">
+                        Oregon beach rock stack — silver and gold ink editions
                     </p>
                 </div>
                 
                 <div class="example-note">
-                    These prints were created on demand in Oregon. Only these two physical copies exist—no digital file was saved. The photograph itself is now irretrievable except through these tangible objects. What you see here is documentation of the artwork, not the artwork itself.
+                    These prints were created on demand. Only the physical copies exist—no digital files were saved. The photographs themselves are now irretrievable except through these tangible objects. What you see here is documentation of the artwork, not the artwork itself.
                 </div>
             </div>
         </section>
@@ -324,8 +192,9 @@
             
             <p>While these digital photographs allow the work to be cataloged and the cards to be traded, they deliberately maintain a hierarchy: the physical card is the original, the primary artifact. The digital image is merely evidence of its existence.</p>
         </section>
+        </main>
 
-        <footer>
+        <footer role="contentinfo">
             <p>LUMIMENTA © 2025</p>
             <p>Physical artifacts in a digital world</p>
         </footer>
