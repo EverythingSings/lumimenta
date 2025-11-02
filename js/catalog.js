@@ -282,11 +282,17 @@ function initializeFlipButtons() {
     const flipButtons = document.querySelectorAll('.flip-button');
     
     flipButtons.forEach(button => {
-        let lastTouchTime = 0;
+        // Skip if already initialized
+        if (button.dataset.initialized === 'true') return;
+        button.dataset.initialized = 'true';
+        
+        let lastInteractionTime = 0;
         
         // Shared flip logic
         const performFlip = () => {
             const card = button.closest('.flip-card');
+            if (!card) return;
+            
             const isFlipped = card.classList.contains('flipped');
             
             // Add flipping class for performance optimization
@@ -297,12 +303,14 @@ function initializeFlipButtons() {
             
             // Update button text and aria-label
             const flipText = button.querySelector('.flip-text');
-            if (isFlipped) {
-                button.setAttribute('aria-label', 'Flip card to see back');
-                flipText.textContent = 'See Back';
-            } else {
-                button.setAttribute('aria-label', 'Flip card to see front');
-                flipText.textContent = 'See Front';
+            if (flipText) {
+                if (isFlipped) {
+                    button.setAttribute('aria-label', 'Flip card to see back');
+                    flipText.textContent = 'See Back';
+                } else {
+                    button.setAttribute('aria-label', 'Flip card to see front');
+                    flipText.textContent = 'See Front';
+                }
             }
             
             // Remove flipping class after animation completes
@@ -311,41 +319,31 @@ function initializeFlipButtons() {
             }, 600);
         };
         
-        // Click event listener
+        // Click event listener - simplified
         button.addEventListener('click', (event) => {
-            // Prevent click if it's from a touch event (handled by touchend)
-            if (event.detail === 0) return; // Keyboard-triggered click
+            event.preventDefault();
             
             const now = Date.now();
-            // Prevent rapid successive clicks/taps
-            if (now - lastTouchTime < 300) {
-                event.preventDefault();
+            // Prevent rapid successive interactions
+            if (now - lastInteractionTime < 300) {
                 return;
             }
-            lastTouchTime = now;
-            
-            performFlip();
-        });
-        
-        // Touch event listener for better mobile support
-        button.addEventListener('touchend', (event) => {
-            event.preventDefault(); // Prevent ghost click
-            
-            const now = Date.now();
-            // Prevent double-tap
-            if (now - lastTouchTime < 300) {
-                return;
-            }
-            lastTouchTime = now;
+            lastInteractionTime = now;
             
             performFlip();
         });
         
         // Keyboard event listener for Enter and Space keys
         button.addEventListener('keydown', (event) => {
-            // Handle Enter (key code 13) and Space (key code 32)
             if (event.key === 'Enter' || event.key === ' ') {
-                event.preventDefault(); // Prevent default space scrolling
+                event.preventDefault();
+                
+                const now = Date.now();
+                if (now - lastInteractionTime < 300) {
+                    return;
+                }
+                lastInteractionTime = now;
+                
                 performFlip();
             }
         });
