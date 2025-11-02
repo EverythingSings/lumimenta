@@ -63,10 +63,76 @@
     <script src="js/catalog.js"></script>
 </head>
 <body>
+    <!-- Fractal SVG Background -->
+    <svg id="fractal-background" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800" preserveAspectRatio="xMidYMid slice">
+        <defs>
+            <!-- Gradient definitions using theme colors -->
+            <linearGradient id="grad1" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" style="stop-color:#4a90e2;stop-opacity:0.3" />
+                <stop offset="50%" style="stop-color:#c0c0c0;stop-opacity:0.2" />
+                <stop offset="100%" style="stop-color:#c79f60;stop-opacity:0.3" />
+            </linearGradient>
+            <linearGradient id="grad2" x1="100%" y1="0%" x2="0%" y2="100%">
+                <stop offset="0%" style="stop-color:#c79f60;stop-opacity:0.25" />
+                <stop offset="100%" style="stop-color:#4a90e2;stop-opacity:0.25" />
+            </linearGradient>
+            <radialGradient id="grad3" cx="50%" cy="50%" r="50%">
+                <stop offset="0%" style="stop-color:#c0c0c0;stop-opacity:0.3" />
+                <stop offset="100%" style="stop-color:#4a90e2;stop-opacity:0.1" />
+            </radialGradient>
+        </defs>
+        
+        <!-- Fractal-inspired geometric patterns -->
+        <!-- Large circles -->
+        <circle cx="200" cy="150" r="180" fill="url(#grad1)" opacity="0.4" />
+        <circle cx="900" cy="600" r="220" fill="url(#grad2)" opacity="0.35" />
+        <circle cx="600" cy="300" r="150" fill="url(#grad3)" opacity="0.3" />
+        
+        <!-- Medium circles - fractal subdivision -->
+        <circle cx="150" cy="100" r="90" fill="#4a90e2" opacity="0.15" />
+        <circle cx="250" cy="200" r="70" fill="#c0c0c0" opacity="0.12" />
+        <circle cx="850" cy="550" r="110" fill="#c79f60" opacity="0.18" />
+        <circle cx="950" cy="650" r="85" fill="#4a90e2" opacity="0.14" />
+        <circle cx="550" cy="250" r="75" fill="#c0c0c0" opacity="0.16" />
+        <circle cx="650" cy="350" r="60" fill="#c79f60" opacity="0.13" />
+        
+        <!-- Small circles - deeper fractal detail -->
+        <circle cx="120" cy="80" r="45" fill="#c79f60" opacity="0.1" />
+        <circle cx="180" cy="120" r="35" fill="#4a90e2" opacity="0.12" />
+        <circle cx="220" cy="180" r="40" fill="#c0c0c0" opacity="0.09" />
+        <circle cx="280" cy="220" r="30" fill="#c79f60" opacity="0.11" />
+        <circle cx="820" cy="520" r="55" fill="#4a90e2" opacity="0.1" />
+        <circle cx="880" cy="580" r="45" fill="#c0c0c0" opacity="0.13" />
+        <circle cx="920" cy="620" r="38" fill="#c79f60" opacity="0.08" />
+        <circle cx="980" cy="680" r="42" fill="#4a90e2" opacity="0.11" />
+        <circle cx="520" cy="220" r="38" fill="#c79f60" opacity="0.09" />
+        <circle cx="580" cy="280" r="32" fill="#4a90e2" opacity="0.1" />
+        <circle cx="620" cy="320" r="35" fill="#c0c0c0" opacity="0.12" />
+        <circle cx="680" cy="380" r="28" fill="#c79f60" opacity="0.08" />
+        
+        <!-- Connecting lines for organic feel -->
+        <line x1="200" y1="150" x2="600" y2="300" stroke="#4a90e2" stroke-width="2" opacity="0.08" />
+        <line x1="600" y1="300" x2="900" y2="600" stroke="#c0c0c0" stroke-width="2" opacity="0.08" />
+        <line x1="200" y1="150" x2="900" y2="600" stroke="#c79f60" stroke-width="1.5" opacity="0.06" />
+        
+        <!-- Additional scattered elements for depth -->
+        <circle cx="400" cy="500" r="95" fill="url(#grad1)" opacity="0.25" />
+        <circle cx="1000" cy="200" r="110" fill="url(#grad2)" opacity="0.28" />
+        <circle cx="100" cy="650" r="130" fill="url(#grad3)" opacity="0.22" />
+        
+        <!-- Tiny detail circles -->
+        <circle cx="370" cy="470" r="25" fill="#4a90e2" opacity="0.1" />
+        <circle cx="430" cy="530" r="20" fill="#c0c0c0" opacity="0.09" />
+        <circle cx="970" cy="170" r="30" fill="#c79f60" opacity="0.11" />
+        <circle cx="1030" cy="230" r="22" fill="#4a90e2" opacity="0.08" />
+        <circle cx="70" cy="620" r="28" fill="#c0c0c0" opacity="0.1" />
+        <circle cx="130" cy="680" r="24" fill="#c79f60" opacity="0.09" />
+    </svg>
+
     <!-- Skip to main content link for keyboard navigation -->
     <a href="#main-content" class="skip-link">Skip to main content</a>
     
-    <div class="container">
+    <div class="container"></div>
         <header role="banner">
             <h1>LUMIMENTA</h1>
             <p class="tagline">Physical Photography in the Digital Age</p>
