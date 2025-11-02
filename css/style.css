@@ -1217,7 +1217,7 @@ button:focus,
 }
 
 /* Menu open state */
-.nav-menu.open {
+.nav-menu.active {
     max-height: 400px;
 }
 
