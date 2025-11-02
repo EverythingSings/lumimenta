@@ -6,8 +6,8 @@
     <title>Lumimenta - Physical Photography Artifacts | Limited Edition Trading Cards</title>
     
     <!-- SEO Meta Tags -->
-    <meta name="description" content="Lumimenta is a photography series creating scarce, physical trading card prints using Kodak C210R. Each card is hand-annotated with metallic ink, timestamped with Bitcoin block height, and never exists digitally.">
-    <meta name="keywords" content="physical photography, trading cards, limited edition prints, Kodak C210R, Bitcoin timestamp, physical artifacts, collectible photography, scarce art, Nostr, decentralized art">
+    <meta name="description" content="Lumimenta is a photography series creating scarce, physical trading card prints using Kodak C210R. Explore interactive flip cards, view the complete collection with availability status, and connect on Nostr. Each card is hand-annotated with metallic ink, timestamped with Bitcoin block height, and never exists digitally.">
+    <meta name="keywords" content="physical photography, trading cards, limited edition prints, Kodak C210R, Bitcoin timestamp, physical artifacts, collectible photography, scarce art, Nostr, decentralized art, card collection, interactive gallery">
     <meta name="author" content="Lumimenta">
     <meta name="robots" content="index, follow">
     <link rel="canonical" href="http://lumimenta.everythingsings.art/">
@@ -16,15 +16,15 @@
     <meta property="og:type" content="website">
     <meta property="og:url" content="http://lumimenta.everythingsings.art/">
     <meta property="og:title" content="Lumimenta - Physical Photography Artifacts">
-    <meta property="og:description" content="Physical trading card photography series. Each print is scarce, hand-annotated, and timestamped with Bitcoin block height. Never exists digitally—only as tangible artifacts.">
-    <meta property="og:image" content="http://lumimenta.everythingsings.art/images/a6cf6fc02dac25b73eaaa0919c0fac91b9d613ed768bc04a9ef6216a9f828d50.jpg">
+    <meta property="og:description" content="Explore interactive flip cards and view the complete collection. Physical trading card photography series—each print is scarce, hand-annotated, and timestamped with Bitcoin block height. Never exists digitally—only as tangible artifacts.">
+    <meta property="og:image" content="http://lumimenta.everythingsings.art/images/8e587a9a699dd2035b5b63727396587a7ff9979eb029f8bf57caeb4d6aa60f83.jpg">
     
     <!-- Twitter -->
     <meta property="twitter:card" content="summary_large_image">
     <meta property="twitter:url" content="http://lumimenta.everythingsings.art/">
     <meta property="twitter:title" content="Lumimenta - Physical Photography Artifacts">
-    <meta property="twitter:description" content="Physical trading card photography series. Each print is scarce, hand-annotated, and timestamped with Bitcoin block height.">
-    <meta property="twitter:image" content="http://lumimenta.everythingsings.art/images/a6cf6fc02dac25b73eaaa0919c0fac91b9d613ed768bc04a9ef6216a9f828d50.jpg">
+    <meta property="twitter:description" content="Explore interactive flip cards and view the complete collection. Physical trading card photography series—each print is scarce, hand-annotated, and timestamped with Bitcoin block height.">
+    <meta property="twitter:image" content="http://lumimenta.everythingsings.art/images/8e587a9a699dd2035b5b63727396587a7ff9979eb029f8bf57caeb4d6aa60f83.jpg">
     
     <!-- Structured Data / Schema.org -->
     <script type="application/ld+json">
@@ -60,8 +60,46 @@
             <p class="tagline">Physical Photography in the Digital Age</p>
         </header>
 
+        <section class="hero" aria-label="Featured card example">
+            <div class="flip-card hero-flip-card">
+                <div class="flip-card-inner">
+                    <div class="flip-card-front">
+                        <img src="images/8e587a9a699dd2035b5b63727396587a7ff9979eb029f8bf57caeb4d6aa60f83.jpg" 
+                             alt="Oregon Beach Scenes - front view showing coastal landscape photography" 
+                             loading="eager">
+                        <p class="card-caption">Oregon Beach Scenes — front view</p>
+                    </div>
+                    <div class="flip-card-back">
+                        <img src="images/91304d4d005b21135e6361f489320828fbe974ea8517c94b9dd0402f46df0252.jpg" 
+                             alt="Oregon Beach Scenes - back view with gold and silver metallic ink annotations showing rarity and edition information" 
+                             loading="eager">
+                        <p class="card-caption">Oregon Beach Scenes — back view with annotations</p>
+                    </div>
+                </div>
+                <button class="flip-button" aria-label="Flip card to see back">
+                    <span class="flip-text">See Back</span>
+                    <span class="flip-icon">↻</span>
+                </button>
+            </div>
+            <p class="hero-hook">Photography that exists only as physical objects—never as digital files.</p>
+        </section>
+
+        <!-- Sticky Navigation -->
+        <nav class="sticky-nav" role="navigation" aria-label="Main navigation">
+            <button class="nav-toggle" aria-label="Toggle navigation menu" aria-expanded="false">
+                <span class="hamburger-icon"></span>
+            </button>
+            <ul class="nav-menu">
+                <li><a href="#concept">Concept</a></li>
+                <li><a href="#rarity">Rarity</a></li>
+                <li><a href="#collection">Collection</a></li>
+                <li><a href="#gallery">Gallery</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </nav>
+
         <main id="main-content" role="main">
-        <section class="concept" aria-labelledby="concept-heading">
+        <section id="concept" class="concept" aria-labelledby="concept-heading">
             <h2 id="concept-heading">THE CONCEPT</h2>
             <p>Lumimenta is a photography series exploring the return to physical artifacts in an increasingly digital world. Each photograph is printed on demand using a Kodak C210R, creating scarce, tangible cards that can never exist digitally—only as physical objects.</p>
             
@@ -70,7 +108,7 @@
             <p>The photographs themselves are never stored as digital files. Once printed, they exist only as physical artifacts—scarce, tradeable, and deliberately offline.</p>
         </section>
 
-        <section aria-labelledby="rarity-heading">
+        <section id="rarity" aria-labelledby="rarity-heading">
             <h2 id="rarity-heading">RARITY SYSTEM</h2>
             <p>Each card is annotated with one of three ink colors, determining its rarity tier:</p>
             
@@ -115,12 +153,12 @@
             <p>"These are not photographs of things. They are things—physical artifacts that cannot be replicated, only documented."</p>
         </section>
 
-        <section aria-labelledby="collection-heading">
+        <section id="collection" aria-labelledby="collection-heading">
             <h2 id="collection-heading">COLLECTION</h2>
             <div id="catalog-stats"></div>
         </section>
 
-        <section aria-labelledby="gallery-heading">
+        <section id="gallery" aria-labelledby="gallery-heading">
             <h2 id="gallery-heading">GALLERY</h2>
             <p>Documentation photographs of physical cards. Each image represents tangible artifacts that exist only as physical prints.</p>
             
@@ -143,6 +181,29 @@
             <p>While these digital photographs allow the work to be cataloged and the cards to be traded, they deliberately maintain a hierarchy: the physical card is the original, the primary artifact. The digital image is merely evidence of its existence.</p>
         </section>
         </main>
+
+        <section id="contact" aria-labelledby="contact-heading">
+            <h2 id="contact-heading">CONNECT</h2>
+            <p>Follow the project and connect with the artist.</p>
+            <div class="contact-links">
+                <a href="https://www.EverythingSings.Art" 
+                   target="_blank" 
+                   rel="noopener noreferrer"
+                   class="contact-link"
+                   aria-label="Visit EverythingSings.Art website">
+                    <span class="link-icon" aria-hidden="true">🌐</span>
+                    <span class="link-text">Visit EverythingSings.Art</span>
+                </a>
+                <a href="https://primal.net/EverythingSings" 
+                   target="_blank" 
+                   rel="noopener noreferrer"
+                   class="contact-link"
+                   aria-label="Follow on Nostr via Primal">
+                    <span class="link-icon" aria-hidden="true">⚡</span>
+                    <span class="link-text">Follow on Nostr</span>
+                </a>
+            </div>
+        </section>
 
         <footer role="contentinfo">
             <p>LUMIMENTA © 2025</p>

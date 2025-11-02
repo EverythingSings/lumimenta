@@ -1017,6 +1017,56 @@ button:focus,
     }
 }
 
+/* ============================================
+   HERO SECTION
+   Prominent hero flip card with hook text
+   ============================================ */
+
+.hero {
+    text-align: center;
+    margin-bottom: var(--spacing-xl);
+}
+
+/* Hero-specific flip card sizing */
+.hero-flip-card {
+    max-width: 100%;
+    margin: 0 auto;
+}
+
+/* Hero hook text - concise one-sentence explanation */
+.hero-hook {
+    font-size: 1.3em;
+    font-weight: 300;
+    text-align: center;
+    color: var(--color-text-white);
+    letter-spacing: 1px;
+    max-width: 800px;
+    margin: var(--spacing-md) auto;
+    line-height: 1.6;
+}
+
+/* Tablet breakpoint - 480px and up */
+@media (min-width: 480px) {
+    .hero-hook {
+        font-size: 1.5em;
+    }
+}
+
+/* Desktop breakpoint - 768px and up */
+@media (min-width: 768px) {
+    .hero {
+        margin-bottom: 60px;
+    }
+    
+    .hero-flip-card {
+        max-width: 900px;
+    }
+    
+    .hero-hook {
+        font-size: 1.8em;
+    }
+}
+
 /* Mobile-specific enhancements */
 @media (max-width: 479px) {
     .flip-button {
@@ -1039,5 +1089,575 @@ button:focus,
     
     .flip-button {
         font-size: 1.05em;
+    }
+}
+
+/* ============================================
+   STICKY NAVIGATION
+   Fixed navigation with glassmorphism effect
+   ============================================ */
+
+.sticky-nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    background: var(--color-bg-surface);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--color-border-light);
+    box-shadow: var(--shadow-medium);
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 var(--spacing-md);
+    transition: transform 300ms ease, box-shadow 300ms ease;
+}
+
+/* Fallback for browsers without backdrop-filter support */
+.no-backdrop-filter .sticky-nav {
+    background: var(--color-bg-surface-solid);
+}
+
+/* Hamburger menu button - mobile only */
+.nav-toggle {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 48px;
+    height: 48px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    z-index: 1001;
+    transition: transform 300ms ease;
+}
+
+.nav-toggle:hover {
+    transform: scale(1.1);
+}
+
+.nav-toggle:active {
+    transform: scale(0.95);
+}
+
+/* Hamburger icon lines */
+.hamburger-icon,
+.hamburger-icon::before,
+.hamburger-icon::after {
+    display: block;
+    width: 24px;
+    height: 2px;
+    background: var(--color-primary);
+    transition: all 300ms ease;
+    border-radius: 2px;
+}
+
+.hamburger-icon {
+    position: relative;
+}
+
+.hamburger-icon::before,
+.hamburger-icon::after {
+    content: '';
+    position: absolute;
+    left: 0;
+}
+
+.hamburger-icon::before {
+    top: -8px;
+}
+
+.hamburger-icon::after {
+    top: 8px;
+}
+
+/* Hamburger animation when menu is open */
+.nav-toggle[aria-expanded="true"] .hamburger-icon {
+    background: transparent;
+}
+
+.nav-toggle[aria-expanded="true"] .hamburger-icon::before {
+    transform: rotate(45deg);
+    top: 0;
+}
+
+.nav-toggle[aria-expanded="true"] .hamburger-icon::after {
+    transform: rotate(-45deg);
+    top: 0;
+}
+
+/* Navigation menu */
+.nav-menu {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    position: fixed;
+    top: 60px;
+    left: 0;
+    right: 0;
+    background: var(--color-bg-surface);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--color-border-light);
+    box-shadow: var(--shadow-medium);
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 400ms cubic-bezier(0.4, 0.0, 0.2, 1);
+}
+
+.no-backdrop-filter .nav-menu {
+    background: var(--color-bg-surface-solid);
+}
+
+/* Menu open state */
+.nav-menu.open {
+    max-height: 400px;
+}
+
+/* Navigation menu items */
+.nav-menu li {
+    border-bottom: 1px solid var(--color-border-light);
+}
+
+.nav-menu li:last-child {
+    border-bottom: none;
+}
+
+/* Navigation links */
+.nav-menu a {
+    display: block;
+    padding: 16px var(--spacing-md);
+    color: var(--color-text-secondary);
+    text-decoration: none;
+    font-size: 1em;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    transition: all 300ms ease;
+    min-height: 48px;
+    min-width: 48px;
+    text-align: center;
+}
+
+.nav-menu a:hover {
+    color: var(--color-primary-light);
+    background: rgba(74, 144, 226, 0.1);
+    transform: translateX(4px);
+}
+
+.nav-menu a:active {
+    transform: translateX(0);
+}
+
+/* Active section highlighting */
+.nav-menu a.active {
+    color: var(--color-primary);
+    background: rgba(74, 144, 226, 0.15);
+    border-left: 3px solid var(--color-primary);
+}
+
+/* Desktop navigation - 768px and up */
+@media (min-width: 768px) {
+    /* Hide hamburger menu on desktop */
+    .nav-toggle {
+        display: none;
+    }
+    
+    /* Horizontal menu layout */
+    .nav-menu {
+        position: static;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        gap: var(--spacing-xs);
+        max-height: none;
+        overflow: visible;
+        background: transparent;
+        backdrop-filter: none;
+        -webkit-backdrop-filter: none;
+        border-bottom: none;
+        box-shadow: none;
+    }
+    
+    .nav-menu li {
+        border-bottom: none;
+    }
+    
+    .nav-menu a {
+        padding: 10px 18px;
+        font-size: 0.9em;
+        border-radius: var(--radius-sm);
+        min-height: 44px;
+        min-width: 44px;
+        text-align: center;
+    }
+    
+    .nav-menu a:hover {
+        transform: translateY(-2px);
+        background: rgba(74, 144, 226, 0.15);
+    }
+    
+    .nav-menu a:active {
+        transform: translateY(0);
+    }
+    
+    /* Active section highlighting on desktop */
+    .nav-menu a.active {
+        color: var(--color-primary);
+        background: rgba(74, 144, 226, 0.2);
+        border-left: none;
+        border-bottom: 2px solid var(--color-primary);
+    }
+}
+
+/* Smooth scroll behavior */
+html {
+    scroll-behavior: smooth;
+}
+
+/* Respect reduced motion preference */
+@media (prefers-reduced-motion: reduce) {
+    html {
+        scroll-behavior: auto;
+    }
+    
+    .sticky-nav,
+    .nav-menu,
+    .nav-menu a,
+    .nav-toggle,
+    .hamburger-icon,
+    .hamburger-icon::before,
+    .hamburger-icon::after {
+        transition: none !important;
+    }
+    
+    .nav-menu a:hover,
+    .nav-toggle:hover {
+        transform: none !important;
+    }
+}
+
+/* Ensure main content doesn't hide behind sticky nav */
+body {
+    padding-top: 60px;
+}
+
+/* Adjust container for sticky nav */
+.container {
+    margin-top: var(--spacing-md);
+}
+
+/* ============================================
+   CONTACT SECTION
+   Social and contact links with glassmorphism
+   ============================================ */
+
+#contact {
+    margin-top: var(--spacing-xl);
+    margin-bottom: var(--spacing-xl);
+}
+
+#contact h2 {
+    text-align: center;
+    margin-bottom: var(--spacing-md);
+}
+
+#contact > p {
+    text-align: center;
+    margin-bottom: var(--spacing-lg);
+    color: var(--color-text-secondary);
+}
+
+/* Contact links container */
+.contact-links {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-md);
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+/* Individual contact link cards */
+.contact-link {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--spacing-sm);
+    padding: 20px var(--spacing-md);
+    min-height: 48px;
+    min-width: 48px;
+    background: var(--color-bg-surface);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid var(--color-border-light);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-medium);
+    color: var(--color-text-white);
+    text-decoration: none;
+    font-size: 1em;
+    letter-spacing: 0.5px;
+    transition: all 300ms cubic-bezier(0.4, 0.0, 0.2, 1);
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: rgba(74, 144, 226, 0.2);
+    contain: layout style paint;
+}
+
+/* Fallback for browsers without backdrop-filter support */
+.no-backdrop-filter .contact-link {
+    background: var(--color-bg-surface-solid);
+}
+
+/* Hover effects */
+.contact-link:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-high);
+    border-color: var(--color-primary);
+    background: linear-gradient(135deg,
+        rgba(74, 144, 226, 0.15) 0%,
+        var(--color-bg-surface) 100%);
+    color: var(--color-primary-light);
+}
+
+.contact-link:active {
+    transform: translateY(-2px);
+}
+
+/* Link icon styling */
+.link-icon {
+    font-size: 1.5em;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+}
+
+/* Link text styling */
+.link-text {
+    font-family: 'Georgia', serif;
+    font-weight: 400;
+}
+
+/* Tablet breakpoint - 480px and up */
+@media (min-width: 480px) {
+    .contact-links {
+        gap: 20px;
+    }
+    
+    .contact-link {
+        padding: 22px var(--spacing-lg);
+        font-size: 1.05em;
+    }
+    
+    .link-icon {
+        font-size: 1.6em;
+    }
+}
+
+/* Desktop breakpoint - 768px and up */
+@media (min-width: 768px) {
+    #contact {
+        margin-top: 60px;
+        margin-bottom: 60px;
+    }
+    
+    /* Horizontal layout on desktop */
+    .contact-links {
+        flex-direction: row;
+        max-width: 800px;
+        gap: var(--spacing-lg);
+    }
+    
+    .contact-link {
+        flex: 1;
+        padding: 25px var(--spacing-lg);
+        min-height: 44px;
+        font-size: 1.1em;
+    }
+    
+    .link-icon {
+        font-size: 1.8em;
+    }
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+    .contact-link {
+        transition: none !important;
+    }
+    
+    .contact-link:hover {
+        transform: none !important;
+    }
+}
+
+/* ============================================
+   CARD AVAILABILITY GRID
+   Display all cards with availability status
+   ============================================ */
+
+/* Availability grid container */
+.availability-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--spacing-md);
+    margin: var(--spacing-md) 0;
+}
+
+/* Individual availability card */
+.availability-card {
+    position: relative;
+    background: var(--color-bg-surface);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid var(--color-border-light);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-medium);
+    overflow: hidden;
+    transition: transform 300ms cubic-bezier(0.4, 0.0, 0.2, 1),
+                box-shadow 300ms cubic-bezier(0.4, 0.0, 0.2, 1);
+    contain: layout style paint;
+    cursor: default;
+}
+
+/* Fallback for browsers without backdrop-filter support */
+.no-backdrop-filter .availability-card {
+    background: var(--color-bg-surface-solid);
+}
+
+/* Hover effect */
+.availability-card:hover {
+    transform: scale(1.02);
+    box-shadow: var(--shadow-high);
+    will-change: transform, box-shadow;
+}
+
+/* Card image container */
+.availability-card img {
+    width: 100%;
+    aspect-ratio: 3 / 4;
+    object-fit: cover;
+    display: block;
+    border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+}
+
+/* Card information section */
+.card-info {
+    padding: var(--spacing-md);
+    position: relative;
+}
+
+/* Card title */
+.card-title {
+    font-size: 1.1em;
+    font-weight: 400;
+    color: var(--color-text-white);
+    margin-bottom: var(--spacing-xs);
+    letter-spacing: 0.5px;
+}
+
+/* Card rarity and edition */
+.card-rarity {
+    font-size: 0.9em;
+    color: var(--color-text-tertiary);
+    margin-bottom: var(--spacing-sm);
+}
+
+/* Availability badge */
+.availability-badge {
+    position: absolute;
+    bottom: var(--spacing-sm);
+    right: var(--spacing-sm);
+    padding: 6px 12px;
+    border-radius: var(--radius-sm);
+    font-size: 0.85em;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    box-shadow: var(--shadow-low);
+}
+
+/* Badge color coding */
+.availability-badge.available {
+    background: #4caf50;
+    color: var(--color-text-white);
+}
+
+.availability-badge.collected {
+    background: #757575;
+    color: var(--color-text-white);
+}
+
+.availability-badge.unknown {
+    background: #ff9800;
+    color: var(--color-text-white);
+}
+
+/* Tablet breakpoint - 480px and up */
+@media (min-width: 480px) {
+    .availability-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 20px;
+    }
+    
+    .card-info {
+        padding: 20px;
+    }
+    
+    .card-title {
+        font-size: 1.15em;
+    }
+    
+    .availability-badge {
+        padding: 7px 14px;
+        font-size: 0.88em;
+    }
+}
+
+/* Desktop breakpoint - 768px and up */
+@media (min-width: 768px) {
+    .availability-grid {
+        grid-template-columns: repeat(3, 1fr);
+        gap: var(--spacing-lg);
+        margin: var(--spacing-xl) 0;
+    }
+    
+    .card-info {
+        padding: 22px;
+    }
+    
+    .card-title {
+        font-size: 1.2em;
+        margin-bottom: 10px;
+    }
+    
+    .card-rarity {
+        font-size: 0.95em;
+        margin-bottom: 18px;
+    }
+    
+    .availability-badge {
+        padding: 8px 16px;
+        font-size: 0.9em;
+        bottom: 20px;
+        right: 20px;
+    }
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+    .availability-card {
+        transition: none !important;
+    }
+    
+    .availability-card:hover {
+        transform: none !important;
     }
 }

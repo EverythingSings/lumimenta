@@ -392,11 +392,198 @@ async function generateGallery() {
     }
 }
 
+// Sticky Navigation Functionality
+function initStickyNavigation() {
+    const nav = document.querySelector('.sticky-nav');
+    const navToggle = document.querySelector('.nav-toggle');
+    const navMenu = document.querySelector('.nav-menu');
+    const navLinks = document.querySelectorAll('.nav-menu a');
+    
+    if (!nav || !navToggle || !navMenu) {
+        console.warn('Sticky navigation elements not found');
+        return;
+    }
+    
+    // Mobile menu toggle functionality
+    navToggle.addEventListener('click', () => {
+        const isExpanded = navToggle.getAttribute('aria-expanded') === 'true';
+        navToggle.setAttribute('aria-expanded', !isExpanded);
+        navMenu.classList.toggle('active');
+        navToggle.classList.toggle('active');
+    });
+    
+    // Click-outside-to-close behavior for mobile menu
+    document.addEventListener('click', (event) => {
+        const isClickInsideNav = nav.contains(event.target);
+        const isMenuActive = navMenu.classList.contains('active');
+        
+        if (!isClickInsideNav && isMenuActive) {
+            navMenu.classList.remove('active');
+            navToggle.classList.remove('active');
+            navToggle.setAttribute('aria-expanded', 'false');
+        }
+    });
+    
+    // Close mobile menu when a link is clicked
+    navLinks.forEach(link => {
+        link.addEventListener('click', () => {
+            navMenu.classList.remove('active');
+            navToggle.classList.remove('active');
+            navToggle.setAttribute('aria-expanded', 'false');
+        });
+    });
+    
+    // Smooth scroll behavior for navigation links
+    navLinks.forEach(link => {
+        link.addEventListener('click', (event) => {
+            event.preventDefault();
+            const targetId = link.getAttribute('href');
+            const targetSection = document.querySelector(targetId);
+            
+            if (targetSection) {
+                // Calculate offset for sticky nav height
+                const navHeight = nav.offsetHeight;
+                const targetPosition = targetSection.offsetTop - navHeight - 20; // 20px extra padding
+                
+                window.scrollTo({
+                    top: targetPosition,
+                    behavior: 'smooth'
+                });
+            }
+        });
+    });
+    
+    // Active section highlighting using IntersectionObserver
+    const sections = document.querySelectorAll('section[id]');
+    
+    if ('IntersectionObserver' in window && sections.length > 0) {
+        const observerOptions = {
+            root: null,
+            rootMargin: '-80px 0px -80% 0px', // Trigger when section is near top
+            threshold: 0
+        };
+        
+        const sectionObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const sectionId = entry.target.getAttribute('id');
+                    
+                    // Remove active class from all links
+                    navLinks.forEach(link => {
+                        link.classList.remove('active');
+                    });
+                    
+                    // Add active class to corresponding link
+                    const activeLink = document.querySelector(`.nav-menu a[href="#${sectionId}"]`);
+                    if (activeLink) {
+                        activeLink.classList.add('active');
+                    }
+                }
+            });
+        }, observerOptions);
+        
+        // Observe all sections
+        sections.forEach(section => {
+            sectionObserver.observe(section);
+        });
+    } else {
+        // Fallback: debounced scroll handling for active section highlighting
+        let scrollTimeout;
+        const debounceDelay = 100;
+        
+        function updateActiveSection() {
+            const scrollPosition = window.scrollY + 100; // Offset for nav height
+            
+            let currentSection = null;
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                const sectionBottom = sectionTop + section.offsetHeight;
+                
+                if (scrollPosition >= sectionTop && scrollPosition < sectionBottom) {
+                    currentSection = section;
+                }
+            });
+            
+            if (currentSection) {
+                const sectionId = currentSection.getAttribute('id');
+                
+                // Remove active class from all links
+                navLinks.forEach(link => {
+                    link.classList.remove('active');
+                });
+                
+                // Add active class to corresponding link
+                const activeLink = document.querySelector(`.nav-menu a[href="#${sectionId}"]`);
+                if (activeLink) {
+                    activeLink.classList.add('active');
+                }
+            }
+        }
+        
+        // Debounced scroll event listener
+        window.addEventListener('scroll', () => {
+            clearTimeout(scrollTimeout);
+            scrollTimeout = setTimeout(updateActiveSection, debounceDelay);
+        }, { passive: true });
+        
+        // Initial call
+        updateActiveSection();
+    }
+}
+
+// Display card availability grid
+function displayAvailability(cards) {
+    // Filter to only show front cards (not back cards) to avoid duplicates
+    const frontCards = cards.filter(card => !card.title.includes('(Back)'));
+    
+    // Generate HTML for each card
+    const availabilityHTML = frontCards.map(card => {
+        // Get availability status, default to "unknown" if not specified
+        const availability = card.availability || 'unknown';
+        
+        // Format rarity for display (handle both string and array formats)
+        let rarityDisplay;
+        if (Array.isArray(card.rarity)) {
+            rarityDisplay = card.rarity.map(r => r.charAt(0).toUpperCase() + r.slice(1)).join(' & ');
+        } else {
+            rarityDisplay = card.rarity.charAt(0).toUpperCase() + card.rarity.slice(1);
+        }
+        
+        // Format badge text
+        const badgeText = availability.charAt(0).toUpperCase() + availability.slice(1);
+        
+        return `
+            <div class="availability-card" data-status="${availability}">
+                <img src="images/${card.imageHash}.jpg" 
+                     alt="${card.title}" 
+                     loading="lazy">
+                <div class="card-info">
+                    <h4 class="card-title">${card.title}</h4>
+                    <p class="card-rarity">${rarityDisplay} • ${card.edition}</p>
+                    <span class="availability-badge ${availability}">${badgeText}</span>
+                </div>
+            </div>
+        `;
+    }).join('');
+    
+    // Insert into availability grid container
+    const availabilityContainer = document.getElementById('availability-grid');
+    if (availabilityContainer) {
+        availabilityContainer.innerHTML = availabilityHTML;
+    }
+}
+
 // Initialize on page load
 document.addEventListener('DOMContentLoaded', async () => {
     const cards = await loadCatalog();
     const stats = calculateStats(cards);
     displayStats(stats);
+    
+    // Display card availability
+    displayAvailability(cards);
+    
+    // Initialize hero flip button (if hero section exists)
+    initializeFlipButtons();
     
     // Generate gallery with flip cards
     await generateGallery();
@@ -406,4 +593,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     
     // Initialize counter animations for stats
     initCounterAnimations();
+    
+    // Initialize sticky navigation
+    initStickyNavigation();
 });
