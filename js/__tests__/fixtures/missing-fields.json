@@ -1,0 +1,40 @@
+{
+  "cards": [
+    {
+      "id": 1,
+      "title": "Incomplete Card - Missing Description",
+      "location": "Test Location",
+      "blockHeight": 800000,
+      "rarity": "blue",
+      "edition": "1/1",
+      "imageHash": "test-hash-incomplete-1"
+    },
+    {
+      "id": 2,
+      "description": "Incomplete Card - Missing Title",
+      "location": "Test Location",
+      "blockHeight": 800001,
+      "rarity": "silver",
+      "edition": "1/1",
+      "imageHash": "test-hash-incomplete-2"
+    },
+    {
+      "id": 3,
+      "title": "Incomplete Card - Missing Rarity",
+      "description": "This card has no rarity field",
+      "location": "Test Location",
+      "blockHeight": 800002,
+      "edition": "1/1",
+      "imageHash": "test-hash-incomplete-3"
+    },
+    {
+      "title": "Incomplete Card - Missing ID",
+      "description": "This card has no id field",
+      "location": "Test Location",
+      "blockHeight": 800003,
+      "rarity": "gold",
+      "edition": "1/1",
+      "imageHash": "test-hash-incomplete-4"
+    }
+  ]
+}

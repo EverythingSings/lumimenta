@@ -1,0 +1,32 @@
+{
+  "name": "lumimenta",
+  "version": "1.0.0",
+  "description": "Physical photography art project with scarce trading card prints",
+  "type": "module",
+  "scripts": {
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:coverage": "vitest run --coverage",
+    "test:ui": "vitest --ui",
+    "test:lighthouse": "node scripts/lighthouse-test.js",
+    "test:all": "npm test && npm run test:lighthouse"
+  },
+  "devDependencies": {
+    "vitest": "^1.0.0",
+    "@vitest/ui": "^1.0.0",
+    "jsdom": "^23.0.0",
+    "@vitest/coverage-v8": "^1.0.0",
+    "lighthouse": "^11.0.0",
+    "chrome-launcher": "^1.1.0",
+    "http-server": "^14.0.0"
+  },
+  "keywords": [
+    "photography",
+    "art",
+    "trading-cards",
+    "bitcoin",
+    "nostr"
+  ],
+  "author": "",
+  "license": "ISC"
+}

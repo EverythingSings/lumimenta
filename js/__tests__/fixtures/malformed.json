@@ -1,0 +1,13 @@
+{
+  "cards": [
+    {
+      "id": 1,
+      "title": "Malformed Card",
+      "description": "This JSON is missing a closing brace",
+      "location": "Test Location",
+      "blockHeight": 800000,
+      "rarity": "blue",
+      "edition": "1/1"
+      "imageHash": "missing-comma-before-this"
+    }
+  ]

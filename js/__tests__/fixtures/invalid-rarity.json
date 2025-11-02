@@ -1,0 +1,44 @@
+{
+  "cards": [
+    {
+      "id": 1,
+      "title": "Invalid Rarity Card - Bronze",
+      "description": "Card with unsupported rarity value",
+      "location": "Test Location",
+      "blockHeight": 800000,
+      "rarity": "bronze",
+      "edition": "1/1",
+      "imageHash": "test-hash-invalid-1"
+    },
+    {
+      "id": 2,
+      "title": "Invalid Rarity Card - Platinum",
+      "description": "Card with unsupported rarity value",
+      "location": "Test Location",
+      "blockHeight": 800001,
+      "rarity": "platinum",
+      "edition": "1/1",
+      "imageHash": "test-hash-invalid-2"
+    },
+    {
+      "id": 3,
+      "title": "Invalid Rarity Card - Empty String",
+      "description": "Card with empty rarity string",
+      "location": "Test Location",
+      "blockHeight": 800002,
+      "rarity": "",
+      "edition": "1/1",
+      "imageHash": "test-hash-invalid-3"
+    },
+    {
+      "id": 4,
+      "title": "Invalid Rarity Card - Number",
+      "description": "Card with numeric rarity value",
+      "location": "Test Location",
+      "blockHeight": 800003,
+      "rarity": 123,
+      "edition": "1/1",
+      "imageHash": "test-hash-invalid-4"
+    }
+  ]
+}

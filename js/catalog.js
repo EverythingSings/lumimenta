@@ -2,14 +2,21 @@
 
 // Feature detection for backdrop-filter support
 function detectBackdropFilterSupport() {
+    // Check if we're in a browser environment
+    if (typeof CSS === 'undefined' || typeof document === 'undefined') {
+        return;
+    }
+    
     if (!CSS.supports('backdrop-filter', 'blur(10px)') && 
         !CSS.supports('-webkit-backdrop-filter', 'blur(10px)')) {
         document.body.classList.add('no-backdrop-filter');
     }
 }
 
-// Run feature detection immediately
-detectBackdropFilterSupport();
+// Run feature detection immediately (only in browser)
+if (typeof window !== 'undefined') {
+    detectBackdropFilterSupport();
+}
 
 async function loadCatalog() {
     try {
@@ -22,30 +29,107 @@ async function loadCatalog() {
     }
 }
 
-function calculateStats(cards) {
-    // Extract base titles (remove "(Back)" suffix) to count unique subjects
-    const baseTitles = cards.map(c => c.title.replace(/\s*\(Back\)$/, ''));
-    
-    const stats = {
-        total: cards.length,
+// Testable functions - exported for testing
+
+/**
+ * Calculate total number of cards
+ * @param {Array} cards - Array of card objects
+ * @returns {number} Total count of cards
+ */
+function calculateTotalCards(cards) {
+    return cards.length;
+}
+
+/**
+ * Calculate rarity distribution across cards
+ * @param {Array} cards - Array of card objects
+ * @returns {Object} Object with counts for each rarity (blue, silver, gold)
+ */
+function calculateRarityDistribution(cards) {
+    const distribution = {
         blue: 0,
         silver: 0,
-        gold: 0,
-        uniqueSubjects: new Set(baseTitles).size
+        gold: 0
     };
     
     // Count rarities, handling both string and array formats
     cards.forEach(card => {
         const rarities = Array.isArray(card.rarity) ? card.rarity : [card.rarity];
         rarities.forEach(rarity => {
-            if (rarity === 'blue') stats.blue++;
-            else if (rarity === 'silver') stats.silver++;
-            else if (rarity === 'gold') stats.gold++;
+            if (rarity === 'blue') distribution.blue++;
+            else if (rarity === 'silver') distribution.silver++;
+            else if (rarity === 'gold') distribution.gold++;
         });
     });
     
-    return stats;
+    return distribution;
 }
+
+/**
+ * Calculate comprehensive statistics for card collection
+ * @param {Array} cards - Array of card objects
+ * @returns {Object} Statistics object with total, rarities, and unique subjects
+ */
+function calculateStatistics(cards) {
+    // Extract base titles (remove "(Back)" suffix) to count unique subjects
+    const baseTitles = cards.map(c => c.title.replace(/\s*\(Back\)$/, ''));
+    
+    const distribution = calculateRarityDistribution(cards);
+    
+    return {
+        total: calculateTotalCards(cards),
+        blue: distribution.blue,
+        silver: distribution.silver,
+        gold: distribution.gold,
+        uniqueSubjects: new Set(baseTitles).size
+    };
+}
+
+/**
+ * Format card data for display
+ * @param {Object} card - Card object
+ * @returns {Object} Formatted card data with display-ready properties
+ */
+function formatCardData(card) {
+    // Format rarity for display (handle both string and array formats)
+    let rarityDisplay;
+    if (Array.isArray(card.rarity)) {
+        rarityDisplay = card.rarity.map(r => r.charAt(0).toUpperCase() + r.slice(1)).join(' & ');
+    } else {
+        rarityDisplay = card.rarity.charAt(0).toUpperCase() + card.rarity.slice(1);
+    }
+    
+    // Get availability status, default to "unknown" if not specified
+    const availability = card.availability || 'unknown';
+    const availabilityDisplay = availability.charAt(0).toUpperCase() + availability.slice(1);
+    
+    // Check if this is a back card
+    const isBack = card.title.includes('(Back)');
+    const baseTitle = card.title.replace(/\s*\(Back\)$/, '');
+    
+    return {
+        id: card.id,
+        title: card.title,
+        baseTitle: baseTitle,
+        description: card.description,
+        location: card.location,
+        blockHeight: card.blockHeight,
+        rarity: card.rarity,
+        rarityDisplay: rarityDisplay,
+        edition: card.edition,
+        imageHash: card.imageHash,
+        availability: availability,
+        availabilityDisplay: availabilityDisplay,
+        isBack: isBack
+    };
+}
+
+// Backward compatibility: keep calculateStats as alias
+function calculateStats(cards) {
+    return calculateStatistics(cards);
+}
+
+
 
 function displayStats(stats) {
     const statsHTML = `
@@ -564,29 +648,17 @@ function displayAvailability(cards) {
     
     // Generate HTML for each card
     const availabilityHTML = frontCards.map(card => {
-        // Get availability status, default to "unknown" if not specified
-        const availability = card.availability || 'unknown';
-        
-        // Format rarity for display (handle both string and array formats)
-        let rarityDisplay;
-        if (Array.isArray(card.rarity)) {
-            rarityDisplay = card.rarity.map(r => r.charAt(0).toUpperCase() + r.slice(1)).join(' & ');
-        } else {
-            rarityDisplay = card.rarity.charAt(0).toUpperCase() + card.rarity.slice(1);
-        }
-        
-        // Format badge text
-        const badgeText = availability.charAt(0).toUpperCase() + availability.slice(1);
+        const formattedCard = formatCardData(card);
         
         return `
-            <div class="availability-card" data-status="${availability}">
-                <img src="images/${card.imageHash}.jpg" 
-                     alt="${card.title}" 
+            <div class="availability-card" data-status="${formattedCard.availability}">
+                <img src="images/${formattedCard.imageHash}.jpg" 
+                     alt="${formattedCard.title}" 
                      loading="lazy">
                 <div class="card-info">
-                    <h4 class="card-title">${card.title}</h4>
-                    <p class="card-rarity">${rarityDisplay} • ${card.edition}</p>
-                    <span class="availability-badge ${availability}">${badgeText}</span>
+                    <h4 class="card-title">${formattedCard.title}</h4>
+                    <p class="card-rarity">${formattedCard.rarityDisplay} • ${formattedCard.edition}</p>
+                    <span class="availability-badge ${formattedCard.availability}">${formattedCard.availabilityDisplay}</span>
                 </div>
             </div>
         `;
@@ -623,3 +695,11 @@ document.addEventListener('DOMContentLoaded', async () => {
     // Initialize sticky navigation
     initStickyNavigation();
 });
+
+// Export functions for testing
+export {
+    calculateTotalCards,
+    calculateRarityDistribution,
+    calculateStatistics,
+    formatCardData
+};
