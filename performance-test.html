@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Performance Test - Animation FPS</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            background: #0a0a0a;
+            color: #e0e0e0;
+        }
+        #results {
+            margin-top: 20px;
+            padding: 20px;
+            background: rgba(17, 17, 17, 0.7);
+            border-radius: 8px;
+        }
+        .test-card {
+            width: 200px;
+            height: 150px;
+            background: rgba(17, 17, 17, 0.7);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            margin: 20px;
+            transition: transform 300ms cubic-bezier(0.4, 0.0, 0.2, 1);
+            display: inline-block;
+        }
+        .test-card:hover {
+            transform: translateY(-8px) scale(1.02);
+        }
+        .metric {
+            margin: 10px 0;
+            padding: 10px;
+            background: rgba(74, 144, 226, 0.1);
+            border-radius: 4px;
+        }
+        .pass { color: #4ade80; }
+        .fail { color: #f87171; }
+    </style>
+</head>
+<body>
+    <h1>Performance Test Results</h1>
+    <div id="test-area">
+        <div class="test-card">Test Card 1</div>
+        <div class="test-card">Test Card 2</div>
+        <div class="test-card">Test Card 3</div>
+    </div>
+    <div id="results">
+        <h2>Running tests...</h2>
+    </div>
+
+    <script>
+        // FPS measurement
+        let frames = 0;
+        let lastTime = performance.now();
+        let fps = 0;
+        let fpsHistory = [];
+
+        function measureFPS() {
+            frames++;
+            const currentTime = performance.now();
+            const elapsed = currentTime - lastTime;
+
+            if (elapsed >= 1000) {
+                fps = Math.round((frames * 1000) / elapsed);
+                fpsHistory.push(fps);
+                frames = 0;
+                lastTime = currentTime;
+            }
+
+            if (fpsHistory.length < 10) {
+                requestAnimationFrame(measureFPS);
+            } else {
+                displayResults();
+            }
+        }
+
+        // Trigger animations
+        const cards = document.querySelectorAll('.test-card');
+        let cardIndex = 0;
+
+        function animateCards() {
+            cards.forEach((card, index) => {
+                setTimeout(() => {
+                    card.style.transform = 'translateY(-8px) scale(1.02)';
+                    setTimeout(() => {
+                        card.style.transform = '';
+                    }, 300);
+                }, index * 100);
+            });
+
+            if (fpsHistory.length < 10) {
+                setTimeout(animateCards, 500);
+            }
+        }
+
+        function displayResults() {
+            const avgFPS = Math.round(fpsHistory.reduce((a, b) => a + b, 0) / fpsHistory.length);
+            const minFPS = Math.min(...fpsHistory);
+            const maxFPS = Math.max(...fpsHistory);
+
+            const resultsDiv = document.getElementById('results');
+            resultsDiv.innerHTML = `
+                <h2>Animation Performance Results</h2>
+                <div class="metric">
+                    <strong>Average FPS:</strong> ${avgFPS} 
+                    <span class="${avgFPS >= 60 ? 'pass' : 'fail'}">${avgFPS >= 60 ? '✓ PASS' : '✗ FAIL'}</span>
+                </div>
+                <div class="metric">
+                    <strong>Min FPS:</strong> ${minFPS}
+                </div>
+                <div class="metric">
+                    <strong>Max FPS:</strong> ${maxFPS}
+                </div>
+                <div class="metric">
+                    <strong>Target:</strong> 60 FPS
+                </div>
+                <div class="metric">
+                    <strong>Test Duration:</strong> ${fpsHistory.length} seconds
+                </div>
+            `;
+        }
+
+        // Start tests
+        setTimeout(() => {
+            animateCards();
+            requestAnimationFrame(measureFPS);
+        }, 1000);
+    </script>
+</body>
+</html>

@@ -1,0 +1,1645 @@
+/* ============================================
+   DESIGN SYSTEM - CSS CUSTOM PROPERTIES
+   Consistent spacing, colors, borders, and shadows
+   ============================================ */
+
+:root {
+    /* Spacing Scale (8px increments) */
+    --spacing-xs: 8px;
+    --spacing-sm: 16px;
+    --spacing-md: 24px;
+    --spacing-lg: 32px;
+    --spacing-xl: 40px;
+    --spacing-2xl: 48px;
+    --spacing-3xl: 64px;
+    --spacing-4xl: 80px;
+    
+    /* Color Palette */
+    --color-primary: #4a90e2;
+    --color-primary-light: #6ba8f0;
+    --color-primary-dark: #3f72af;
+    --color-secondary: #c0c0c0;
+    --color-accent: #c79f60;
+    
+    /* Background Colors */
+    --color-bg-dark: #0a0a0a;
+    --color-bg-medium: #111111;
+    --color-bg-surface: rgba(17, 17, 17, 0.7);
+    --color-bg-surface-solid: rgba(17, 17, 17, 0.95);
+    
+    /* Text Colors */
+    --color-text-primary: #e0e0e0;
+    --color-text-secondary: #b0b0b0;
+    --color-text-tertiary: #888888;
+    --color-text-muted: #555555;
+    --color-text-white: #ffffff;
+    
+    /* Border Colors */
+    --color-border-light: rgba(255, 255, 255, 0.1);
+    --color-border-medium: #222222;
+    --color-border-dark: #333333;
+    
+    /* Border Radius */
+    --radius-sm: 4px;
+    --radius-md: 8px;
+    --radius-lg: 12px;
+    
+    /* Box Shadow Depths */
+    --shadow-low: 0 2px 8px rgba(0, 0, 0, 0.3);
+    --shadow-medium: 0 8px 32px rgba(0, 0, 0, 0.3);
+    --shadow-high: 0 12px 40px rgba(0, 0, 0, 0.4);
+    
+    /* Rarity-specific shadows */
+    --shadow-blue: 0 12px 40px rgba(74, 144, 226, 0.4);
+    --shadow-silver: 0 12px 40px rgba(192, 192, 192, 0.4);
+    --shadow-gold: 0 12px 40px rgba(199, 159, 96, 0.4);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Georgia', serif;
+    background: var(--color-bg-dark);
+    color: var(--color-text-primary);
+    line-height: 1.7;
+    padding: var(--spacing-sm);
+    font-size: 1em;
+    position: relative;
+}
+
+/* Fractal SVG Background */
+#fractal-background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    filter: blur(80px);
+    opacity: 0.6;
+    pointer-events: none;
+}
+
+/* ============================================
+   TOUCH-FRIENDLY INTERACTIONS
+   Ensures all interactive elements meet WCAG 2.1 
+   minimum touch target size of 44x44px
+   ============================================ */
+
+/* Links and buttons - minimum 44x44px touch targets */
+a,
+button {
+    min-height: 44px;
+    min-width: 44px;
+    padding: 12px var(--spacing-sm);
+    display: inline-block;
+    text-decoration: none;
+    color: var(--color-primary);
+    transition: color 300ms ease, transform 200ms ease;
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: rgba(74, 144, 226, 0.2);
+}
+
+a:hover,
+button:hover {
+    color: var(--color-primary-light);
+    transform: translateY(-2px);
+}
+
+a:active,
+button:active {
+    transform: translateY(0);
+    color: var(--color-primary);
+}
+
+/* Ensure adequate spacing between interactive elements */
+a + a,
+button + button {
+    margin-left: var(--spacing-xs);
+}
+
+/* Glassmorphism Container System */
+.glass-container {
+    background: var(--color-bg-surface);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid var(--color-border-light);
+    box-shadow: var(--shadow-medium);
+}
+
+/* Fallback for browsers without backdrop-filter support */
+.no-backdrop-filter .glass-container {
+    background: var(--color-bg-surface-solid);
+}
+
+.container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: var(--spacing-sm);
+}
+
+header {
+    text-align: center;
+    margin-bottom: var(--spacing-lg);
+    border-bottom: 1px solid var(--color-border-dark);
+    padding-bottom: var(--spacing-md);
+}
+
+h1 {
+    font-size: 2.5em;
+    font-weight: 300;
+    letter-spacing: 4px;
+    margin-bottom: var(--spacing-sm);
+    background: linear-gradient(135deg, 
+        #a8c0ff 0%, 
+        var(--color-primary-dark) 50%, 
+        var(--color-accent) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    /* Removed: animation: gradientShift 8s ease infinite; for performance */
+    /* Removed: background-size: 200% 200%; */
+}
+
+.tagline {
+    font-size: 1em;
+    color: var(--color-text-tertiary);
+    font-style: italic;
+    letter-spacing: 1px;
+}
+
+section {
+    margin-bottom: var(--spacing-lg);
+}
+
+h2 {
+    font-size: 1.5em;
+    font-weight: 400;
+    margin-bottom: var(--spacing-sm);
+    color: var(--color-text-white);
+    letter-spacing: 2px;
+}
+
+p {
+    margin-bottom: var(--spacing-sm);
+    font-size: 1em;
+    color: var(--color-text-secondary);
+}
+
+.concept {
+    background: var(--color-bg-surface-solid);
+    /* Removed: backdrop-filter for performance */
+    border: 1px solid var(--color-border-light);
+    border-left: 3px solid var(--color-primary-dark);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-medium);
+    padding: 20px;
+    margin: var(--spacing-md) 0;
+}
+
+.rarity-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--spacing-md);
+    margin: var(--spacing-md) 0;
+}
+
+.rarity-card {
+    background: var(--color-bg-surface-solid);
+    /* Removed: backdrop-filter for performance */
+    border: 1px solid var(--color-border-light);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-medium);
+    padding: var(--spacing-md);
+    text-align: center;
+    transition: transform 300ms cubic-bezier(0.4, 0.0, 0.2, 1),
+                box-shadow 300ms cubic-bezier(0.4, 0.0, 0.2, 1),
+                border-color 300ms cubic-bezier(0.4, 0.0, 0.2, 1);
+    transform: translateZ(0);
+    min-height: 44px;
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+    contain: layout style paint;
+}
+
+.rarity-card:hover {
+    transform: translateY(-4px);
+    /* Removed: scale, translateZ, will-change for performance */
+}
+
+.rarity-card.blue {
+    border-top: 3px solid var(--color-primary);
+}
+
+.rarity-card.blue:hover {
+    border-color: var(--color-primary);
+    background: linear-gradient(135deg,
+        rgba(74, 144, 226, 0.15) 0%,
+        var(--color-bg-surface) 100%);
+    box-shadow: var(--shadow-blue);
+}
+
+.rarity-card.silver {
+    border-top: 3px solid var(--color-secondary);
+}
+
+.rarity-card.silver:hover {
+    border-color: var(--color-secondary);
+    background: linear-gradient(135deg,
+        rgba(192, 192, 192, 0.15) 0%,
+        var(--color-bg-surface) 100%);
+    box-shadow: var(--shadow-silver);
+}
+
+.rarity-card.gold {
+    border-top: 3px solid var(--color-accent);
+}
+
+.rarity-card.gold:hover {
+    border-color: var(--color-accent);
+    background: linear-gradient(135deg,
+        rgba(199, 159, 96, 0.15) 0%,
+        var(--color-bg-surface) 100%);
+    box-shadow: var(--shadow-gold);
+}
+
+.rarity-name {
+    font-size: 1.3em;
+    margin-bottom: var(--spacing-xs);
+    letter-spacing: 1px;
+}
+
+.rarity-description {
+    color: var(--color-text-tertiary);
+    font-size: 0.95em;
+}
+
+.specs {
+    background: var(--color-bg-surface-solid);
+    /* Removed: backdrop-filter for performance */
+    border: 1px solid var(--color-border-light);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-medium);
+    padding: 20px;
+    margin: var(--spacing-md) 0;
+}
+
+.specs ul {
+    list-style: none;
+    padding-left: 0;
+}
+
+.specs li {
+    padding: 12px 0;
+    border-bottom: 1px solid #1a1a1a;
+    color: var(--color-text-secondary);
+}
+
+.specs li:last-child {
+    border-bottom: none;
+}
+
+.specs strong {
+    color: var(--color-text-white);
+    margin-right: 10px;
+}
+
+.philosophy {
+    background: linear-gradient(135deg,
+        rgba(74, 144, 226, 0.1) 0%,
+        rgba(192, 192, 192, 0.05) 50%,
+        rgba(199, 159, 96, 0.1) 100%);
+    /* Removed: background-size: 200% 200%; for performance */
+    padding: 20px;
+    margin: var(--spacing-lg) 0;
+    border-radius: var(--radius-sm);
+    text-align: center;
+    /* Removed: animation: gradientShift 8s ease infinite; for performance */
+}
+
+.philosophy p {
+    font-size: 1.05em;
+    font-style: italic;
+    line-height: 1.7;
+    color: #ccc;
+}
+
+.example-images {
+    margin: var(--spacing-md) 0;
+    padding: 20px;
+    background: var(--color-bg-surface-solid);
+    /* Removed: backdrop-filter for performance */
+    border: 1px solid var(--color-border-light);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-medium);
+}
+
+.example-images img {
+    transition: transform 400ms cubic-bezier(0.4, 0.0, 0.2, 1),
+                filter 400ms cubic-bezier(0.4, 0.0, 0.2, 1);
+    transform: translateZ(0);
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+    min-height: 44px;
+    touch-action: manipulation;
+}
+
+.example-images img:hover {
+    transform: scale(1.02);
+    filter: brightness(1.1);
+    /* Removed: translateZ, will-change for performance */
+}
+
+.example-images img:active {
+    transform: scale(0.98) translateZ(0);
+}
+
+.example-note {
+    background: var(--color-bg-medium);
+    padding: var(--spacing-sm);
+    border-left: 3px solid var(--color-primary);
+    margin-top: var(--spacing-md);
+    font-size: 0.9em;
+    color: #999;
+}
+
+footer {
+    margin-top: var(--spacing-2xl);
+    padding-top: var(--spacing-md);
+    border-top: 1px solid var(--color-border-medium);
+    text-align: center;
+    color: var(--color-text-muted);
+    font-size: 0.85em;
+}
+
+.block-height {
+    font-family: 'Courier New', monospace;
+    background: var(--color-bg-dark);
+    padding: 2px var(--spacing-xs);
+    border-radius: 3px;
+    border: 1px solid var(--color-border-dark);
+}
+
+/* Gradient Animation Keyframes - DISABLED for performance */
+/*
+@keyframes gradientShift {
+    0%, 100% { 
+        background-position: 0% 50%; 
+    }
+    50% { 
+        background-position: 100% 50%; 
+    }
+}
+*/
+
+/* Mobile-specific touch enhancements */
+@media (max-width: 479px) {
+    a,
+    button {
+        padding: 14px 18px;
+        min-height: 48px;
+        min-width: 48px;
+    }
+    
+    .rarity-card {
+        padding: 28px;
+        min-height: 48px;
+    }
+    
+    .stat-item {
+        padding: 24px;
+        min-height: 48px;
+    }
+}
+
+/* Tablet breakpoint - 480px and up */
+@media (min-width: 480px) {
+    body {
+        padding: 20px;
+        font-size: 1.02em;
+    }
+    
+    .container {
+        padding: var(--spacing-md);
+    }
+    
+    header {
+        margin-bottom: var(--spacing-xl);
+        padding-bottom: var(--spacing-lg);
+    }
+    
+    h1 {
+        font-size: 3em;
+        letter-spacing: 6px;
+        margin-bottom: 20px;
+    }
+    
+    .tagline {
+        font-size: 1.05em;
+        letter-spacing: 1.5px;
+    }
+    
+    h2 {
+        font-size: 1.6em;
+        letter-spacing: 2.5px;
+    }
+    
+    p {
+        font-size: 1.02em;
+    }
+    
+    section {
+        margin-bottom: var(--spacing-xl);
+    }
+    
+    .concept {
+        padding: 30px;
+        margin: var(--spacing-lg) 0;
+    }
+    
+    .philosophy {
+        padding: 35px;
+        margin: var(--spacing-xl) 0;
+    }
+    
+    .philosophy p {
+        font-size: 1.1em;
+    }
+    
+    .rarity-grid {
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: var(--spacing-md);
+        margin: var(--spacing-lg) 0;
+    }
+    
+    .rarity-card {
+        padding: 28px;
+    }
+    
+    .rarity-name {
+        font-size: 1.4em;
+        letter-spacing: 1.5px;
+    }
+    
+    .specs {
+        padding: var(--spacing-md);
+        margin: var(--spacing-lg) 0;
+    }
+    
+    .example-images {
+        padding: 30px;
+        margin: var(--spacing-lg) 0;
+    }
+    
+    .example-note {
+        padding: 18px;
+        margin-top: 28px;
+    }
+    
+    .stats-container {
+        padding: 30px;
+        margin: var(--spacing-lg) 0;
+    }
+    
+    .stats-container h3 {
+        font-size: 1.4em;
+        margin-bottom: var(--spacing-md);
+    }
+    
+    .stats-grid {
+        grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+        gap: 18px;
+    }
+    
+    .stat-item {
+        padding: 22px;
+    }
+    
+    .stat-number {
+        font-size: 2.2em;
+    }
+    
+    footer {
+        margin-top: var(--spacing-3xl);
+        padding-top: var(--spacing-lg);
+        font-size: 0.88em;
+    }
+}
+
+/* Desktop breakpoint - 768px and up */
+@media (min-width: 768px) {
+    body {
+        padding: 20px;
+        font-size: 1.05em;
+    }
+    
+    .container {
+        padding: var(--spacing-xl) 20px;
+    }
+    
+    header {
+        margin-bottom: 60px;
+        padding-bottom: var(--spacing-xl);
+    }
+    
+    h1 {
+        font-size: 3.5em;
+        letter-spacing: 8px;
+    }
+    
+    .tagline {
+        font-size: 1.1em;
+        letter-spacing: 2px;
+    }
+    
+    h2 {
+        font-size: 1.8em;
+        letter-spacing: 3px;
+        margin-bottom: 20px;
+    }
+    
+    p {
+        font-size: 1.05em;
+        margin-bottom: 20px;
+    }
+    
+    section {
+        margin-bottom: 50px;
+    }
+    
+    .concept {
+        padding: var(--spacing-xl);
+        margin: var(--spacing-xl) 0;
+    }
+    
+    .philosophy {
+        padding: 50px;
+        margin: 60px 0;
+    }
+    
+    .philosophy p {
+        font-size: 1.2em;
+        line-height: 1.8;
+    }
+    
+    .rarity-grid {
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 30px;
+        margin: var(--spacing-xl) 0;
+    }
+    
+    .rarity-card {
+        padding: 30px;
+    }
+    
+    .rarity-name {
+        font-size: 1.5em;
+        margin-bottom: 10px;
+        letter-spacing: 2px;
+    }
+    
+    .specs {
+        padding: 30px;
+        margin: var(--spacing-xl) 0;
+    }
+    
+    .example-images {
+        padding: var(--spacing-xl);
+        margin: var(--spacing-xl) 0;
+    }
+    
+    .example-note {
+        padding: 20px;
+        margin-top: 30px;
+        font-size: 0.95em;
+    }
+    
+    .stats-container {
+        padding: var(--spacing-xl);
+        margin: var(--spacing-xl) 0;
+    }
+    
+    .stats-container h3 {
+        font-size: 1.5em;
+        margin-bottom: 30px;
+        letter-spacing: 2px;
+    }
+    
+    .stats-grid {
+        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+        gap: 20px;
+    }
+    
+    .stat-item {
+        padding: 25px;
+    }
+    
+    .stat-number {
+        font-size: 2.5em;
+        margin-bottom: 10px;
+    }
+    
+    footer {
+        margin-top: var(--spacing-4xl);
+        padding-top: var(--spacing-xl);
+        font-size: 0.9em;
+    }
+}
+
+
+/* Catalog Stats Styling */
+.stats-container {
+    background: var(--color-bg-surface-solid);
+    /* Removed: backdrop-filter for performance */
+    border: 1px solid var(--color-border-light);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-medium);
+    padding: 20px;
+    margin: var(--spacing-md) 0;
+}
+
+.stats-container h3 {
+    font-size: 1.3em;
+    font-weight: 400;
+    margin-bottom: 20px;
+    color: var(--color-text-white);
+    letter-spacing: 1px;
+    text-align: center;
+}
+
+.stats-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--spacing-sm);
+}
+
+.stat-item {
+    background: var(--color-bg-medium);
+    padding: 20px;
+    border-radius: var(--radius-sm);
+    text-align: center;
+    border: 1px solid var(--color-border-medium);
+    transition: transform 0.3s ease;
+    min-height: 44px;
+    cursor: default;
+    -webkit-tap-highlight-color: transparent;
+    contain: layout style paint;
+}
+
+.stat-item:hover {
+    transform: translateY(-2px);
+    /* Removed: will-change for performance */
+}
+
+.stat-number {
+    display: block;
+    font-size: 2em;
+    font-weight: 300;
+    color: var(--color-text-white);
+    margin-bottom: var(--spacing-xs);
+}
+
+.stat-label {
+    display: block;
+    font-size: 0.9em;
+    color: var(--color-text-tertiary);
+    letter-spacing: 1px;
+    text-transform: uppercase;
+}
+
+.stat-blue {
+    border-top: 3px solid var(--color-primary);
+}
+
+.stat-silver {
+    border-top: 3px solid var(--color-secondary);
+}
+
+.stat-gold {
+    border-top: 3px solid var(--color-accent);
+}
+
+/* Scroll-triggered animations - SIMPLIFIED for performance */
+section {
+    opacity: 1;
+    transform: none;
+    /* Removed: transition, will-change for performance */
+}
+
+/* Only animate hero section */
+.hero {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 400ms ease, transform 400ms ease;
+}
+
+.hero.animate-in {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Ensure header is always visible (not a section) */
+header {
+    opacity: 1;
+    transform: none;
+}
+
+/* Graceful degradation: show all content if animations are disabled */
+.no-intersection-observer .hero {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* ============================================
+   ACCESSIBILITY ENHANCEMENTS
+   ============================================ */
+
+/* Visible focus indicators for all focusable elements */
+*:focus {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 4px;
+}
+
+/* Enhanced focus for interactive elements */
+a:focus,
+button:focus,
+.rarity-card:focus,
+.stat-item:focus,
+.example-images img:focus {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 4px;
+    border-radius: var(--radius-sm);
+}
+
+/* Skip to main content link */
+.skip-link {
+    position: absolute;
+    top: -100px;
+    left: 0;
+    background: var(--color-primary);
+    color: var(--color-text-white);
+    padding: 12px var(--spacing-md);
+    text-decoration: none;
+    z-index: 1000;
+    font-weight: bold;
+    border-radius: 0 0 var(--radius-sm) 0;
+    transition: top 300ms ease;
+}
+
+.skip-link:focus {
+    top: 0;
+    outline: 2px solid var(--color-text-white);
+    outline-offset: 2px;
+}
+
+/* Reduced motion support - disable animations for users who prefer reduced motion */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
+    
+    /* Ensure content is visible immediately */
+    section {
+        opacity: 1 !important;
+        transform: none !important;
+    }
+    
+    /* Disable gradient animations */
+    h1,
+    .philosophy {
+        animation: none !important;
+    }
+    
+    /* Disable hover transforms */
+    .rarity-card:hover,
+    .example-images img:hover,
+    .stat-item:hover,
+    a:hover,
+    button:hover {
+        transform: none !important;
+    }
+}
+
+/* ============================================
+   FLIP CARD COMPONENTS
+   Interactive card flip animation for gallery
+   ============================================ */
+
+/* Flip Card Container - Creates 3D space */
+.flip-card {
+    position: relative;
+    width: 100%;
+    max-width: 800px;
+    margin: 0 auto 30px;
+    perspective: 1000px;
+}
+
+/* Card Inner - Handles rotation transform */
+.flip-card-inner {
+    position: relative;
+    width: 100%;
+    transition: transform 600ms cubic-bezier(0.4, 0.0, 0.2, 1);
+    transform-style: preserve-3d;
+}
+
+/* Flipped state */
+.flip-card.flipped .flip-card-inner {
+    transform: rotateY(180deg);
+}
+
+/* Card Faces - Front and Back */
+.flip-card-front,
+.flip-card-back {
+    width: 100%;
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+}
+
+.flip-card-back {
+    position: absolute;
+    top: 0;
+    left: 0;
+    transform: rotateY(180deg);
+}
+
+/* Card images */
+.flip-card-front img,
+.flip-card-back img {
+    width: 100%;
+    height: auto;
+    display: block;
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-medium);
+}
+
+/* Card captions */
+.card-caption {
+    margin-top: var(--spacing-sm);
+    font-size: 0.9em;
+    color: var(--color-text-tertiary);
+    text-align: center;
+    font-style: italic;
+}
+
+/* Flip Button */
+.flip-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    width: 100%;
+    max-width: 200px;
+    margin: var(--spacing-sm) auto 0;
+    padding: 12px var(--spacing-md);
+    background: var(--color-bg-surface);
+    border: 1px solid var(--color-border-light);
+    border-radius: var(--radius-md);
+    color: var(--color-primary);
+    font-size: 1em;
+    font-family: 'Georgia', serif;
+    cursor: pointer;
+    transition: all 300ms ease;
+    min-height: 44px;
+    min-width: 44px;
+    touch-action: manipulation; /* Prevents double-tap zoom */
+    -webkit-tap-highlight-color: rgba(74, 144, 226, 0.2);
+    user-select: none; /* Prevents text selection on touch */
+    -webkit-user-select: none;
+}
+
+.flip-button:hover {
+    background: var(--color-primary);
+    color: var(--color-text-white);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-medium);
+}
+
+.flip-button:active {
+    transform: translateY(0);
+}
+
+.flip-button:focus {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 4px;
+}
+
+.flip-icon {
+    font-size: 1.2em;
+    transition: transform 300ms ease;
+}
+
+.flip-card.flipped .flip-icon {
+    transform: rotate(180deg);
+}
+
+/* Performance optimizations */
+.flip-card-inner {
+    contain: layout style paint;
+}
+
+/* GPU acceleration hint */
+.flip-card.flipping .flip-card-inner {
+    will-change: transform;
+}
+
+/* Browser compatibility fallback for non-3D transform support */
+@supports not (transform-style: preserve-3d) {
+    .flip-card-inner {
+        transition: opacity 300ms ease;
+    }
+    
+    .flip-card.flipped .flip-card-front {
+        opacity: 0;
+        pointer-events: none;
+    }
+    
+    .flip-card.flipped .flip-card-back {
+        opacity: 1;
+        position: relative;
+        transform: none;
+    }
+    
+    .flip-card:not(.flipped) .flip-card-back {
+        opacity: 0;
+        pointer-events: none;
+    }
+}
+
+/* Reduced motion fallback - fade transition instead of flip */
+@media (prefers-reduced-motion: reduce) {
+    .flip-card-inner {
+        transition: opacity 300ms ease;
+        transform: none !important;
+    }
+    
+    .flip-card.flipped .flip-card-front {
+        opacity: 0;
+        pointer-events: none;
+    }
+    
+    .flip-card.flipped .flip-card-back {
+        opacity: 1;
+        position: relative;
+        transform: none;
+    }
+    
+    .flip-card:not(.flipped) .flip-card-back {
+        opacity: 0;
+        pointer-events: none;
+    }
+    
+    .flip-button:hover {
+        transform: none !important;
+    }
+    
+    .flip-icon {
+        transition: none !important;
+    }
+    
+    .flip-card.flipped .flip-icon {
+        transform: none !important;
+    }
+}
+
+/* ============================================
+   HERO SECTION
+   Prominent hero flip card with hook text
+   ============================================ */
+
+.hero {
+    text-align: center;
+    margin-bottom: var(--spacing-xl);
+}
+
+/* Hero-specific flip card sizing */
+.hero-flip-card {
+    max-width: 100%;
+    margin: 0 auto;
+}
+
+/* Hero hook text - concise one-sentence explanation */
+.hero-hook {
+    font-size: 1.3em;
+    font-weight: 300;
+    text-align: center;
+    color: var(--color-text-white);
+    letter-spacing: 1px;
+    max-width: 800px;
+    margin: var(--spacing-md) auto;
+    line-height: 1.6;
+}
+
+/* Tablet breakpoint - 480px and up */
+@media (min-width: 480px) {
+    .hero-hook {
+        font-size: 1.5em;
+    }
+}
+
+/* Desktop breakpoint - 768px and up */
+@media (min-width: 768px) {
+    .hero {
+        margin-bottom: 60px;
+    }
+    
+    .hero-flip-card {
+        max-width: 900px;
+    }
+    
+    .hero-hook {
+        font-size: 1.8em;
+    }
+}
+
+/* Mobile-specific enhancements */
+@media (max-width: 479px) {
+    .flip-button {
+        padding: 14px 18px;
+        min-height: 48px;
+        min-width: 48px;
+        max-width: 100%;
+    }
+    
+    .flip-card {
+        margin-bottom: var(--spacing-md);
+    }
+}
+
+/* Tablet and desktop adjustments */
+@media (min-width: 480px) {
+    .flip-card {
+        margin-bottom: var(--spacing-lg);
+    }
+    
+    .flip-button {
+        font-size: 1.05em;
+    }
+}
+
+/* ============================================
+   STICKY NAVIGATION
+   Fixed navigation with glassmorphism effect
+   ============================================ */
+
+.sticky-nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    background: var(--color-bg-surface);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--color-border-light);
+    box-shadow: var(--shadow-medium);
+    height: 60px;
+    min-height: 60px; /* Prevent shrinking - fixes CLS */
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 var(--spacing-md);
+    transition: transform 300ms ease, box-shadow 300ms ease;
+}
+
+/* Fallback for browsers without backdrop-filter support */
+.no-backdrop-filter .sticky-nav {
+    background: var(--color-bg-surface-solid);
+}
+
+/* Hamburger menu button - mobile only */
+.nav-toggle {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 48px;
+    height: 48px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    z-index: 1001;
+    transition: transform 300ms ease;
+}
+
+.nav-toggle:hover {
+    transform: scale(1.1);
+}
+
+.nav-toggle:active {
+    transform: scale(0.95);
+}
+
+/* Hamburger icon lines */
+.hamburger-icon,
+.hamburger-icon::before,
+.hamburger-icon::after {
+    display: block;
+    width: 24px;
+    height: 2px;
+    background: var(--color-primary);
+    transition: all 300ms ease;
+    border-radius: 2px;
+}
+
+.hamburger-icon {
+    position: relative;
+}
+
+.hamburger-icon::before,
+.hamburger-icon::after {
+    content: '';
+    position: absolute;
+    left: 0;
+}
+
+.hamburger-icon::before {
+    top: -8px;
+}
+
+.hamburger-icon::after {
+    top: 8px;
+}
+
+/* Hamburger animation when menu is open */
+.nav-toggle[aria-expanded="true"] .hamburger-icon {
+    background: transparent;
+}
+
+.nav-toggle[aria-expanded="true"] .hamburger-icon::before {
+    transform: rotate(45deg);
+    top: 0;
+}
+
+.nav-toggle[aria-expanded="true"] .hamburger-icon::after {
+    transform: rotate(-45deg);
+    top: 0;
+}
+
+/* Navigation menu */
+.nav-menu {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    position: fixed;
+    top: 60px;
+    left: 0;
+    right: 0;
+    background: var(--color-bg-surface);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--color-border-light);
+    box-shadow: var(--shadow-medium);
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 400ms cubic-bezier(0.4, 0.0, 0.2, 1);
+}
+
+.no-backdrop-filter .nav-menu {
+    background: var(--color-bg-surface-solid);
+}
+
+/* Menu open state */
+.nav-menu.active {
+    max-height: 400px;
+}
+
+/* Navigation menu items */
+.nav-menu li {
+    border-bottom: 1px solid var(--color-border-light);
+}
+
+.nav-menu li:last-child {
+    border-bottom: none;
+}
+
+/* Navigation links */
+.nav-menu a {
+    display: block;
+    padding: 16px var(--spacing-md);
+    color: var(--color-text-secondary);
+    text-decoration: none;
+    font-size: 1em;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    transition: all 300ms ease;
+    min-height: 48px;
+    min-width: 48px;
+    text-align: center;
+}
+
+.nav-menu a:hover {
+    color: var(--color-primary-light);
+    background: rgba(74, 144, 226, 0.1);
+    transform: translateX(4px);
+}
+
+.nav-menu a:active {
+    transform: translateX(0);
+}
+
+/* Active section highlighting */
+.nav-menu a.active {
+    color: var(--color-primary);
+    background: rgba(74, 144, 226, 0.15);
+    border-left: 3px solid var(--color-primary);
+}
+
+/* Desktop navigation - 768px and up */
+@media (min-width: 768px) {
+    /* Hide hamburger menu on desktop */
+    .nav-toggle {
+        display: none;
+    }
+    
+    /* Horizontal menu layout */
+    .nav-menu {
+        position: static;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        gap: var(--spacing-xs);
+        max-height: none;
+        overflow: visible;
+        background: transparent;
+        backdrop-filter: none;
+        -webkit-backdrop-filter: none;
+        border-bottom: none;
+        box-shadow: none;
+    }
+    
+    .nav-menu li {
+        border-bottom: none;
+    }
+    
+    .nav-menu a {
+        padding: 10px 18px;
+        font-size: 0.9em;
+        border-radius: var(--radius-sm);
+        min-height: 44px;
+        min-width: 44px;
+        text-align: center;
+    }
+    
+    .nav-menu a:hover {
+        transform: translateY(-2px);
+        background: rgba(74, 144, 226, 0.15);
+    }
+    
+    .nav-menu a:active {
+        transform: translateY(0);
+    }
+    
+    /* Active section highlighting on desktop */
+    .nav-menu a.active {
+        color: var(--color-primary);
+        background: rgba(74, 144, 226, 0.2);
+        border-left: none;
+        border-bottom: 2px solid var(--color-primary);
+    }
+}
+
+/* Smooth scroll behavior */
+html {
+    scroll-behavior: smooth;
+}
+
+/* Respect reduced motion preference */
+@media (prefers-reduced-motion: reduce) {
+    html {
+        scroll-behavior: auto;
+    }
+    
+    .sticky-nav,
+    .nav-menu,
+    .nav-menu a,
+    .nav-toggle,
+    .hamburger-icon,
+    .hamburger-icon::before,
+    .hamburger-icon::after {
+        transition: none !important;
+    }
+    
+    .nav-menu a:hover,
+    .nav-toggle:hover {
+        transform: none !important;
+    }
+}
+
+/* Ensure main content doesn't hide behind sticky nav */
+body {
+    padding-top: 60px;
+}
+
+/* Adjust container for sticky nav */
+.container {
+    margin-top: var(--spacing-md);
+}
+
+/* ============================================
+   CONTACT SECTION
+   Social and contact links with glassmorphism
+   ============================================ */
+
+#contact {
+    margin-top: var(--spacing-xl);
+    margin-bottom: var(--spacing-xl);
+}
+
+#contact h2 {
+    text-align: center;
+    margin-bottom: var(--spacing-md);
+}
+
+#contact > p {
+    text-align: center;
+    margin-bottom: var(--spacing-lg);
+    color: var(--color-text-secondary);
+}
+
+/* Contact links container */
+.contact-links {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-md);
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+/* Individual contact link cards */
+.contact-link {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--spacing-sm);
+    padding: 20px var(--spacing-md);
+    min-height: 48px;
+    min-width: 48px;
+    background: var(--color-bg-surface-solid);
+    /* Removed: backdrop-filter for performance */
+    border: 1px solid var(--color-border-light);
+    border-radius: var(--spacing-lg);
+    box-shadow: var(--shadow-medium);
+    color: var(--color-text-white);
+    text-decoration: none;
+    font-size: 1em;
+    letter-spacing: 0.5px;
+    transition: all 300ms cubic-bezier(0.4, 0.0, 0.2, 1);
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: rgba(74, 144, 226, 0.2);
+    contain: layout style paint;
+}
+
+/* Hover effects */
+.contact-link:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-high);
+    border-color: var(--color-primary);
+    background: linear-gradient(135deg,
+        rgba(74, 144, 226, 0.15) 0%,
+        var(--color-bg-surface) 100%);
+    color: var(--color-primary-light);
+}
+
+.contact-link:active {
+    transform: translateY(-2px);
+}
+
+/* Link icon styling */
+.link-icon {
+    font-size: 1.5em;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+}
+
+/* Link text styling */
+.link-text {
+    font-family: 'Georgia', serif;
+    font-weight: 400;
+}
+
+/* Tablet breakpoint - 480px and up */
+@media (min-width: 480px) {
+    .contact-links {
+        gap: 20px;
+    }
+    
+    .contact-link {
+        padding: 22px var(--spacing-lg);
+        font-size: 1.05em;
+    }
+    
+    .link-icon {
+        font-size: 1.6em;
+    }
+}
+
+/* Desktop breakpoint - 768px and up */
+@media (min-width: 768px) {
+    #contact {
+        margin-top: 60px;
+        margin-bottom: 60px;
+    }
+    
+    /* Horizontal layout on desktop */
+    .contact-links {
+        flex-direction: row;
+        max-width: 800px;
+        gap: var(--spacing-lg);
+    }
+    
+    .contact-link {
+        flex: 1;
+        padding: 25px var(--spacing-lg);
+        min-height: 44px;
+        font-size: 1.1em;
+    }
+    
+    .link-icon {
+        font-size: 1.8em;
+    }
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+    .contact-link {
+        transition: none !important;
+    }
+    
+    .contact-link:hover {
+        transform: none !important;
+    }
+}
+
+/* ============================================
+   CARD AVAILABILITY GRID
+   Display all cards with availability status
+   ============================================ */
+
+/* Availability grid container */
+.availability-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--spacing-md);
+    margin: var(--spacing-md) 0;
+}
+
+/* Individual availability card */
+.availability-card {
+    position: relative;
+    background: var(--color-bg-surface-solid);
+    /* Removed: backdrop-filter for performance */
+    border: 1px solid var(--color-border-light);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-medium);
+    overflow: hidden;
+    transition: transform 300ms cubic-bezier(0.4, 0.0, 0.2, 1),
+                box-shadow 300ms cubic-bezier(0.4, 0.0, 0.2, 1);
+    contain: layout style paint;
+    cursor: default;
+}
+
+/* Hover effect */
+.availability-card:hover {
+    transform: scale(1.01);
+    box-shadow: var(--shadow-high);
+    /* Removed: will-change for performance */
+}
+
+/* Card image container */
+.availability-card img {
+    width: 100%;
+    aspect-ratio: 3 / 4;
+    object-fit: cover;
+    display: block;
+    border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+}
+
+/* Card information section */
+.card-info {
+    padding: var(--spacing-md);
+    position: relative;
+}
+
+/* Card title */
+.card-title {
+    font-size: 1.1em;
+    font-weight: 400;
+    color: var(--color-text-white);
+    margin-bottom: var(--spacing-xs);
+    letter-spacing: 0.5px;
+}
+
+/* Card rarity and edition */
+.card-rarity {
+    font-size: 0.9em;
+    color: var(--color-text-tertiary);
+    margin-bottom: var(--spacing-sm);
+}
+
+/* Availability badge */
+.availability-badge {
+    position: absolute;
+    bottom: var(--spacing-sm);
+    right: var(--spacing-sm);
+    padding: 6px 12px;
+    border-radius: var(--radius-sm);
+    font-size: 0.85em;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    box-shadow: var(--shadow-low);
+}
+
+/* Badge color coding */
+.availability-badge.available {
+    background: #4caf50;
+    color: var(--color-text-white);
+}
+
+.availability-badge.collected {
+    background: #757575;
+    color: var(--color-text-white);
+}
+
+.availability-badge.unknown {
+    background: #ff9800;
+    color: var(--color-text-white);
+}
+
+/* Tablet breakpoint - 480px and up */
+@media (min-width: 480px) {
+    .availability-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 20px;
+    }
+    
+    .card-info {
+        padding: 20px;
+    }
+    
+    .card-title {
+        font-size: 1.15em;
+    }
+    
+    .availability-badge {
+        padding: 7px 14px;
+        font-size: 0.88em;
+    }
+}
+
+/* Desktop breakpoint - 768px and up */
+@media (min-width: 768px) {
+    .availability-grid {
+        grid-template-columns: repeat(3, 1fr);
+        gap: var(--spacing-lg);
+        margin: var(--spacing-xl) 0;
+    }
+    
+    .card-info {
+        padding: 22px;
+    }
+    
+    .card-title {
+        font-size: 1.2em;
+        margin-bottom: 10px;
+    }
+    
+    .card-rarity {
+        font-size: 0.95em;
+        margin-bottom: 18px;
+    }
+    
+    .availability-badge {
+        padding: 8px 16px;
+        font-size: 0.9em;
+        bottom: 20px;
+        right: 20px;
+    }
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+    .availability-card {
+        transition: none !important;
+    }
+    
+    .availability-card:hover {
+        transform: none !important;
+    }
+}

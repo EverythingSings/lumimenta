@@ -1,0 +1,15 @@
+# Lighthouse reports
+lighthouse-*.html
+lighthouse-*.json
+lighthouse-reports/latest.*
+lighthouse-reports/history/
+
+# Lighthouse CI
+.lighthouseci/
+
+# Test coverage
+coverage/
+.nyc_output/
+
+# Node modules
+node_modules/

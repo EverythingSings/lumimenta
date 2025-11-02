@@ -1,0 +1,50 @@
+{
+  "ci": {
+    "collect": {
+      "staticDistDir": ".",
+      "url": ["/index.html"],
+      "numberOfRuns": 3,
+      "settings": {
+        "preset": "desktop",
+        "throttling": {
+          "rttMs": 40,
+          "throughputKbps": 10240,
+          "cpuSlowdownMultiplier": 1
+        }
+      }
+    },
+    "assert": {
+      "assertions": {
+        "categories:performance": ["error", {"minScore": 0.7}],
+        "categories:accessibility": ["error", {"minScore": 1}],
+        "categories:best-practices": ["error", {"minScore": 1}],
+        "categories:seo": ["error", {"minScore": 1}],
+        
+        "first-contentful-paint": ["warn", {"maxNumericValue": 2000}],
+        "largest-contentful-paint": ["warn", {"maxNumericValue": 4000}],
+        "cumulative-layout-shift": ["error", {"maxNumericValue": 0.1}],
+        "total-blocking-time": ["warn", {"maxNumericValue": 300}],
+        "speed-index": ["warn", {"maxNumericValue": 3000}],
+        
+        "uses-responsive-images": "off",
+        "offscreen-images": "off",
+        "render-blocking-resources": "off",
+        "unused-javascript": "off",
+        "unused-css-rules": "off",
+        "modern-image-formats": "off",
+        "uses-optimized-images": "off",
+        "uses-text-compression": "off",
+        "uses-rel-preconnect": "off",
+        "font-display": "off",
+        "unminified-css": "off",
+        "unminified-javascript": "off",
+        "unsized-images": "off",
+        "lcp-discovery-insight": "off",
+        "network-dependency-tree-insight": "off"
+      }
+    },
+    "upload": {
+      "target": "temporary-public-storage"
+    }
+  }
+}
