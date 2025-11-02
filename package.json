@@ -9,16 +9,21 @@
     "test:coverage": "vitest run --coverage",
     "test:ui": "vitest --ui",
     "test:lighthouse": "node scripts/lighthouse-test.js",
-    "test:all": "npm test && npm run test:lighthouse"
+    "test:lhci": "lhci autorun",
+    "test:all": "npm test && npm run test:lhci",
+    "clean": "node scripts/clean.js",
+    "clean:all": "npm run clean && rimraf node_modules"
   },
   "devDependencies": {
-    "vitest": "^1.0.0",
-    "@vitest/ui": "^1.0.0",
-    "jsdom": "^23.0.0",
+    "@lhci/cli": "^0.15.1",
     "@vitest/coverage-v8": "^1.0.0",
-    "lighthouse": "^11.0.0",
+    "@vitest/ui": "^1.0.0",
     "chrome-launcher": "^1.1.0",
-    "http-server": "^14.0.0"
+    "http-server": "^14.0.0",
+    "jsdom": "^23.0.0",
+    "lighthouse": "^11.0.0",
+    "rimraf": "^6.1.0",
+    "vitest": "^1.0.0"
   },
   "keywords": [
     "photography",
