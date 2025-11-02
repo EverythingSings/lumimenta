@@ -1643,3 +1643,63 @@ body {
         transform: none !important;
     }
 }
+
+/* ============================================
+   FOOTER ARTICLE LINK & TWITTER EMBED
+   Styling for article link and embedded tweet in footer
+   ============================================ */
+
+.footer-article-link {
+    margin-top: var(--spacing-md);
+    padding-top: var(--spacing-md);
+    border-top: 1px solid var(--color-border-dark);
+    text-align: center;
+}
+
+.footer-article-link p {
+    font-size: 1.1em;
+    margin: 0;
+}
+
+.footer-article-link a {
+    color: var(--color-primary);
+    text-decoration: none;
+    transition: color 0.3s ease;
+    border-bottom: 1px solid transparent;
+}
+
+.footer-article-link a:hover,
+.footer-article-link a:focus {
+    color: var(--color-primary-light);
+    border-bottom-color: var(--color-primary-light);
+}
+
+.nostr-embed-container {
+    margin-top: var(--spacing-lg);
+    padding-top: var(--spacing-lg);
+    border-top: 1px solid var(--color-border-dark);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.nostr-embed-container .twitter-tweet {
+    margin: 0 auto !important;
+}
+
+/* Ensure responsive layout on mobile */
+@media (max-width: 480px) {
+    .footer-article-link {
+        padding-top: var(--spacing-sm);
+        margin-top: var(--spacing-sm);
+    }
+    
+    .footer-article-link p {
+        font-size: 1em;
+    }
+    
+    .nostr-embed-container {
+        padding-top: var(--spacing-md);
+        margin-top: var(--spacing-md);
+    }
+}
