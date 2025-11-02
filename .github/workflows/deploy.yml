@@ -58,4 +58,4 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: .
           publish_branch: gh-pages
-          exclude_assets: '.github,node_modules,.git,.kiro,coverage,lighthouse-reports,scripts,js/__tests__'
+          exclude_assets: '.github,node_modules,.kiro,coverage,lighthouse-reports,scripts,js/__tests__,.lighthouseci'
