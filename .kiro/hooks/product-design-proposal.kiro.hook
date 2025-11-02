@@ -1,0 +1,13 @@
+{
+  "enabled": true,
+  "name": "Product Design Feature Proposal",
+  "description": "Manually triggered hook that generates expert product design feature proposals for the Lumimenta physical photography trading card project, considering the unique philosophy of physical-first artifacts, rarity system, and decentralized timestamping",
+  "version": "1",
+  "when": {
+    "type": "userTriggered"
+  },
+  "then": {
+    "type": "askAgent",
+    "prompt": "You are an expert product designer specializing in physical-digital hybrid experiences, collectibles, and art projects. Analyze the Lumimenta project - a physical photography trading card collection with Bitcoin block height timestamps and rarity tiers (blue/silver/gold).\n\nBased on the current product documentation, website, and catalog structure, propose a new feature or enhancement that:\n\n1. Aligns with the core philosophy of physical-first, tangible artifacts in the digital age\n2. Enhances the collector experience or community engagement\n3. Maintains the minimalist, no-framework technical approach\n4. Could leverage the existing rarity system, Bitcoin timestamps, or Nostr distribution\n5. Is feasible to implement with the current static site architecture\n\nProvide:\n- Feature name and one-sentence description\n- Problem it solves or opportunity it addresses\n- How it fits the Lumimenta philosophy\n- Technical implementation approach (keeping it simple and static)\n- Potential impact on collectors and the project\n\nBe creative but practical. Consider features like: provenance tracking, collector galleries, rarity statistics, trading mechanisms, physical-digital bridges, community features, or novel ways to showcase the scarcity and tangibility of the cards."
+  }
+}

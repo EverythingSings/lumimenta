@@ -1,0 +1,13 @@
+{
+  "enabled": true,
+  "name": "Code Optimization Validator",
+  "description": "Monitors code files for changes, optimizes them for efficiency without breaking functionality, and runs test suites to confirm performance scores improved",
+  "version": "1",
+  "when": {
+    "type": "userTriggered"
+  },
+  "then": {
+    "type": "askAgent",
+    "prompt": "Code files have been modified. Your task is to:\n\n1. Analyze the codebase for optimization opportunities (performance, bundle size, runtime efficiency)\n2. Apply optimizations that improve efficiency without breaking functionality:\n   - Minify and optimize CSS (remove unused rules, consolidate selectors)\n   - Optimize JavaScript (reduce DOM queries, improve async operations, cache calculations)\n   - Optimize HTML (lazy loading, resource hints, efficient markup)\n3. Run the test suite using `npm test` to ensure functionality is preserved\n4. Run Lighthouse performance tests using `npm run lighthouse` to measure performance scores\n5. Compare before/after metrics from lighthouse reports and test results\n6. Only keep optimizations if:\n   - All tests pass\n   - Performance scores improved or stayed the same\n   - No functionality was broken\n7. Report the optimization results with specific metrics (load time, bundle size, Lighthouse scores)\n\nFocus on measurable improvements while maintaining the vanilla JavaScript, no-framework architecture."
+  }
+}
