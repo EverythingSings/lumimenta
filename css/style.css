@@ -1643,3 +1643,38 @@ body {
         transform: none !important;
     }
 }
+
+/* ============================================
+   FOOTER ARTICLE LINK
+   Styling for Nostr article link in footer
+   ============================================ */
+
+.footer-article-link {
+    margin-top: var(--spacing-md);
+    padding-top: var(--spacing-md);
+    border-top: 1px solid var(--color-border-dark);
+    text-align: center;
+    font-size: 1.1em;
+}
+
+.footer-article-link a {
+    color: var(--color-primary);
+    text-decoration: none;
+    transition: color 0.3s ease;
+    border-bottom: 1px solid transparent;
+}
+
+.footer-article-link a:hover,
+.footer-article-link a:focus {
+    color: var(--color-primary-light);
+    border-bottom-color: var(--color-primary-light);
+}
+
+/* Ensure responsive layout on mobile */
+@media (max-width: 480px) {
+    .footer-article-link {
+        padding-top: var(--spacing-sm);
+        margin-top: var(--spacing-sm);
+        font-size: 1em;
+    }
+}
