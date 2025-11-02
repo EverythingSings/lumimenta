@@ -1,21 +1,23 @@
 // Lumimenta Catalog Manager
 
-// Feature detection for backdrop-filter support
-function detectBackdropFilterSupport() {
-    // Check if we're in a browser environment
-    if (typeof CSS === 'undefined' || typeof document === 'undefined') {
-        return;
-    }
-    
-    if (!CSS.supports('backdrop-filter', 'blur(10px)') && 
-        !CSS.supports('-webkit-backdrop-filter', 'blur(10px)')) {
-        document.body.classList.add('no-backdrop-filter');
-    }
-}
+// DOM element cache for performance
+const domCache = {
+    statsContainer: null,
+    galleryContainer: null,
+    availabilityGrid: null,
+    nav: null,
+    navToggle: null,
+    navMenu: null,
+    navLinks: null
+};
 
-// Run feature detection immediately (only in browser)
-if (typeof window !== 'undefined') {
-    detectBackdropFilterSupport();
+// Initialize DOM cache
+function initDOMCache() {
+    if (typeof document === 'undefined') return;
+    
+    domCache.statsContainer = document.getElementById('catalog-stats');
+    domCache.galleryContainer = document.getElementById('gallery-container');
+    domCache.availabilityGrid = document.getElementById('availability-grid');
 }
 
 async function loadCatalog() {
@@ -160,7 +162,7 @@ function displayStats(stats) {
         </div>
     `;
     
-    const statsElement = document.getElementById('catalog-stats');
+    const statsElement = domCache.statsContainer || document.getElementById('catalog-stats');
     if (statsElement) {
         statsElement.innerHTML = statsHTML;
     }
@@ -168,26 +170,20 @@ function displayStats(stats) {
 
 // Counter animation function with configurable duration and easing
 function animateCounter(element, target, duration = 1000) {
-    const start = 0;
     const startTime = performance.now();
-    
-    // Easing function for smooth animation (easeOutCubic)
     const easeOutCubic = (t) => 1 - Math.pow(1 - t, 3);
     
     function updateCounter(currentTime) {
         const elapsed = currentTime - startTime;
         const progress = Math.min(elapsed / duration, 1);
-        
-        // Apply easing to progress
         const easedProgress = easeOutCubic(progress);
-        const current = Math.floor(start + (target - start) * easedProgress);
+        const current = Math.floor(target * easedProgress);
         
         element.textContent = current;
         
         if (progress < 1) {
             requestAnimationFrame(updateCounter);
         } else {
-            // Ensure final value is exact
             element.textContent = target;
         }
     }
@@ -232,9 +228,7 @@ function initCounterAnimations() {
 
 // Scroll-triggered animations with Intersection Observer
 function initScrollAnimations() {
-    // Check for IntersectionObserver support
     if (!('IntersectionObserver' in window)) {
-        // Graceful degradation: show all content immediately
         document.body.classList.add('no-intersection-observer');
         document.querySelectorAll('section').forEach(section => {
             section.classList.add('animate-in');
@@ -242,34 +236,25 @@ function initScrollAnimations() {
         return;
     }
 
-    // Configure Intersection Observer
     const observerOptions = {
         threshold: 0.1,
         rootMargin: '0px 0px -100px 0px'
     };
 
-    // Limit simultaneous animations to prevent frame drops
     let animationQueue = [];
     let isAnimating = false;
-    const MAX_SIMULTANEOUS_ANIMATIONS = 2;
 
     function processAnimationQueue() {
-        if (isAnimating || animationQueue.length === 0) {
-            return;
-        }
+        if (isAnimating || animationQueue.length === 0) return;
 
         isAnimating = true;
-        const batch = animationQueue.splice(0, MAX_SIMULTANEOUS_ANIMATIONS);
-        
-        batch.forEach(element => {
-            element.classList.add('animate-in');
-        });
+        const batch = animationQueue.splice(0, 2);
+        batch.forEach(el => el.classList.add('animate-in'));
 
-        // Wait for animations to complete before processing next batch
         setTimeout(() => {
             isAnimating = false;
             processAnimationQueue();
-        }, 100); // Small delay between batches
+        }, 100);
     }
 
     const observer = new IntersectionObserver((entries) => {
@@ -281,10 +266,7 @@ function initScrollAnimations() {
         });
     }, observerOptions);
 
-    // Observe all sections
-    document.querySelectorAll('section').forEach(section => {
-        observer.observe(section);
-    });
+    document.querySelectorAll('section').forEach(section => observer.observe(section));
 }
 
 // Pair front and back cards from catalog
@@ -366,26 +348,24 @@ function initializeFlipButtons() {
     const flipButtons = document.querySelectorAll('.flip-button');
     
     flipButtons.forEach(button => {
-        // Skip if already initialized
         if (button.dataset.initialized === 'true') return;
         button.dataset.initialized = 'true';
         
         let lastInteractionTime = 0;
+        const debounceDelay = 300;
         
-        // Shared flip logic
         const performFlip = () => {
+            const now = Date.now();
+            if (now - lastInteractionTime < debounceDelay) return;
+            lastInteractionTime = now;
+            
             const card = button.closest('.flip-card');
             if (!card) return;
             
             const isFlipped = card.classList.contains('flipped');
-            
-            // Add flipping class for performance optimization
             card.classList.add('flipping');
-            
-            // Toggle flipped state
             card.classList.toggle('flipped');
             
-            // Update button text and aria-label
             const flipText = button.querySelector('.flip-text');
             if (flipText) {
                 if (isFlipped) {
@@ -397,37 +377,17 @@ function initializeFlipButtons() {
                 }
             }
             
-            // Remove flipping class after animation completes
-            setTimeout(() => {
-                card.classList.remove('flipping');
-            }, 600);
+            setTimeout(() => card.classList.remove('flipping'), 600);
         };
         
-        // Click event listener - simplified
-        button.addEventListener('click', (event) => {
-            event.preventDefault();
-            
-            const now = Date.now();
-            // Prevent rapid successive interactions
-            if (now - lastInteractionTime < 300) {
-                return;
-            }
-            lastInteractionTime = now;
-            
+        button.addEventListener('click', (e) => {
+            e.preventDefault();
             performFlip();
         });
         
-        // Keyboard event listener for Enter and Space keys
-        button.addEventListener('keydown', (event) => {
-            if (event.key === 'Enter' || event.key === ' ') {
-                event.preventDefault();
-                
-                const now = Date.now();
-                if (now - lastInteractionTime < 300) {
-                    return;
-                }
-                lastInteractionTime = now;
-                
+        button.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
                 performFlip();
             }
         });
@@ -459,15 +419,14 @@ async function generateGallery() {
             }
         }).join('');
         
-        const galleryContainer = document.getElementById('gallery-container');
+        const galleryContainer = domCache.galleryContainer || document.getElementById('gallery-container');
         if (galleryContainer) {
             galleryContainer.innerHTML = galleryHTML;
-            // Initialize flip button event listeners after HTML is inserted
             initializeFlipButtons();
         }
     } catch (error) {
         console.error('Failed to generate gallery:', error);
-        const galleryContainer = document.getElementById('gallery-container');
+        const galleryContainer = domCache.galleryContainer || document.getElementById('gallery-container');
         if (galleryContainer) {
             galleryContainer.innerHTML = '<p style="text-align: center; color: #999; padding: 40px 0;">Unable to load gallery. Please try refreshing the page.</p>';
         }
@@ -476,10 +435,13 @@ async function generateGallery() {
 
 // Sticky Navigation Functionality
 function initStickyNavigation() {
-    const nav = document.querySelector('.sticky-nav');
-    const navToggle = document.querySelector('.nav-toggle');
-    const navMenu = document.querySelector('.nav-menu');
-    const navLinks = document.querySelectorAll('.nav-menu a');
+    // Use cached elements or query once
+    domCache.nav = domCache.nav || document.querySelector('.sticky-nav');
+    domCache.navToggle = domCache.navToggle || document.querySelector('.nav-toggle');
+    domCache.navMenu = domCache.navMenu || document.querySelector('.nav-menu');
+    domCache.navLinks = domCache.navLinks || document.querySelectorAll('.nav-menu a');
+    
+    const { nav, navToggle, navMenu, navLinks } = domCache;
     
     if (!nav || !navToggle || !navMenu) {
         console.warn('Sticky navigation elements not found');
@@ -576,14 +538,12 @@ function initStickyNavigation() {
             sectionObserver.observe(section);
         });
     } else {
-        // Fallback: debounced scroll handling for active section highlighting
         let scrollTimeout;
-        const debounceDelay = 100;
         
         function updateActiveSection() {
-            const scrollPosition = window.scrollY + 100; // Offset for nav height
-            
+            const scrollPosition = window.scrollY + 100;
             let currentSection = null;
+            
             sections.forEach(section => {
                 const sectionTop = section.offsetTop;
                 const sectionBottom = sectionTop + section.offsetHeight;
@@ -595,27 +555,18 @@ function initStickyNavigation() {
             
             if (currentSection) {
                 const sectionId = currentSection.getAttribute('id');
+                navLinks.forEach(link => link.classList.remove('active'));
                 
-                // Remove active class from all links
-                navLinks.forEach(link => {
-                    link.classList.remove('active');
-                });
-                
-                // Add active class to corresponding link
                 const activeLink = document.querySelector(`.nav-menu a[href="#${sectionId}"]`);
-                if (activeLink) {
-                    activeLink.classList.add('active');
-                }
+                if (activeLink) activeLink.classList.add('active');
             }
         }
         
-        // Debounced scroll event listener
         window.addEventListener('scroll', () => {
             clearTimeout(scrollTimeout);
-            scrollTimeout = setTimeout(updateActiveSection, debounceDelay);
+            scrollTimeout = setTimeout(updateActiveSection, 100);
         }, { passive: true });
         
-        // Initial call
         updateActiveSection();
     }
     
@@ -643,10 +594,8 @@ function initStickyNavigation() {
 
 // Display card availability grid
 function displayAvailability(cards) {
-    // Filter to only show front cards (not back cards) to avoid duplicates
     const frontCards = cards.filter(card => !card.title.includes('(Back)'));
     
-    // Generate HTML for each card
     const availabilityHTML = frontCards.map(card => {
         const formattedCard = formatCardData(card);
         
@@ -664,8 +613,7 @@ function displayAvailability(cards) {
         `;
     }).join('');
     
-    // Insert into availability grid container
-    const availabilityContainer = document.getElementById('availability-grid');
+    const availabilityContainer = domCache.availabilityGrid || document.getElementById('availability-grid');
     if (availabilityContainer) {
         availabilityContainer.innerHTML = availabilityHTML;
     }
@@ -673,31 +621,26 @@ function displayAvailability(cards) {
 
 // Initialize on page load
 document.addEventListener('DOMContentLoaded', async () => {
+    // Initialize DOM cache first
+    initDOMCache();
+    
     const cards = await loadCatalog();
     const stats = calculateStats(cards);
     displayStats(stats);
     
-    // Display card availability
     displayAvailability(cards);
-    
-    // Initialize hero flip button (if hero section exists)
     initializeFlipButtons();
     
-    // Generate gallery with flip cards
     await generateGallery();
     
-    // Initialize scroll animations
     initScrollAnimations();
-    
-    // Initialize counter animations for stats
     initCounterAnimations();
-    
-    // Initialize sticky navigation
     initStickyNavigation();
 });
 
-// Export functions for testing
+// Export functions for testing and integration
 export {
+    loadCatalog,
     calculateTotalCards,
     calculateRarityDistribution,
     calculateStatistics,

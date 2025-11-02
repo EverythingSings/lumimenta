@@ -122,18 +122,11 @@ button + button {
     margin-left: var(--spacing-xs);
 }
 
-/* Glassmorphism Container System */
+/* Glassmorphism Container System - Optimized */
 .glass-container {
-    background: var(--color-bg-surface);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
+    background: var(--color-bg-surface-solid);
     border: 1px solid var(--color-border-light);
     box-shadow: var(--shadow-medium);
-}
-
-/* Fallback for browsers without backdrop-filter support */
-.no-backdrop-filter .glass-container {
-    background: var(--color-bg-surface-solid);
 }
 
 .container {
@@ -1096,23 +1089,16 @@ button:focus,
     left: 0;
     right: 0;
     z-index: 1000;
-    background: var(--color-bg-surface);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
+    background: var(--color-bg-surface-solid);
     border-bottom: 1px solid var(--color-border-light);
     box-shadow: var(--shadow-medium);
     height: 60px;
-    min-height: 60px; /* Prevent shrinking - fixes CLS */
+    min-height: 60px;
     display: flex;
     align-items: center;
     justify-content: space-between;
     padding: 0 var(--spacing-md);
     transition: transform 300ms ease, box-shadow 300ms ease;
-}
-
-/* Fallback for browsers without backdrop-filter support */
-.no-backdrop-filter .sticky-nav {
-    background: var(--color-bg-surface-solid);
 }
 
 /* Hamburger menu button - mobile only */
@@ -1196,18 +1182,12 @@ button:focus,
     top: 60px;
     left: 0;
     right: 0;
-    background: var(--color-bg-surface);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
+    background: var(--color-bg-surface-solid);
     border-bottom: 1px solid var(--color-border-light);
     box-shadow: var(--shadow-medium);
     max-height: 0;
     overflow: hidden;
     transition: max-height 400ms cubic-bezier(0.4, 0.0, 0.2, 1);
-}
-
-.no-backdrop-filter .nav-menu {
-    background: var(--color-bg-surface-solid);
 }
 
 /* Menu open state */
@@ -1273,8 +1253,6 @@ button:focus,
         max-height: none;
         overflow: visible;
         background: transparent;
-        backdrop-filter: none;
-        -webkit-backdrop-filter: none;
         border-bottom: none;
         box-shadow: none;
     }
@@ -1337,15 +1315,7 @@ html {
     }
 }
 
-/* Ensure main content doesn't hide behind sticky nav */
-body {
-    padding-top: 60px;
-}
-
-/* Adjust container for sticky nav */
-.container {
-    margin-top: var(--spacing-md);
-}
+/* Container spacing already handled in critical CSS */
 
 /* ============================================
    CONTACT SECTION
@@ -1641,6 +1611,466 @@ body {
     
     .availability-card:hover {
         transform: none !important;
+    }
+}
+
+/* ============================================
+   SCARCITY VISUALIZATION SECTION
+   Annotation ink color distribution and forecast
+   ============================================ */
+
+/* Scarcity section container */
+.scarcity-section {
+    padding: var(--spacing-3xl) var(--spacing-md);
+    background: var(--color-bg-medium);
+    border-top: 1px solid var(--color-border-dark);
+    border-radius: var(--radius-lg);
+    margin-top: var(--spacing-xl);
+}
+
+.scarcity-section .section-heading {
+    font-size: 1.8em;
+    font-weight: 400;
+    margin-bottom: var(--spacing-md);
+    color: var(--color-text-white);
+    letter-spacing: 2px;
+    text-align: center;
+}
+
+.scarcity-section .section-description {
+    text-align: center;
+    color: var(--color-text-secondary);
+    max-width: 700px;
+    margin: 0 auto var(--spacing-xl);
+    line-height: 1.7;
+}
+
+/* Chart container with glassmorphism effect */
+.scarcity-chart-container {
+    max-width: 800px;
+    margin: var(--spacing-2xl) auto;
+    padding: var(--spacing-lg);
+    background: var(--color-bg-surface-solid);
+    border: 1px solid var(--color-border-light);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-medium);
+    contain: layout style paint;
+}
+
+/* Canvas element for chart */
+.scarcity-chart {
+    width: 100%;
+    height: 200px;
+    display: block;
+}
+
+/* Statistics grid layout */
+.scarcity-stats-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--spacing-md);
+    margin: var(--spacing-2xl) 0;
+}
+
+/* Individual stat card */
+.scarcity-stats-grid .stat-card {
+    padding: var(--spacing-lg);
+    background: var(--color-bg-surface-solid);
+    border-radius: var(--radius-lg);
+    text-align: center;
+    border: 2px solid transparent;
+    box-shadow: var(--shadow-medium);
+    transition: transform 300ms cubic-bezier(0.4, 0.0, 0.2, 1),
+                border-color 300ms cubic-bezier(0.4, 0.0, 0.2, 1),
+                box-shadow 300ms cubic-bezier(0.4, 0.0, 0.2, 1);
+    min-height: 44px;
+    cursor: default;
+    contain: layout style paint;
+}
+
+.scarcity-stats-grid .stat-card:hover {
+    transform: translateY(-4px);
+}
+
+/* Rarity-specific border colors */
+.scarcity-stats-grid .stat-card.blue {
+    border-color: var(--color-primary);
+}
+
+.scarcity-stats-grid .stat-card.blue:hover {
+    box-shadow: var(--shadow-blue);
+    background: linear-gradient(135deg,
+        rgba(74, 144, 226, 0.1) 0%,
+        var(--color-bg-surface) 100%);
+}
+
+.scarcity-stats-grid .stat-card.silver {
+    border-color: var(--color-secondary);
+}
+
+.scarcity-stats-grid .stat-card.silver:hover {
+    box-shadow: var(--shadow-silver);
+    background: linear-gradient(135deg,
+        rgba(192, 192, 192, 0.1) 0%,
+        var(--color-bg-surface) 100%);
+}
+
+.scarcity-stats-grid .stat-card.gold {
+    border-color: var(--color-accent);
+}
+
+.scarcity-stats-grid .stat-card.gold:hover {
+    box-shadow: var(--shadow-gold);
+    background: linear-gradient(135deg,
+        rgba(199, 159, 96, 0.1) 0%,
+        var(--color-bg-surface) 100%);
+}
+
+/* Stat card icon */
+.scarcity-stats-grid .stat-icon {
+    font-size: 3em;
+    margin-bottom: var(--spacing-sm);
+    line-height: 1;
+}
+
+.scarcity-stats-grid .stat-card.blue .stat-icon {
+    color: var(--color-primary);
+}
+
+.scarcity-stats-grid .stat-card.silver .stat-icon {
+    color: var(--color-secondary);
+}
+
+.scarcity-stats-grid .stat-card.gold .stat-icon {
+    color: var(--color-accent);
+}
+
+/* Stat card label */
+.scarcity-stats-grid .stat-label {
+    font-size: 0.95em;
+    color: var(--color-text-tertiary);
+    letter-spacing: 0.5px;
+    margin-bottom: var(--spacing-xs);
+}
+
+/* Stat card value */
+.scarcity-stats-grid .stat-value {
+    font-size: 2.5em;
+    font-weight: 300;
+    color: var(--color-text-white);
+    margin: var(--spacing-sm) 0;
+    line-height: 1;
+}
+
+/* Stat card percentage */
+.scarcity-stats-grid .stat-percentage {
+    font-size: 1.2em;
+    color: var(--color-text-secondary);
+}
+
+/* Forecast panel with gradient background */
+.forecast-panel {
+    max-width: 600px;
+    margin: var(--spacing-2xl) auto 0;
+    padding: var(--spacing-xl);
+    background: linear-gradient(135deg, 
+        rgba(74, 144, 226, 0.1) 0%, 
+        rgba(199, 159, 96, 0.1) 100%);
+    border-radius: var(--radius-lg);
+    border: 2px solid var(--color-border-light);
+    box-shadow: var(--shadow-medium);
+    text-align: center;
+    contain: layout style paint;
+}
+
+/* Forecast heading */
+.forecast-heading {
+    font-size: 1.3em;
+    font-weight: 400;
+    color: var(--color-text-white);
+    letter-spacing: 1px;
+    margin-bottom: var(--spacing-lg);
+}
+
+/* Forecast recommendation display */
+.forecast-recommendation {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--spacing-md);
+    margin: var(--spacing-lg) 0;
+}
+
+/* Color indicator circle */
+.forecast-color-indicator {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: inline-block;
+    box-shadow: var(--shadow-medium);
+    flex-shrink: 0;
+}
+
+/* Color name text */
+.forecast-color-name {
+    font-size: 2em;
+    font-weight: 300;
+    color: var(--color-text-white);
+    letter-spacing: 1px;
+}
+
+/* Forecast rationale text */
+.forecast-rationale {
+    color: var(--color-text-secondary);
+    line-height: 1.6;
+    font-size: 1em;
+    margin-top: var(--spacing-md);
+}
+
+/* Tablet breakpoint - 480px and up */
+@media (min-width: 480px) {
+    .scarcity-section {
+        padding: var(--spacing-3xl) var(--spacing-lg);
+    }
+    
+    .scarcity-chart {
+        height: 250px;
+    }
+    
+    .scarcity-stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 20px;
+    }
+    
+    .scarcity-stats-grid .stat-card {
+        padding: 28px;
+    }
+    
+    .scarcity-stats-grid .stat-icon {
+        font-size: 3.2em;
+    }
+    
+    .scarcity-stats-grid .stat-value {
+        font-size: 2.8em;
+    }
+    
+    .forecast-panel {
+        padding: var(--spacing-2xl);
+    }
+    
+    .forecast-color-indicator {
+        width: 48px;
+        height: 48px;
+    }
+    
+    .forecast-color-name {
+        font-size: 2.2em;
+    }
+}
+
+/* Desktop breakpoint - 768px and up */
+@media (min-width: 768px) {
+    .scarcity-section {
+        padding: var(--spacing-4xl) var(--spacing-xl);
+    }
+    
+    .scarcity-section .section-heading {
+        font-size: 2em;
+        letter-spacing: 3px;
+        margin-bottom: 20px;
+    }
+    
+    .scarcity-section .section-description {
+        font-size: 1.05em;
+        margin-bottom: 60px;
+    }
+    
+    .scarcity-chart-container {
+        padding: var(--spacing-xl);
+        margin: var(--spacing-3xl) auto;
+    }
+    
+    .scarcity-chart {
+        height: 300px;
+    }
+    
+    .scarcity-stats-grid {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 30px;
+        margin: var(--spacing-3xl) 0;
+    }
+    
+    .scarcity-stats-grid .stat-card {
+        padding: 30px;
+    }
+    
+    .scarcity-stats-grid .stat-icon {
+        font-size: 3.5em;
+    }
+    
+    .scarcity-stats-grid .stat-label {
+        font-size: 1em;
+    }
+    
+    .scarcity-stats-grid .stat-value {
+        font-size: 3em;
+    }
+    
+    .scarcity-stats-grid .stat-percentage {
+        font-size: 1.3em;
+    }
+    
+    .forecast-panel {
+        padding: 50px;
+    }
+    
+    .forecast-heading {
+        font-size: 1.5em;
+        letter-spacing: 2px;
+    }
+    
+    .forecast-color-indicator {
+        width: 56px;
+        height: 56px;
+    }
+    
+    .forecast-color-name {
+        font-size: 2.5em;
+    }
+    
+    .forecast-rationale {
+        font-size: 1.05em;
+        margin-top: 20px;
+    }
+}
+
+/* Visible focus indicators for accessibility */
+.scarcity-stats-grid .stat-card:focus {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 4px;
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+    .scarcity-stats-grid .stat-card {
+        transition: none !important;
+    }
+    
+    .scarcity-stats-grid .stat-card:hover {
+        transform: none !important;
+    }
+    
+    /* Disable any animations that might be added via JavaScript */
+    .scarcity-chart,
+    .scarcity-stats-grid .stat-value,
+    .forecast-panel {
+        animation: none !important;
+        transition: none !important;
+    }
+}
+
+/* Mobile-specific touch enhancements */
+@media (max-width: 479px) {
+    .scarcity-stats-grid .stat-card {
+        padding: 24px;
+        min-height: 48px;
+    }
+    
+    .forecast-panel {
+        padding: 24px;
+    }
+    
+    .forecast-color-name {
+        font-size: 1.5em;
+    }
+}
+
+/* ============================================
+   SCARCITY CHART FALLBACK STYLES
+   CSS-based visualization for browsers without canvas support
+   ============================================ */
+
+.scarcity-chart-fallback {
+    width: 100%;
+    padding: var(--spacing-md);
+}
+
+.fallback-bar {
+    display: grid;
+    grid-template-columns: 80px 1fr 120px;
+    align-items: center;
+    gap: var(--spacing-sm);
+    margin-bottom: var(--spacing-md);
+}
+
+.fallback-label {
+    font-weight: bold;
+    text-align: right;
+    color: var(--color-text-primary);
+}
+
+.fallback-bar-fill {
+    height: 40px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: var(--radius-sm);
+    position: relative;
+    overflow: hidden;
+}
+
+.fallback-bar-fill::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    transition: transform 0.8s cubic-bezier(0.33, 1, 0.68, 1);
+}
+
+.fallback-bar.blue .fallback-bar-fill::before {
+    background: var(--color-primary);
+}
+
+.fallback-bar.silver .fallback-bar-fill::before {
+    background: var(--color-secondary);
+}
+
+.fallback-bar.gold .fallback-bar-fill::before {
+    background: var(--color-accent);
+}
+
+.fallback-value {
+    color: var(--color-text-primary);
+    font-weight: 500;
+}
+
+/* Reduced motion for fallback */
+@media (prefers-reduced-motion: reduce) {
+    .fallback-bar-fill::before {
+        transition: none;
+    }
+}
+
+/* Responsive adjustments for fallback */
+@media (max-width: 768px) {
+    .fallback-bar {
+        grid-template-columns: 60px 1fr 100px;
+        gap: var(--spacing-xs);
+    }
+}
+
+@media (max-width: 480px) {
+    .fallback-bar {
+        grid-template-columns: 1fr;
+        gap: var(--spacing-xs);
+    }
+    
+    .fallback-label {
+        text-align: left;
+    }
+    
+    .fallback-value {
+        margin-top: var(--spacing-xs);
     }
 }
 
