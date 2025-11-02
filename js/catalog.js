@@ -461,20 +461,27 @@ function initStickyNavigation() {
             threshold: 0
         };
         
+        let currentActiveSection = null;
+        
         const sectionObserver = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
                     const sectionId = entry.target.getAttribute('id');
                     
-                    // Remove active class from all links
-                    navLinks.forEach(link => {
-                        link.classList.remove('active');
-                    });
-                    
-                    // Add active class to corresponding link
-                    const activeLink = document.querySelector(`.nav-menu a[href="#${sectionId}"]`);
-                    if (activeLink) {
-                        activeLink.classList.add('active');
+                    // Only update if this is a different section
+                    if (currentActiveSection !== sectionId) {
+                        currentActiveSection = sectionId;
+                        
+                        // Remove active class from all links
+                        navLinks.forEach(link => {
+                            link.classList.remove('active');
+                        });
+                        
+                        // Add active class to corresponding link
+                        const activeLink = document.querySelector(`.nav-menu a[href="#${sectionId}"]`);
+                        if (activeLink) {
+                            activeLink.classList.add('active');
+                        }
                     }
                 }
             });
@@ -526,6 +533,27 @@ function initStickyNavigation() {
         
         // Initial call
         updateActiveSection();
+    }
+    
+    // Simplified scroll animation - only for hero section
+    const hero = document.querySelector('.hero');
+    if (hero && 'IntersectionObserver' in window) {
+        const heroObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('animate-in');
+                    heroObserver.unobserve(entry.target);
+                }
+            });
+        }, {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        });
+        
+        heroObserver.observe(hero);
+    } else if (hero) {
+        // Fallback: show hero immediately if no IntersectionObserver
+        hero.classList.add('animate-in');
     }
 }
 

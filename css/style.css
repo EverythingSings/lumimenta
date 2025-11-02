@@ -142,15 +142,13 @@ h1 {
     margin-bottom: var(--spacing-sm);
     background: linear-gradient(135deg, 
         #a8c0ff 0%, 
-        var(--color-primary-dark) 25%, 
-        var(--color-accent) 50%,
-        var(--color-primary) 75%,
-        #a8c0ff 100%);
-    background-size: 200% 200%;
+        var(--color-primary-dark) 50%, 
+        var(--color-accent) 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
-    animation: gradientShift 8s ease infinite;
+    /* Removed: animation: gradientShift 8s ease infinite; for performance */
+    /* Removed: background-size: 200% 200%; */
 }
 
 .tagline {
@@ -179,19 +177,14 @@ p {
 }
 
 .concept {
-    background: var(--color-bg-surface);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
+    background: var(--color-bg-surface-solid);
+    /* Removed: backdrop-filter for performance */
     border: 1px solid var(--color-border-light);
     border-left: 3px solid var(--color-primary-dark);
     border-radius: var(--radius-lg);
     box-shadow: var(--shadow-medium);
     padding: 20px;
     margin: var(--spacing-md) 0;
-}
-
-.no-backdrop-filter .concept {
-    background: var(--color-bg-surface-solid);
 }
 
 .rarity-grid {
@@ -202,9 +195,8 @@ p {
 }
 
 .rarity-card {
-    background: var(--color-bg-surface);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
+    background: var(--color-bg-surface-solid);
+    /* Removed: backdrop-filter for performance */
     border: 1px solid var(--color-border-light);
     border-radius: var(--radius-lg);
     box-shadow: var(--shadow-medium);
@@ -220,13 +212,9 @@ p {
     contain: layout style paint;
 }
 
-.no-backdrop-filter .rarity-card {
-    background: var(--color-bg-surface-solid);
-}
-
 .rarity-card:hover {
-    transform: translateY(-8px) scale(1.02) translateZ(0);
-    will-change: transform, box-shadow;
+    transform: translateY(-4px);
+    /* Removed: scale, translateZ, will-change for performance */
 }
 
 .rarity-card.blue {
@@ -277,18 +265,13 @@ p {
 }
 
 .specs {
-    background: var(--color-bg-surface);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
+    background: var(--color-bg-surface-solid);
+    /* Removed: backdrop-filter for performance */
     border: 1px solid var(--color-border-light);
     border-radius: var(--radius-lg);
     box-shadow: var(--shadow-medium);
     padding: 20px;
     margin: var(--spacing-md) 0;
-}
-
-.no-backdrop-filter .specs {
-    background: var(--color-bg-surface-solid);
 }
 
 .specs ul {
@@ -316,12 +299,12 @@ p {
         rgba(74, 144, 226, 0.1) 0%,
         rgba(192, 192, 192, 0.05) 50%,
         rgba(199, 159, 96, 0.1) 100%);
-    background-size: 200% 200%;
+    /* Removed: background-size: 200% 200%; for performance */
     padding: 20px;
     margin: var(--spacing-lg) 0;
     border-radius: var(--radius-sm);
     text-align: center;
-    animation: gradientShift 8s ease infinite;
+    /* Removed: animation: gradientShift 8s ease infinite; for performance */
 }
 
 .philosophy p {
@@ -334,16 +317,11 @@ p {
 .example-images {
     margin: var(--spacing-md) 0;
     padding: 20px;
-    background: var(--color-bg-surface);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
+    background: var(--color-bg-surface-solid);
+    /* Removed: backdrop-filter for performance */
     border: 1px solid var(--color-border-light);
     border-radius: var(--radius-lg);
     box-shadow: var(--shadow-medium);
-}
-
-.no-backdrop-filter .example-images {
-    background: var(--color-bg-surface-solid);
 }
 
 .example-images img {
@@ -357,9 +335,9 @@ p {
 }
 
 .example-images img:hover {
-    transform: scale(1.03) translateZ(0);
+    transform: scale(1.02);
     filter: brightness(1.1);
-    will-change: transform, filter;
+    /* Removed: translateZ, will-change for performance */
 }
 
 .example-images img:active {
@@ -392,7 +370,8 @@ footer {
     border: 1px solid var(--color-border-dark);
 }
 
-/* Gradient Animation Keyframes */
+/* Gradient Animation Keyframes - DISABLED for performance */
+/*
 @keyframes gradientShift {
     0%, 100% { 
         background-position: 0% 50%; 
@@ -401,6 +380,7 @@ footer {
         background-position: 100% 50%; 
     }
 }
+*/
 
 /* Mobile-specific touch enhancements */
 @media (max-width: 479px) {
@@ -659,18 +639,13 @@ footer {
 
 /* Catalog Stats Styling */
 .stats-container {
-    background: var(--color-bg-surface);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
+    background: var(--color-bg-surface-solid);
+    /* Removed: backdrop-filter for performance */
     border: 1px solid var(--color-border-light);
     border-radius: var(--radius-lg);
     box-shadow: var(--shadow-medium);
     padding: 20px;
     margin: var(--spacing-md) 0;
-}
-
-.no-backdrop-filter .stats-container {
-    background: var(--color-bg-surface-solid);
 }
 
 .stats-container h3 {
@@ -702,8 +677,8 @@ footer {
 }
 
 .stat-item:hover {
-    transform: translateY(-3px);
-    will-change: transform;
+    transform: translateY(-2px);
+    /* Removed: will-change for performance */
 }
 
 .stat-number {
@@ -734,19 +709,23 @@ footer {
     border-top: 3px solid var(--color-accent);
 }
 
-/* Scroll-triggered animations */
+/* Scroll-triggered animations - SIMPLIFIED for performance */
 section {
-    opacity: 0;
-    transform: translateY(30px);
-    transition: opacity 600ms cubic-bezier(0.4, 0.0, 0.2, 1),
-                transform 600ms cubic-bezier(0.4, 0.0, 0.2, 1);
-    will-change: opacity, transform;
+    opacity: 1;
+    transform: none;
+    /* Removed: transition, will-change for performance */
 }
 
-section.animate-in {
+/* Only animate hero section */
+.hero {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 400ms ease, transform 400ms ease;
+}
+
+.hero.animate-in {
     opacity: 1;
     transform: translateY(0);
-    will-change: auto;
 }
 
 /* Ensure header is always visible (not a section) */
@@ -756,7 +735,7 @@ header {
 }
 
 /* Graceful degradation: show all content if animations are disabled */
-.no-intersection-observer section {
+.no-intersection-observer .hero {
     opacity: 1;
     transform: translateY(0);
 }
@@ -1109,6 +1088,7 @@ button:focus,
     border-bottom: 1px solid var(--color-border-light);
     box-shadow: var(--shadow-medium);
     height: 60px;
+    min-height: 60px; /* Prevent shrinking - fixes CLS */
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -1392,11 +1372,10 @@ body {
     padding: 20px var(--spacing-md);
     min-height: 48px;
     min-width: 48px;
-    background: var(--color-bg-surface);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
+    background: var(--color-bg-surface-solid);
+    /* Removed: backdrop-filter for performance */
     border: 1px solid var(--color-border-light);
-    border-radius: var(--radius-lg);
+    border-radius: var(--spacing-lg);
     box-shadow: var(--shadow-medium);
     color: var(--color-text-white);
     text-decoration: none;
@@ -1406,11 +1385,6 @@ body {
     touch-action: manipulation;
     -webkit-tap-highlight-color: rgba(74, 144, 226, 0.2);
     contain: layout style paint;
-}
-
-/* Fallback for browsers without backdrop-filter support */
-.no-backdrop-filter .contact-link {
-    background: var(--color-bg-surface-solid);
 }
 
 /* Hover effects */
@@ -1514,9 +1488,8 @@ body {
 /* Individual availability card */
 .availability-card {
     position: relative;
-    background: var(--color-bg-surface);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
+    background: var(--color-bg-surface-solid);
+    /* Removed: backdrop-filter for performance */
     border: 1px solid var(--color-border-light);
     border-radius: var(--radius-lg);
     box-shadow: var(--shadow-medium);
@@ -1527,16 +1500,11 @@ body {
     cursor: default;
 }
 
-/* Fallback for browsers without backdrop-filter support */
-.no-backdrop-filter .availability-card {
-    background: var(--color-bg-surface-solid);
-}
-
 /* Hover effect */
 .availability-card:hover {
-    transform: scale(1.02);
+    transform: scale(1.01);
     box-shadow: var(--shadow-high);
-    will-change: transform, box-shadow;
+    /* Removed: will-change for performance */
 }
 
 /* Card image container */

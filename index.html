@@ -47,6 +47,18 @@
     <!-- Favicon -->
     <link rel="icon" type="image/jpeg" href="images/a6cf6fc02dac25b73eaaa0919c0fac91b9d613ed768bc04a9ef6216a9f828d50.jpg">
     
+    <!-- Preload hero image for faster LCP -->
+    <link rel="preload" 
+          as="image" 
+          href="images/hero-front-1200.webp"
+          type="image/webp"
+          imagesrcset="
+              images/hero-front-480.webp 480w,
+              images/hero-front-768.webp 768w,
+              images/hero-front-1200.webp 1200w
+          "
+          imagesizes="(max-width: 480px) 480px, (max-width: 768px) 768px, 1200px">
+    
     <link rel="stylesheet" href="css/style.css">
     <script src="js/catalog.js"></script>
 </head>
@@ -64,15 +76,42 @@
             <div class="flip-card hero-flip-card">
                 <div class="flip-card-inner">
                     <div class="flip-card-front">
-                        <img src="images/8e587a9a699dd2035b5b63727396587a7ff9979eb029f8bf57caeb4d6aa60f83.jpg" 
-                             alt="Oregon Beach Scenes - front view showing coastal landscape photography" 
-                             loading="eager">
+                        <picture>
+                            <source 
+                                type="image/webp"
+                                srcset="
+                                    images/hero-front-480.webp 480w,
+                                    images/hero-front-768.webp 768w,
+                                    images/hero-front-1200.webp 1200w
+                                "
+                                sizes="(max-width: 480px) 480px, (max-width: 768px) 768px, 1200px">
+                            <img 
+                                src="images/8e587a9a699dd2035b5b63727396587a7ff9979eb029f8bf57caeb4d6aa60f83.jpg"
+                                alt="Oregon Beach Scenes - front view showing coastal landscape photography"
+                                width="1200"
+                                height="1600"
+                                loading="eager"
+                                fetchpriority="high">
+                        </picture>
                         <p class="card-caption">Oregon Beach Scenes — front view</p>
                     </div>
                     <div class="flip-card-back">
-                        <img src="images/91304d4d005b21135e6361f489320828fbe974ea8517c94b9dd0402f46df0252.jpg" 
-                             alt="Oregon Beach Scenes - back view with gold and silver metallic ink annotations showing rarity and edition information" 
-                             loading="eager">
+                        <picture>
+                            <source 
+                                type="image/webp"
+                                srcset="
+                                    images/hero-back-480.webp 480w,
+                                    images/hero-back-768.webp 768w,
+                                    images/hero-back-1200.webp 1200w
+                                "
+                                sizes="(max-width: 480px) 480px, (max-width: 768px) 768px, 1200px">
+                            <img 
+                                src="images/91304d4d005b21135e6361f489320828fbe974ea8517c94b9dd0402f46df0252.jpg"
+                                alt="Oregon Beach Scenes - back view with gold and silver metallic ink annotations showing rarity and edition information"
+                                width="1200"
+                                height="1600"
+                                loading="eager">
+                        </picture>
                         <p class="card-caption">Oregon Beach Scenes — back view with annotations</p>
                     </div>
                 </div>
