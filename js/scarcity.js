@@ -71,6 +71,7 @@ function calculateDistribution(cards) {
 
 /**
  * Calculate forecast recommendation for next mint
+ * Target distribution: Blue (most common), Silver (~50% of blue), Gold (rarest)
  * @param {Object} distribution - Distribution object from calculateDistribution
  * @returns {Object} Forecast with recommended color and rationale
  */
@@ -81,29 +82,63 @@ function calculateForecast(distribution) {
         gold: distribution.gold.count
     };
 
-    // Find the minimum count
-    const minCount = Math.min(counts.blue, counts.silver, counts.gold);
+    const total = counts.blue + counts.silver + counts.gold;
 
-    // Determine recommended color with priority: gold > silver > blue
-    let recommendedColor;
-    if (counts.gold === minCount) {
-        recommendedColor = 'gold';
-    } else if (counts.silver === minCount) {
-        recommendedColor = 'silver';
-    } else {
-        recommendedColor = 'blue';
+    // Handle edge case: no cards yet
+    if (total === 0) {
+        return {
+            recommendedColor: 'blue',
+            rationale: 'Starting the collection with blue ink establishes the standard edition tier.'
+        };
     }
 
-    // Generate rationale
+    // Target ratios: Blue should be ~60%, Silver ~30%, Gold ~10%
+    // This means Silver should be roughly 50% of Blue, and Gold should be roughly 16.7% of Blue
+    const targetRatios = {
+        silverToBlue: 0.5,   // Silver should be 50% of blue count (30/60)
+        goldToBlue: 0.167    // Gold should be 16.7% of blue count (10/60)
+    };
+
+    // Calculate current ratios (avoid division by zero)
+    const currentRatios = {
+        silverToBlue: counts.blue > 0 ? counts.silver / counts.blue : 0,
+        goldToBlue: counts.blue > 0 ? counts.gold / counts.blue : 0
+    };
+
+    // Calculate how far each color is from its target
+    const deviations = {
+        blue: 0, // Blue is the baseline
+        silver: counts.blue > 0 ? currentRatios.silverToBlue - targetRatios.silverToBlue : -1,
+        gold: counts.blue > 0 ? currentRatios.goldToBlue - targetRatios.goldToBlue : -1
+    };
+
+    // Special case: if blue is 0, we need blue first
+    if (counts.blue === 0) {
+        return {
+            recommendedColor: 'blue',
+            rationale: 'Blue annotations establish the standard edition tier and serve as the baseline for other rarities.'
+        };
+    }
+
+    // Determine which color is most underrepresented relative to target
+    let recommendedColor;
     let rationale;
-    if (counts.blue === counts.silver && counts.silver === counts.gold) {
-        rationale = `All annotation colors are perfectly balanced at ${counts.gold} each. Minting with gold ink maintains the premium tier while preserving balance.`;
-    } else if (minCount === 0) {
-        rationale = `${recommendedColor.charAt(0).toUpperCase() + recommendedColor.slice(1)} annotations have not been minted yet. Starting with ${recommendedColor} ink will establish this rarity tier.`;
+
+    // Find the most negative deviation (most underrepresented)
+    if (deviations.silver <= deviations.gold && deviations.silver < 0) {
+        recommendedColor = 'silver';
+        const targetCount = Math.ceil(counts.blue * targetRatios.silverToBlue);
+        const deficit = targetCount - counts.silver;
+        rationale = `Silver annotations are underrepresented at ${distribution.silver.percentage.toFixed(1)}% (${counts.silver} cards). Target is approximately ${targetCount} cards (50% of blue supply) to maintain limited edition scarcity.`;
+    } else if (deviations.gold < 0) {
+        recommendedColor = 'gold';
+        const targetCount = Math.ceil(counts.blue * targetRatios.goldToBlue);
+        const deficit = targetCount - counts.gold;
+        rationale = `Gold annotations are underrepresented at ${distribution.gold.percentage.toFixed(1)}% (${counts.gold} cards). Target is approximately ${targetCount} cards (16.7% of blue supply) to maintain one-of-a-kind rarity.`;
     } else {
-        const colorName = recommendedColor.charAt(0).toUpperCase() + recommendedColor.slice(1);
-        const percentage = distribution[recommendedColor].percentage;
-        rationale = `${colorName} annotations are currently underrepresented at ${percentage}% (${minCount} cards). Minting with ${recommendedColor} ink will help balance the distribution.`;
+        // All colors are at or above target relative to blue, so mint blue
+        recommendedColor = 'blue';
+        rationale = `Blue annotations maintain the standard edition tier at ${distribution.blue.percentage.toFixed(1)}% (${counts.blue} cards). Minting blue keeps the collection balanced as the baseline rarity.`;
     }
 
     return {

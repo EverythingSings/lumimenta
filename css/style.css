@@ -1621,9 +1621,10 @@ html {
 
 /* Scarcity section container */
 .scarcity-section {
-    padding: var(--spacing-3xl) 0;
+    padding: var(--spacing-3xl) var(--spacing-md);
     background: var(--color-bg-medium);
     border-top: 1px solid var(--color-border-dark);
+    border-radius: var(--radius-lg);
     margin-top: var(--spacing-xl);
 }
 
@@ -1828,6 +1829,10 @@ html {
 
 /* Tablet breakpoint - 480px and up */
 @media (min-width: 480px) {
+    .scarcity-section {
+        padding: var(--spacing-3xl) var(--spacing-lg);
+    }
+    
     .scarcity-chart {
         height: 250px;
     }
@@ -1866,7 +1871,7 @@ html {
 /* Desktop breakpoint - 768px and up */
 @media (min-width: 768px) {
     .scarcity-section {
-        padding: var(--spacing-4xl) 0;
+        padding: var(--spacing-4xl) var(--spacing-xl);
     }
     
     .scarcity-section .section-heading {
