@@ -861,7 +861,7 @@ button:focus,
     position: absolute;
     top: 0;
     left: 0;
-    transform: rotateY(180deg);
+    transform: rotateY(180deg) scaleX(-1);
 }
 
 /* Card images */
