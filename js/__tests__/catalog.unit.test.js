@@ -22,23 +22,12 @@ describe('calculateTotalCards', () => {
 
     it('should return correct count for multiple cards', () => {
         const cards = [
-            { id: 1, title: 'Card 1', rarity: 'blue' },
-            { id: 2, title: 'Card 2', rarity: 'silver' },
-            { id: 3, title: 'Card 3', rarity: 'gold' }
+            { id: 'card-001', subject: 'Card 1', rarity: 'blue' },
+            { id: 'card-002', subject: 'Card 2', rarity: 'silver' },
+            { id: 'card-003', subject: 'Card 3', rarity: 'gold' }
         ];
         const result = calculateTotalCards(cards);
         expect(result).toBe(3);
-    });
-
-    it('should exclude back cards from count', () => {
-        const cards = [
-            { id: 1, title: 'Card 1', rarity: 'blue' },
-            { id: 2, title: 'Card 1 (Back)', rarity: 'blue' },
-            { id: 3, title: 'Card 2', rarity: 'silver' },
-            { id: 4, title: 'Card 2 (Back)', rarity: 'silver' }
-        ];
-        const result = calculateTotalCards(cards);
-        expect(result).toBe(2); // Only count front cards
     });
 });
 
@@ -103,19 +92,8 @@ describe('calculateRarityDistribution', () => {
         });
     });
 
-    it('should handle cards with array rarity values', () => {
-        const cards = [
-            { id: 1, title: 'Card 1', rarity: ['blue', 'silver'] },
-            { id: 2, title: 'Card 2', rarity: 'gold' }
-        ];
-        const result = calculateRarityDistribution(cards);
-        expect(result).toEqual({
-            blue: 1,
-            silver: 1,
-            gold: 1
-        });
-    });
 });
+
 
 describe('calculateStatistics', () => {
     it('should return correct stats for empty array', () => {
@@ -149,9 +127,9 @@ describe('calculateStatistics', () => {
 
     it('should calculate stats for multiple cards with different rarities', () => {
         const cards = [
-            { id: 1, title: 'Card 1', rarity: 'blue' },
-            { id: 2, title: 'Card 2', rarity: 'silver' },
-            { id: 3, title: 'Card 3', rarity: 'gold' }
+            { id: 'card-001', subject: 'Card 1', rarity: 'blue' },
+            { id: 'card-002', subject: 'Card 2', rarity: 'silver' },
+            { id: 'card-003', subject: 'Card 3', rarity: 'gold' }
         ];
         const result = calculateStatistics(cards);
         expect(result).toEqual({
@@ -163,115 +141,63 @@ describe('calculateStatistics', () => {
         });
     });
 
-    it('should count unique subjects correctly with front and back cards', () => {
+    it('should count unique subjects correctly', () => {
         const cards = [
-            { id: 1, title: 'Mountain View', rarity: 'blue' },
-            { id: 2, title: 'Mountain View (Back)', rarity: 'blue' },
-            { id: 3, title: 'Ocean Sunset', rarity: 'silver' }
+            { id: 'card-001', subject: 'Mountain View', rarity: 'blue' },
+            { id: 'card-002', subject: 'Mountain View', rarity: 'blue' },
+            { id: 'card-003', subject: 'Ocean Sunset', rarity: 'silver' }
         ];
         const result = calculateStatistics(cards);
         expect(result).toEqual({
-            total: 2, // Only count physical cards (front cards)
+            total: 3,
             blue: 2,
             silver: 1,
             gold: 0,
             uniqueSubjects: 2
         });
     });
-
-    it('should handle cards with array rarity values in stats', () => {
-        const cards = [
-            { id: 1, title: 'Card 1', rarity: ['blue', 'silver'] },
-            { id: 2, title: 'Card 2', rarity: 'gold' }
-        ];
-        const result = calculateStatistics(cards);
-        expect(result).toEqual({
-            total: 2,
-            blue: 1,
-            silver: 1,
-            gold: 1,
-            uniqueSubjects: 2
-        });
-    });
 });
 
 describe('formatCardData', () => {
-    it('should format card with string rarity', () => {
+    it('should format card with v2 schema', () => {
         const card = {
-            id: 1,
-            title: 'Test Card',
-            description: 'Test description',
+            id: 'card-001',
+            subject: 'Test Card',
             location: 'Test Location',
             blockHeight: 800000,
             rarity: 'blue',
             edition: '1/100',
-            imageHash: 'test-hash',
+            frontImage: 'test-hash-front',
+            backImage: 'test-hash-back',
             availability: 'available'
         };
         const result = formatCardData(card);
-        
+
         expect(result).toEqual({
-            id: 1,
-            title: 'Test Card',
-            baseTitle: 'Test Card',
-            description: 'Test description',
+            id: 'card-001',
+            subject: 'Test Card',
             location: 'Test Location',
             blockHeight: 800000,
             rarity: 'blue',
             rarityDisplay: 'Blue',
             edition: '1/100',
-            imageHash: 'test-hash',
+            frontImage: 'test-hash-front',
+            backImage: 'test-hash-back',
             availability: 'available',
-            availabilityDisplay: 'Available',
-            isBack: false
+            availabilityDisplay: 'Available'
         });
-    });
-
-    it('should format card with array rarity', () => {
-        const card = {
-            id: 1,
-            title: 'Test Card',
-            description: 'Test description',
-            location: 'Test Location',
-            blockHeight: 800000,
-            rarity: ['blue', 'silver'],
-            edition: '1/50',
-            imageHash: 'test-hash',
-            availability: 'available'
-        };
-        const result = formatCardData(card);
-        
-        expect(result.rarityDisplay).toBe('Blue & Silver');
-        expect(result.rarity).toEqual(['blue', 'silver']);
-    });
-
-    it('should identify back cards correctly', () => {
-        const card = {
-            id: 2,
-            title: 'Mountain View (Back)',
-            description: 'Back view',
-            location: 'Test Location',
-            blockHeight: 800001,
-            rarity: 'gold',
-            edition: '1/1',
-            imageHash: 'test-hash-back'
-        };
-        const result = formatCardData(card);
-        
-        expect(result.isBack).toBe(true);
-        expect(result.baseTitle).toBe('Mountain View');
     });
 
     it('should handle missing availability field', () => {
         const card = {
-            id: 1,
-            title: 'Test Card',
-            description: 'Test description',
+            id: 'card-001',
+            subject: 'Test Card',
             location: 'Test Location',
             blockHeight: 800000,
             rarity: 'silver',
             edition: '1/10',
-            imageHash: 'test-hash'
+            frontImage: 'test-hash-front',
+            backImage: 'test-hash-back'
         };
         const result = formatCardData(card);
         

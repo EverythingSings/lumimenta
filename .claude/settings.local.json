@@ -1,0 +1,17 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(certutil -hashfile:*)",
+      "Bash(copy \"C:\\Users\\Trist\\Downloads\\IMG_0806.jpg\" \"images\\d7b66266309212aee864ed60a58cb0f6ea921c143e0158ad8ada32bfdbb8ae10.jpg\")",
+      "Bash(copy:*)",
+      "Bash(npm test)",
+      "Bash(git add:*)",
+      "Bash(git commit:*)",
+      "Bash(git push:*)",
+      "Bash(git pull:*)",
+      "Bash(node scripts/migrate-catalog.js:*)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}

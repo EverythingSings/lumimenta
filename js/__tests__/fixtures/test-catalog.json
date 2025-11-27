@@ -1,36 +1,37 @@
 {
+  "version": "2.0.0",
   "cards": [
     {
-      "id": 1,
-      "title": "Test Card Blue",
-      "description": "Test blue rarity card for unit testing",
+      "id": "card-001",
+      "subject": "Test Card Blue",
       "location": "Test Location",
       "blockHeight": 800000,
       "rarity": "blue",
       "edition": "1/100",
-      "imageHash": "test-hash-blue-abc123",
+      "frontImage": "test-hash-blue-abc123-front",
+      "backImage": "test-hash-blue-abc123-back",
       "availability": "available"
     },
     {
-      "id": 2,
-      "title": "Test Card Silver",
-      "description": "Test silver rarity card for unit testing",
+      "id": "card-002",
+      "subject": "Test Card Silver",
       "location": "Test Location",
       "blockHeight": 800001,
       "rarity": "silver",
       "edition": "1/10",
-      "imageHash": "test-hash-silver-def456",
+      "frontImage": "test-hash-silver-def456-front",
+      "backImage": "test-hash-silver-def456-back",
       "availability": "available"
     },
     {
-      "id": 3,
-      "title": "Test Card Gold",
-      "description": "Test gold rarity card for unit testing",
+      "id": "card-003",
+      "subject": "Test Card Gold",
       "location": "Test Location",
       "blockHeight": 800002,
       "rarity": "gold",
       "edition": "1/1",
-      "imageHash": "test-hash-gold-ghi789",
+      "frontImage": "test-hash-gold-ghi789-front",
+      "backImage": "test-hash-gold-ghi789-back",
       "availability": "collected"
     }
   ]

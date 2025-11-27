@@ -1,0 +1,158 @@
+{
+  "cards": [
+    {
+      "id": 1,
+      "title": "Oregon Coast Hillside",
+      "description": "Coastal hillside landscape (front)",
+      "location": "Oregon Coast",
+      "blockHeight": 920048,
+      "rarity": "blue",
+      "edition": "1/2 & 2/2",
+      "imageHash": "a6cf6fc02dac25b73eaaa0919c0fac91b9d613ed768bc04a9ef6216a9f828d50",
+      "availability": "available"
+    },
+    {
+      "id": 2,
+      "title": "Oregon Coast Hillside (Back)",
+      "description": "Back side with blue annotations 1/2 and 2/2",
+      "location": "Oregon Coast",
+      "blockHeight": 920048,
+      "rarity": "blue",
+      "edition": "1/2 & 2/2",
+      "imageHash": "185d89123bdb948880a277745f67b77beba2a90844d5e606ca06f9f1042e6e13",
+      "availability": "available"
+    },
+    {
+      "id": 3,
+      "title": "Concert Performance",
+      "description": "Live music performance (front)",
+      "location": "Local venue",
+      "blockHeight": 921200,
+      "rarity": "blue",
+      "edition": "1/2 & 2/2",
+      "imageHash": "4ee826f397b59be8c29d6dd6270504f8ac93b971d9983fa5a66236a2d384f6ee",
+      "availability": "available"
+    },
+    {
+      "id": 4,
+      "title": "Concert Performance (Back)",
+      "description": "Back side with blue annotations 1/2 and 2/2",
+      "location": "Local venue",
+      "blockHeight": 921200,
+      "rarity": "blue",
+      "edition": "1/2 & 2/2",
+      "imageHash": "445cb4c1dd7b20a148df1aee6daa5d2a944e117013ebff9ce5b8180deac9617a",
+      "availability": "available"
+    },
+    {
+      "id": 5,
+      "title": "3 Bitaxe Gammas",
+      "description": "Three Bitaxe Gamma miners (front)",
+      "location": "Unknown",
+      "blockHeight": 921809,
+      "rarity": "blue",
+      "edition": "1/1",
+      "imageHash": "60c9a304b8a18e046dfa4611e11fbaa38621b88387ecdac91d5f737d156ff861",
+      "availability": "available"
+    },
+    {
+      "id": 6,
+      "title": "3 Bitaxe Gammas (Back)",
+      "description": "Back side with blue annotation 1/1",
+      "location": "Unknown",
+      "blockHeight": 921809,
+      "rarity": "blue",
+      "edition": "1/1",
+      "imageHash": "c6670301d96bf5bb259cfe65fd79cc34b8b7bb32efc1a30b50a6331c7ca9f7c9",
+      "availability": "available"
+    },
+    {
+      "id": 7,
+      "title": "Oregon Beach Scenes",
+      "description": "Rock stack (gold 1/2) and mountain cliff (silver 1/2)",
+      "location": "Oregon Coast",
+      "blockHeight": 920046,
+      "rarity": ["gold", "silver"],
+      "edition": "1/2 each",
+      "imageHash": "8e587a9a699dd2035b5b63727396587a7ff9979eb029f8bf57caeb4d6aa60f83",
+      "availability": "available"
+    },
+    {
+      "id": 8,
+      "title": "Oregon Beach Scenes (Back)",
+      "description": "Back side showing both cards with gold and silver annotations",
+      "location": "Oregon Coast",
+      "blockHeight": 920046,
+      "rarity": ["gold", "silver"],
+      "edition": "1/2 each",
+      "imageHash": "91304d4d005b21135e6361f489320828fbe974ea8517c94b9dd0402f46df0252",
+      "availability": "available"
+    },
+    {
+      "id": 9,
+      "title": "Oregon Coast Dual Scenes",
+      "description": "Beach with rock stack (gold 2/2) and coastal rocks (blue 2/2)",
+      "location": "Oregon Coast",
+      "blockHeight": 920045,
+      "rarity": ["gold", "blue"],
+      "edition": "2/2 each",
+      "imageHash": "d7b66266309212aee864ed60a58cb0f6ea921c143e0158ad8ada32bfdbb8ae10",
+      "availability": "available"
+    },
+    {
+      "id": 10,
+      "title": "Oregon Coast Dual Scenes (Back)",
+      "description": "Back side showing both cards with gold 2/2 (920045) and blue 2/2 (920047) annotations",
+      "location": "Oregon Coast",
+      "blockHeight": 920045,
+      "rarity": ["gold", "blue"],
+      "edition": "2/2 each",
+      "imageHash": "7bde5a0019d808d7c0ce1853661dd0f1a0b4509b73c8137e47f99fbbbff13ed6",
+      "availability": "available"
+    },
+    {
+      "id": 11,
+      "title": "Autumn Tree Branches",
+      "description": "Two photos of tree branches with autumn foliage",
+      "location": "Unknown",
+      "blockHeight": 918896,
+      "rarity": ["blue", "blue"],
+      "edition": "1/2 & 2/2",
+      "imageHash": "59d983be09e0630b4e43e20c524b11a7a2f843102ae3a618ea770b863229a04e",
+      "availability": "available"
+    },
+    {
+      "id": 12,
+      "title": "Autumn Tree Branches (Back)",
+      "description": "Back side with blue annotations 1/2 (918896) and 2/2 (918898)",
+      "location": "Unknown",
+      "blockHeight": 918896,
+      "rarity": ["blue", "blue"],
+      "edition": "1/2 & 2/2",
+      "imageHash": "0d914afd0aef4c8d970c96410a75a0ae634665c549e6bbb01d40064425ef901d",
+      "availability": "available"
+    },
+    {
+      "id": 13,
+      "title": "Oregon Coast Rock Formations",
+      "description": "Two ocean scenes with coastal rock formations",
+      "location": "Oregon Coast",
+      "blockHeight": 920047,
+      "rarity": ["silver", "silver"],
+      "edition": "2/2 & 1/2",
+      "imageHash": "4326ad20e1137d80cb6c05551e4ca445d976ece45cddbd14b925c9b0e9eb97a4",
+      "availability": "available"
+    },
+    {
+      "id": 14,
+      "title": "Oregon Coast Rock Formations (Back)",
+      "description": "Back side with silver annotations 2/2 (920947) and 1/2 (920047)",
+      "location": "Oregon Coast",
+      "blockHeight": 920047,
+      "rarity": ["silver", "silver"],
+      "edition": "2/2 & 1/2",
+      "imageHash": "509b389727470bab3b610398198f49e50d26af217c30103fb0f9c1452116cef9",
+      "availability": "available"
+    }
+  ]
+}

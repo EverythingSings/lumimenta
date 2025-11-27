@@ -34,13 +34,13 @@ async function loadCatalog() {
 // Testable functions - exported for testing
 
 /**
- * Calculate total number of physical cards (excluding back sides)
+ * Calculate total number of physical cards
  * @param {Array} cards - Array of card objects
  * @returns {number} Total count of physical cards
  */
 function calculateTotalCards(cards) {
-    // Count only front cards (exclude back sides)
-    return cards.filter(card => !card.title.includes('(Back)')).length;
+    // V2: Each entry is a physical card, just return length
+    return cards.length;
 }
 
 /**
@@ -54,17 +54,14 @@ function calculateRarityDistribution(cards) {
         silver: 0,
         gold: 0
     };
-    
-    // Count rarities, handling both string and array formats
+
+    // V2: Each card has a single rarity (no arrays)
     cards.forEach(card => {
-        const rarities = Array.isArray(card.rarity) ? card.rarity : [card.rarity];
-        rarities.forEach(rarity => {
-            if (rarity === 'blue') distribution.blue++;
-            else if (rarity === 'silver') distribution.silver++;
-            else if (rarity === 'gold') distribution.gold++;
-        });
+        if (card.rarity === 'blue') distribution.blue++;
+        else if (card.rarity === 'silver') distribution.silver++;
+        else if (card.rarity === 'gold') distribution.gold++;
     });
-    
+
     return distribution;
 }
 
@@ -74,17 +71,17 @@ function calculateRarityDistribution(cards) {
  * @returns {Object} Statistics object with total, rarities, and unique subjects
  */
 function calculateStatistics(cards) {
-    // Extract base titles (remove "(Back)" suffix) to count unique subjects
-    const baseTitles = cards.map(c => c.title.replace(/\s*\(Back\)$/, ''));
-    
+    // V2: Use 'subject' field (no "(Back)" suffix to remove)
+    const subjects = cards.map(c => c.subject);
+
     const distribution = calculateRarityDistribution(cards);
-    
+
     return {
         total: calculateTotalCards(cards),
         blue: distribution.blue,
         silver: distribution.silver,
         gold: distribution.gold,
-        uniqueSubjects: new Set(baseTitles).size
+        uniqueSubjects: new Set(subjects).size
     };
 }
 
@@ -94,36 +91,25 @@ function calculateStatistics(cards) {
  * @returns {Object} Formatted card data with display-ready properties
  */
 function formatCardData(card) {
-    // Format rarity for display (handle both string and array formats)
-    let rarityDisplay;
-    if (Array.isArray(card.rarity)) {
-        rarityDisplay = card.rarity.map(r => r.charAt(0).toUpperCase() + r.slice(1)).join(' & ');
-    } else {
-        rarityDisplay = card.rarity.charAt(0).toUpperCase() + card.rarity.slice(1);
-    }
-    
+    // V2: Rarity is always a single string
+    const rarityDisplay = card.rarity.charAt(0).toUpperCase() + card.rarity.slice(1);
+
     // Get availability status, default to "unknown" if not specified
     const availability = card.availability || 'unknown';
     const availabilityDisplay = availability.charAt(0).toUpperCase() + availability.slice(1);
-    
-    // Check if this is a back card
-    const isBack = card.title.includes('(Back)');
-    const baseTitle = card.title.replace(/\s*\(Back\)$/, '');
-    
+
     return {
         id: card.id,
-        title: card.title,
-        baseTitle: baseTitle,
-        description: card.description,
+        subject: card.subject,
         location: card.location,
         blockHeight: card.blockHeight,
         rarity: card.rarity,
         rarityDisplay: rarityDisplay,
         edition: card.edition,
-        imageHash: card.imageHash,
+        frontImage: card.frontImage,
+        backImage: card.backImage,
         availability: availability,
-        availabilityDisplay: availabilityDisplay,
-        isBack: isBack
+        availabilityDisplay: availabilityDisplay
     };
 }
 
@@ -270,54 +256,49 @@ function initScrollAnimations() {
     document.querySelectorAll('section').forEach(section => observer.observe(section));
 }
 
-// Pair front and back cards from catalog
+// Group cards by shared photo (frontImage) for gallery display
 function pairCards(cards) {
-    const pairs = [];
-    const processed = new Set();
-    
+    const groupedByPhoto = {};
+
     cards.forEach(card => {
-        if (processed.has(card.id)) return;
-        
-        // Skip if this is a back card (will be paired with its front)
-        const isBack = card.title.includes('(Back)');
-        if (isBack) return;
-        
-        // Look for matching back card
-        const frontTitle = card.title;
-        const backCard = cards.find(c => 
-            c.title === `${frontTitle} (Back)` && !processed.has(c.id)
-        );
-        
-        pairs.push({
-            front: card,
-            back: backCard || null
-        });
-        
-        processed.add(card.id);
-        if (backCard) {
-            processed.add(backCard.id);
+        const photoKey = card.frontImage;
+        if (!groupedByPhoto[photoKey]) {
+            groupedByPhoto[photoKey] = {
+                cards: [],
+                frontImage: card.frontImage,
+                backImage: card.backImage,
+                subject: card.subject
+            };
         }
+        groupedByPhoto[photoKey].cards.push(card);
     });
-    
-    return pairs;
+
+    return Object.values(groupedByPhoto);
 }
 
-// Create flip card HTML for paired cards
-function createFlipCard(frontCard, backCard) {
+// Create flip card HTML for a photo group (may contain multiple cards)
+function createFlipCard(photoGroup) {
+    const { frontImage, backImage, cards, subject } = photoGroup;
+
+    // Create caption describing the cards in this photo
+    const caption = cards.length === 1
+        ? `${subject} ${cards[0].edition}`
+        : cards.map(c => `${c.rarity} ${c.edition}`).join(', ');
+
     return `
         <div class="flip-card">
             <div class="flip-card-inner">
                 <div class="flip-card-front">
-                    <img src="images/${frontCard.imageHash}.jpg" 
-                         alt="${frontCard.title} - front" 
+                    <img src="images/${frontImage}.jpg"
+                         alt="${subject} - front"
                          loading="lazy">
-                    <p class="card-caption">${frontCard.title} — front view</p>
+                    <p class="card-caption">${subject} — front view</p>
                 </div>
                 <div class="flip-card-back">
-                    <img src="images/${backCard.imageHash}.jpg" 
-                         alt="${backCard.title} - back with annotations" 
+                    <img src="images/${backImage}.jpg"
+                         alt="${subject} - back with annotations"
                          loading="lazy">
-                    <p class="card-caption">${frontCard.title} — back view with annotations</p>
+                    <p class="card-caption">${subject} — back view (${caption})</p>
                 </div>
             </div>
             <button class="flip-button" aria-label="Flip card to see back">
@@ -399,7 +380,7 @@ function initializeFlipButtons() {
 async function generateGallery() {
     try {
         const cards = await loadCatalog();
-        
+
         if (cards.length === 0) {
             const galleryContainer = document.getElementById('gallery-container');
             if (galleryContainer) {
@@ -407,19 +388,15 @@ async function generateGallery() {
             }
             return;
         }
-        
-        // Pair front and back cards
-        const cardPairs = pairCards(cards);
-        
-        // Generate HTML for each pair
-        const galleryHTML = cardPairs.map(pair => {
-            if (pair.back) {
-                return createFlipCard(pair.front, pair.back);
-            } else {
-                return createStaticCard(pair.front);
-            }
+
+        // Group cards by shared photo
+        const photoGroups = pairCards(cards);
+
+        // Generate HTML for each photo group
+        const galleryHTML = photoGroups.map(photoGroup => {
+            return createFlipCard(photoGroup);
         }).join('');
-        
+
         const galleryContainer = domCache.galleryContainer || document.getElementById('gallery-container');
         if (galleryContainer) {
             galleryContainer.innerHTML = galleryHTML;
@@ -595,25 +572,33 @@ function initStickyNavigation() {
 
 // Display card availability grid
 function displayAvailability(cards) {
-    const frontCards = cards.filter(card => !card.title.includes('(Back)'));
-    
-    const availabilityHTML = frontCards.map(card => {
-        const formattedCard = formatCardData(card);
-        
+    // Group cards by subject (photo) for display
+    const photoGroups = pairCards(cards);
+
+    const availabilityHTML = photoGroups.map(photoGroup => {
+        const { frontImage, cards: cardsInPhoto, subject } = photoGroup;
+
+        // Get first card for availability status
+        const firstCard = cardsInPhoto[0];
+        const formattedCard = formatCardData(firstCard);
+
+        // Create description of all cards in the photo
+        const cardsList = cardsInPhoto.map(c => `${c.rarity} ${c.edition}`).join(', ');
+
         return `
             <div class="availability-card" data-status="${formattedCard.availability}">
-                <img src="images/${formattedCard.imageHash}.jpg" 
-                     alt="${formattedCard.title}" 
+                <img src="images/${frontImage}.jpg"
+                     alt="${subject}"
                      loading="lazy">
                 <div class="card-info">
-                    <h4 class="card-title">${formattedCard.title}</h4>
-                    <p class="card-rarity">${formattedCard.rarityDisplay} • ${formattedCard.edition}</p>
+                    <h4 class="card-title">${subject}</h4>
+                    <p class="card-rarity">${cardsList}</p>
                     <span class="availability-badge ${formattedCard.availability}">${formattedCard.availabilityDisplay}</span>
                 </div>
             </div>
         `;
     }).join('');
-    
+
     const availabilityContainer = domCache.availabilityGrid || document.getElementById('availability-grid');
     if (availabilityContainer) {
         availabilityContainer.innerHTML = availabilityHTML;

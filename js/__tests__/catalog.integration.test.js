@@ -19,16 +19,16 @@ describe('Catalog Data Loading Integration Tests', () => {
             const catalogPath = join(process.cwd(), 'catalog.json');
             const fileContent = await readFile(catalogPath, 'utf-8');
             const data = JSON.parse(fileContent);
-            
+
             data.cards.forEach(card => {
                 expect(card).toHaveProperty('id');
-                expect(card).toHaveProperty('title');
-                expect(card).toHaveProperty('description');
+                expect(card).toHaveProperty('subject');
                 expect(card).toHaveProperty('location');
                 expect(card).toHaveProperty('blockHeight');
                 expect(card).toHaveProperty('rarity');
                 expect(card).toHaveProperty('edition');
-                expect(card).toHaveProperty('imageHash');
+                expect(card).toHaveProperty('frontImage');
+                expect(card).toHaveProperty('backImage');
             });
         });
 
@@ -36,17 +36,12 @@ describe('Catalog Data Loading Integration Tests', () => {
             const catalogPath = join(process.cwd(), 'catalog.json');
             const fileContent = await readFile(catalogPath, 'utf-8');
             const data = JSON.parse(fileContent);
-            
+
             const validRarities = ['blue', 'silver', 'gold'];
-            
+
+            // V2: Rarity is always a string, never an array
             data.cards.forEach(card => {
-                if (Array.isArray(card.rarity)) {
-                    card.rarity.forEach(r => {
-                        expect(validRarities).toContain(r);
-                    });
-                } else {
-                    expect(validRarities).toContain(card.rarity);
-                }
+                expect(validRarities).toContain(card.rarity);
             });
         });
     });
@@ -79,24 +74,30 @@ describe('Catalog Data Loading Integration Tests', () => {
             const fileContent = await readFile(testPath, 'utf-8');
             const data = JSON.parse(fileContent);
             
-            // Verify that cards have imageHash even if images don't exist
+            // V2: Verify that cards have frontImage and backImage
             expect(data.cards).toBeDefined();
             data.cards.forEach(card => {
-                expect(card.imageHash).toBeDefined();
-                expect(typeof card.imageHash).toBe('string');
-                expect(card.imageHash.length).toBeGreaterThan(0);
+                expect(card.frontImage).toBeDefined();
+                expect(typeof card.frontImage).toBe('string');
+                expect(card.frontImage.length).toBeGreaterThan(0);
+                expect(card.backImage).toBeDefined();
+                expect(typeof card.backImage).toBe('string');
+                expect(card.backImage.length).toBeGreaterThan(0);
             });
         });
 
-        it('should have imageHash property for all cards', async () => {
+        it('should have frontImage and backImage properties for all cards', async () => {
             const catalogPath = join(process.cwd(), 'catalog.json');
             const fileContent = await readFile(catalogPath, 'utf-8');
             const data = JSON.parse(fileContent);
-            
+
             data.cards.forEach(card => {
-                expect(card).toHaveProperty('imageHash');
-                expect(typeof card.imageHash).toBe('string');
-                expect(card.imageHash).not.toBe('');
+                expect(card).toHaveProperty('frontImage');
+                expect(typeof card.frontImage).toBe('string');
+                expect(card.frontImage).not.toBe('');
+                expect(card).toHaveProperty('backImage');
+                expect(typeof card.backImage).toBe('string');
+                expect(card.backImage).not.toBe('');
             });
         });
     });
