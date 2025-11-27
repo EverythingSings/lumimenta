@@ -29,6 +29,17 @@ describe('calculateTotalCards', () => {
         const result = calculateTotalCards(cards);
         expect(result).toBe(3);
     });
+
+    it('should exclude back cards from count', () => {
+        const cards = [
+            { id: 1, title: 'Card 1', rarity: 'blue' },
+            { id: 2, title: 'Card 1 (Back)', rarity: 'blue' },
+            { id: 3, title: 'Card 2', rarity: 'silver' },
+            { id: 4, title: 'Card 2 (Back)', rarity: 'silver' }
+        ];
+        const result = calculateTotalCards(cards);
+        expect(result).toBe(2); // Only count front cards
+    });
 });
 
 describe('calculateRarityDistribution', () => {
@@ -160,7 +171,7 @@ describe('calculateStatistics', () => {
         ];
         const result = calculateStatistics(cards);
         expect(result).toEqual({
-            total: 3,
+            total: 2, // Only count physical cards (front cards)
             blue: 2,
             silver: 1,
             gold: 0,

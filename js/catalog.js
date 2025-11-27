@@ -34,12 +34,13 @@ async function loadCatalog() {
 // Testable functions - exported for testing
 
 /**
- * Calculate total number of cards
+ * Calculate total number of physical cards (excluding back sides)
  * @param {Array} cards - Array of card objects
- * @returns {number} Total count of cards
+ * @returns {number} Total count of physical cards
  */
 function calculateTotalCards(cards) {
-    return cards.length;
+    // Count only front cards (exclude back sides)
+    return cards.filter(card => !card.title.includes('(Back)')).length;
 }
 
 /**
