@@ -3,9 +3,9 @@ import { readFile } from 'fs/promises';
 import { join } from 'path';
 
 describe('Catalog Data Loading Integration Tests', () => {
-    describe('Valid catalog.json loading', () => {
-        it('should load and parse valid catalog.json successfully', async () => {
-            const catalogPath = join(process.cwd(), 'catalog.json');
+    describe('Valid catalog-v2.json loading', () => {
+        it('should load and parse valid catalog-v2.json successfully', async () => {
+            const catalogPath = join(process.cwd(), 'catalog-v2.json');
             const fileContent = await readFile(catalogPath, 'utf-8');
             const data = JSON.parse(fileContent);
             
@@ -16,7 +16,7 @@ describe('Catalog Data Loading Integration Tests', () => {
         });
 
         it('should have valid data structure for all cards', async () => {
-            const catalogPath = join(process.cwd(), 'catalog.json');
+            const catalogPath = join(process.cwd(), 'catalog-v2.json');
             const fileContent = await readFile(catalogPath, 'utf-8');
             const data = JSON.parse(fileContent);
 
@@ -33,7 +33,7 @@ describe('Catalog Data Loading Integration Tests', () => {
         });
 
         it('should have valid rarity values', async () => {
-            const catalogPath = join(process.cwd(), 'catalog.json');
+            const catalogPath = join(process.cwd(), 'catalog-v2.json');
             const fileContent = await readFile(catalogPath, 'utf-8');
             const data = JSON.parse(fileContent);
 
@@ -87,7 +87,7 @@ describe('Catalog Data Loading Integration Tests', () => {
         });
 
         it('should have frontImage and backImage properties for all cards', async () => {
-            const catalogPath = join(process.cwd(), 'catalog.json');
+            const catalogPath = join(process.cwd(), 'catalog-v2.json');
             const fileContent = await readFile(catalogPath, 'utf-8');
             const data = JSON.parse(fileContent);
 
