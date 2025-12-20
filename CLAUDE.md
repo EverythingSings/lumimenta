@@ -78,8 +78,7 @@ npm run test:all   # Run all tests including Lighthouse
 ```
 lumimenta/
 ├── index.html         # Main page
-├── catalog-v2.json    # Card catalog (v2 schema)
-├── catalog.json       # Legacy catalog (symlink to v2)
+├── catalog-v2.json    # Card catalog (primary, v2 schema)
 ├── css/style.css      # Styles
 ├── js/
 │   ├── catalog.js     # Catalog display logic

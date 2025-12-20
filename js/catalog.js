@@ -22,7 +22,7 @@ function initDOMCache() {
 
 async function loadCatalog() {
     try {
-        const response = await fetch('catalog.json');
+        const response = await fetch('catalog-v2.json');
         const data = await response.json();
         return data.cards;
     } catch (error) {
