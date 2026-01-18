@@ -887,7 +887,7 @@ button:focus,
     position: absolute;
     top: 0;
     left: 0;
-    transform: rotateY(180deg);
+    transform: rotateY(-180deg);
 }
 
 /* Card images */
@@ -898,11 +898,6 @@ button:focus,
     display: block;
     border-radius: var(--radius-md);
     box-shadow: var(--shadow-medium);
-}
-
-/* Counter the horizontal mirroring from parent's rotateY(180deg) */
-.flip-card-back img {
-    transform: scaleX(-1);
 }
 
 /* Card captions */
