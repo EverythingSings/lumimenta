@@ -900,6 +900,11 @@ button:focus,
     box-shadow: var(--shadow-medium);
 }
 
+/* Counter the horizontal mirroring from parent's rotateY(180deg) */
+.flip-card-back img {
+    transform: scaleX(-1);
+}
+
 /* Card captions */
 .card-caption {
     margin-top: var(--spacing-sm);
